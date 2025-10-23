@@ -54,7 +54,4 @@
 ![Anthropic](https://img.shields.io/badge/Anthropic-191919?style=flat-square&logoColor=white)
 ![ElevenLabs](https://img.shields.io/badge/ElevenLabs-000000?style=flat-square&logoColor=white)
 ![Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black)
-
-### Web Automation
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat-square&logo=selenium&logoColor=white)
-![Beautiful Soup](https://img.shields.io/badge/Beautiful_Soup-3776AB?style=flat-square&logo=python&logoColor=white)
