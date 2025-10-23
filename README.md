@@ -40,11 +40,16 @@
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
 
 ### Development Tools
-![Cursor](https://img.shields.io/badge/Cursor-000000?style=flat-square&logo=cursor&logoColor=white)
+![Cursor](https://img.shields.io/badge/Cursor-000000?style=flat-square&logoColor=white)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-000000?style=flat-square&logo=anthropic&logoColor=white)
-![Windsurf](https://img.shields.io/badge/Windsurf-0EA5E9?style=flat-square&logo=windsurf&logoColor=white)
+![Windsurf](https://img.shields.io/badge/Windsurf-0EA5E9?style=flat-square&logoColor=white)
 
 ### Analytics & Monitoring
 ![PostHog](https://img.shields.io/badge/PostHog-000000?style=flat-square&logo=posthog&logoColor=white)
-![Amplitude](https://img.shields.io/badge/Amplitude-000080?style=flat-square&logo=amplitude&logoColor=white)
+![Amplitude](https://img.shields.io/badge/Amplitude-000080?style=flat-square&logoColor=white)
 ![Sentry](https://img.shields.io/badge/Sentry-362D59?style=flat-square&logo=sentry&logoColor=white)
+
+### APIs & Services
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white)
+![Anthropic](https://img.shields.io/badge/Anthropic-191919?style=flat-square&logoColor=white)
+![ElevenLabs](https://img.shields.io/badge/ElevenLabs-000000?style=flat-square&logoColor=white)
