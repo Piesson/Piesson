@@ -5,8 +5,6 @@
 - Built the iOS app, taught myself backend logic
 - Pouring everything that i've got into making conversations feel natural and fun
 
-Korean startup founder based in San Francisco & Seoul
-
 ![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg)
 
 ## 🛠️ Tech Stack
