@@ -1,11 +1,11 @@
-# Started from zero code, now building AI friends for fun language practice�
+# Started from zero code for my thing
 
 - Started with a simple idea: make language learning feel like chatting with a friend 
 - Problem? I couldn't code. So I learned from scratch
 - Built the iOS app, taught myself backend logic
-- I'll pure everything that i've got into making conversations feel natural and fun
+- Pouring everything that i've got into making conversations feel natural and fun
 
-Korean startup founder between San Francisco & Seoul
+Korean startup founder based in San Francisco & Seoul
 
 ![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg)
 
