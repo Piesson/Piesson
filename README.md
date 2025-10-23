@@ -1,4 +1,10 @@
-# Hi, I'm a Korean startup founder in San Francisco & Seoul 👋
+# Started from zero code, now building AI friends 👋
+
+Started with a simple idea: make language learning feel like chatting with a friend. Problem? I couldn't code.
+
+So I learned. From scratch. Built the iOS app, taught myself backend logic, and poured everything into making conversations feel natural and fun.
+
+Korean startup founder between San Francisco & Seoul.
 
 ![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg)
 
