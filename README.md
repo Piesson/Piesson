@@ -1,10 +1,9 @@
-# Started from zero code, now building AI friends 👋
+# Started from zero code, now building AI friends for fun language practice�
 
-• Started with a simple idea: make language learning feel like chatting with a friend
-• Problem? I couldn't code
-• So I learned from scratch
-• Built the iOS app, taught myself backend logic
-• Poured everything into making conversations feel natural and fun
+- Started with a simple idea: make language learning feel like chatting with a friend 
+- Problem? I couldn't code. So I learned from scratch
+- Built the iOS app, taught myself backend logic
+- I'll pure everything that i've got into making conversations feel natural and fun
 
 Korean startup founder between San Francisco & Seoul
 
