@@ -15,6 +15,7 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 
 ### Backend
+![Next.js API](https://img.shields.io/badge/Next.js_API-000000?style=flat-square&logo=nextdotjs&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white)
 
@@ -35,6 +36,11 @@
 ![Windsurf](https://img.shields.io/badge/Windsurf-0EA5E9?style=flat-square&logo=windsurf&logoColor=white)
 ![Kiro](https://img.shields.io/badge/Kiro-FF9500?style=flat-square&logo=amazon&logoColor=white)
 ![GPT-5 Codex](https://img.shields.io/badge/GPT--5_Codex-412991?style=flat-square&logo=openai&logoColor=white)
+
+### Notifications & Automation
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
+![Expo Notifications](https://img.shields.io/badge/Expo_Notifications-1C1E24?style=flat-square&logo=expo&logoColor=white)
+![Cron Jobs](https://img.shields.io/badge/Cron_Jobs-4EAA25?style=flat-square&logo=clockify&logoColor=white)
 
 ### Cloud & Deployment
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white)
