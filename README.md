@@ -37,7 +37,6 @@
 ![Claude Code](https://img.shields.io/badge/Claude_Code-000000?style=flat-square&logo=anthropic&logoColor=white)
 ![Windsurf](https://img.shields.io/badge/Windsurf-0EA5E9?style=flat-square&logo=windsurf&logoColor=white)
 ![Kiro](https://img.shields.io/badge/Kiro-FF9500?style=flat-square&logo=amazon&logoColor=white)
-![GPT-5 Codex](https://img.shields.io/badge/GPT--5_Codex-412991?style=flat-square&logo=openai&logoColor=white)
 
 ### Analytics & Monitoring
 ![PostHog](https://img.shields.io/badge/PostHog-000000?style=flat-square&logo=posthog&logoColor=white)
