@@ -5,6 +5,7 @@
 ## 🛠️ Tech Stack
 
 ### Languages
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
@@ -37,6 +38,11 @@
 ![Windsurf](https://img.shields.io/badge/Windsurf-0EA5E9?style=flat-square&logo=windsurf&logoColor=white)
 ![Kiro](https://img.shields.io/badge/Kiro-FF9500?style=flat-square&logo=amazon&logoColor=white)
 ![GPT-5 Codex](https://img.shields.io/badge/GPT--5_Codex-412991?style=flat-square&logo=openai&logoColor=white)
+
+### Analytics & Monitoring
+![PostHog](https://img.shields.io/badge/PostHog-000000?style=flat-square&logo=posthog&logoColor=white)
+![Amplitude](https://img.shields.io/badge/Amplitude-000080?style=flat-square&logo=amplitude&logoColor=white)
+![Sentry](https://img.shields.io/badge/Sentry-362D59?style=flat-square&logo=sentry&logoColor=white)
 
 ### Infrastructure & DevOps
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
