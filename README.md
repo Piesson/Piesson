@@ -8,10 +8,11 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
-### Frontend
+### Frontend & Mobile
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Expo Notifications](https://img.shields.io/badge/Expo_Notifications-1C1E24?style=flat-square&logo=expo&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 
 ### Backend
@@ -37,12 +38,9 @@
 ![Kiro](https://img.shields.io/badge/Kiro-FF9500?style=flat-square&logo=amazon&logoColor=white)
 ![GPT-5 Codex](https://img.shields.io/badge/GPT--5_Codex-412991?style=flat-square&logo=openai&logoColor=white)
 
-### Notifications & Automation
+### Infrastructure & DevOps
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
-![Expo Notifications](https://img.shields.io/badge/Expo_Notifications-1C1E24?style=flat-square&logo=expo&logoColor=white)
 ![Cron Jobs](https://img.shields.io/badge/Cron_Jobs-4EAA25?style=flat-square&logo=clockify&logoColor=white)
-
-### Cloud & Deployment
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white)
 ![Azure](https://img.shields.io/badge/Microsoft_Azure-0089D0?style=flat-square&logo=microsoft-azure&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
