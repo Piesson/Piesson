@@ -63,12 +63,84 @@ def get_github_data(username, token):
 
 def generate_four_quadrant_stats():
     """Generate 4-quadrant statistics data"""
-    return {
+    stats = {
         'commits': 156,
         'code_reviews': 23,
         'pull_requests': 12,
         'issues': 8
     }
+
+    # Calculate percentages
+    total = sum(stats.values())
+    percentages = {key: round((value / total) * 100) for key, value in stats.items()}
+
+    return {
+        'stats': stats,
+        'percentages': percentages,
+        'total': total
+    }
+
+def generate_quadrant_pie_chart(data):
+    """Generate a 4-quadrant pie chart SVG"""
+    import math
+
+    stats = data['stats']
+    percentages = data['percentages']
+
+    # Chart dimensions
+    size = 120
+    center = size // 2
+    radius = 45
+
+    # Colors for each quadrant
+    colors = {
+        'commits': '#3b82f6',      # Blue
+        'code_reviews': '#10b981', # Green
+        'pull_requests': '#f59e0b', # Yellow
+        'issues': '#ef4444'        # Red
+    }
+
+    # Calculate angles (starting from top, clockwise)
+    total = data['total']
+    current_angle = -90  # Start from top
+
+    chart_svg = f'<svg width="{size}" height="{size}" viewBox="0 0 {size} {size}">'
+
+    for key, value in stats.items():
+        if value == 0:
+            continue
+
+        # Calculate angle for this slice
+        slice_angle = (value / total) * 360
+
+        # Calculate start and end angles in radians
+        start_angle_rad = math.radians(current_angle)
+        end_angle_rad = math.radians(current_angle + slice_angle)
+
+        # Calculate arc path
+        x1 = center + radius * math.cos(start_angle_rad)
+        y1 = center + radius * math.sin(start_angle_rad)
+        x2 = center + radius * math.cos(end_angle_rad)
+        y2 = center + radius * math.sin(end_angle_rad)
+
+        large_arc = 1 if slice_angle > 180 else 0
+
+        # Create path
+        path = f'M {center},{center} L {x1},{y1} A {radius},{radius} 0 {large_arc},1 {x2},{y2} Z'
+
+        chart_svg += f'<path d="{path}" fill="{colors[key]}" stroke="#ffffff" stroke-width="2"/>'
+
+        # Add percentage label
+        label_angle_rad = math.radians(current_angle + slice_angle / 2)
+        label_x = center + (radius * 0.7) * math.cos(label_angle_rad)
+        label_y = center + (radius * 0.7) * math.sin(label_angle_rad)
+
+        chart_svg += f'<text x="{label_x}" y="{label_y}" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">{percentages[key]}%</text>'
+
+        current_angle += slice_angle
+
+    chart_svg += '</svg>'
+    return chart_svg
 
 def generate_profile_card():
     """Generate the custom profile summary card"""
@@ -79,11 +151,12 @@ def generate_profile_card():
     github_data = get_github_data(username, token)
 
     # Generate 4-quadrant stats
-    stats = generate_four_quadrant_stats()
+    quadrant_data = generate_four_quadrant_stats()
+    pie_chart = generate_quadrant_pie_chart(quadrant_data)
 
     # SVG dimensions
     card_width = 500
-    card_height = 220
+    card_height = 200
 
     svg_content = f'''<svg width="{card_width}" height="{card_height}" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -101,67 +174,81 @@ def generate_profile_card():
         GitHub Activity Overview
     </text>
 
-    <!-- 4-Quadrant Layout -->
+    <!-- Left Side: 4-Quadrant Chart + Legend -->
+    <g transform="translate(30, 50)">
+        <!-- Pie Chart -->
+        <g transform="translate(30, 20)">
+            {pie_chart}
+        </g>
 
-    <!-- Top Left: Commits -->
-    <g transform="translate(30, 60)">
-        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
-        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            {stats['commits']}
-        </text>
-        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
-            Commits
-        </text>
-        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
-            Joined {github_data['join_date']}
-        </text>
+        <!-- Legend -->
+        <g transform="translate(170, 30)">
+            <!-- Commits -->
+            <g transform="translate(0, 0)">
+                <rect x="0" y="0" width="12" height="12" fill="#3b82f6"/>
+                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+                    Commits: {quadrant_data['stats']['commits']} ({quadrant_data['percentages']['commits']}%)
+                </text>
+            </g>
+            <!-- Code Reviews -->
+            <g transform="translate(0, 20)">
+                <rect x="0" y="0" width="12" height="12" fill="#10b981"/>
+                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+                    Reviews: {quadrant_data['stats']['code_reviews']} ({quadrant_data['percentages']['code_reviews']}%)
+                </text>
+            </g>
+            <!-- Pull Requests -->
+            <g transform="translate(0, 40)">
+                <rect x="0" y="0" width="12" height="12" fill="#f59e0b"/>
+                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+                    PRs: {quadrant_data['stats']['pull_requests']} ({quadrant_data['percentages']['pull_requests']}%)
+                </text>
+            </g>
+            <!-- Issues -->
+            <g transform="translate(0, 60)">
+                <rect x="0" y="0" width="12" height="12" fill="#ef4444"/>
+                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+                    Issues: {quadrant_data['stats']['issues']} ({quadrant_data['percentages']['issues']}%)
+                </text>
+            </g>
+        </g>
     </g>
 
-    <!-- Top Right: Code Reviews -->
-    <g transform="translate(250, 60)">
-        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
-        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            {stats['code_reviews']}
-        </text>
-        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
-            Code Reviews
-        </text>
-        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
-            Total {github_data['total_commits']:,} commits
-        </text>
-    </g>
+    <!-- Vertical Divider -->
+    <line x1="350" y1="50" x2="350" y2="180" stroke="#e5e7eb" stroke-width="1"/>
 
-    <!-- Bottom Left: Pull Requests -->
-    <g transform="translate(30, 145)">
-        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
-        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            {stats['pull_requests']}
-        </text>
-        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
-            Pull Requests
-        </text>
-        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
-            Daily avg {github_data['daily_avg']}
-        </text>
-    </g>
+    <!-- Right Side: Statistics Cards -->
+    <g transform="translate(370, 60)">
+        <!-- Total Commits -->
+        <g transform="translate(0, 0)">
+            <text x="0" y="20" fill="#111827" font-size="24" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+                {github_data['total_commits']:,}
+            </text>
+            <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
+                Total Commits
+            </text>
+        </g>
 
-    <!-- Bottom Right: Issues -->
-    <g transform="translate(250, 145)">
-        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
-        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            {stats['issues']}
-        </text>
-        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
-            Issues
-        </text>
-        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
-            Opened & closed
-        </text>
-    </g>
+        <!-- Join Date -->
+        <g transform="translate(0, 50)">
+            <text x="0" y="20" fill="#111827" font-size="16" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+                {github_data['join_date']}
+            </text>
+            <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
+                Joined GitHub
+            </text>
+        </g>
 
-    <!-- Center divider lines -->
-    <line x1="250" y1="60" x2="250" y2="210" stroke="#e5e7eb" stroke-width="1"/>
-    <line x1="30" y1="135" x2="450" y2="135" stroke="#e5e7eb" stroke-width="1"/>
+        <!-- Daily Average -->
+        <g transform="translate(0, 100)">
+            <text x="0" y="20" fill="#111827" font-size="16" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+                {github_data['daily_avg']}
+            </text>
+            <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
+                Daily Average
+            </text>
+        </g>
+    </g>
 </svg>'''
 
     # Save SVG
