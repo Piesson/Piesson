@@ -44,7 +44,7 @@
     <g transform="translate(200, 90)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            9
+            1
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             SOCIAL POSTS
@@ -58,7 +58,7 @@
     <g transform="translate(340, 90)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            127
+            1
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             USER TALKS
@@ -73,7 +73,7 @@
     <g transform="translate(60, 210)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            4
+            0
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             COFFEE CHATS
@@ -87,13 +87,13 @@
     <g transform="translate(200, 210)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            5
+            2
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             WORKOUTS
         </text>
         <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
-            Run: 3 Gym: 2
+            Run: 1 Gym: 1
         </text>
     </g>
 
@@ -101,7 +101,7 @@
     <g transform="translate(340, 210)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            2
+            0
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             BLOG POSTS
