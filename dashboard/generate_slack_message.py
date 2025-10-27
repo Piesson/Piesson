@@ -63,29 +63,34 @@ def generate_slack_message():
     message = {
         "username": "GrindBot",
         "icon_emoji": ":fire:",
-        "text": f"""🔥 **Daily Progress Tracker**
+        "text": f"""🔥 Daily Progress Tracker
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**📊 CORE METRICS**
+📊 CORE METRICS
 
-🚀 **Code Commits:** `{m['commits']}` builds
-💬 **User Talks:** `{m['usertalks']}` conversations
-📱 **Social Posts:** `{total_social}` total
+🚀 Code Commits: `{m['commits']}` builds
+
+💬 User Talks: `{m['usertalks']}` conversations
+
+📱 Social Posts: `{total_social}` total
     ├─ Instagram: `{m['instagram']}`
     ├─ TikTok: `{m['tiktok']}`
     └─ HelloTalk: `{m['hellotalk']}`
-☕ **Coffee Chats:** `{m['coffeechats']}` co-founder meetings
-🏃 **Workouts:** `{total_workouts}` sessions
+
+☕ Coffee Chats: `{m['coffeechats']}` co-founder meetings
+
+🏃 Workouts: `{total_workouts}` sessions
     ├─ Running: `{m['running']}`
     └─ Gym: `{m['gym']}`
-📝 **Blog Posts:** `{m['blogposts']}` AI/startup articles
+
+📝 Blog Posts: `{m['blogposts']}` AI/startup articles
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**📥 INPUT FORMAT:**
+📥 INPUT FORMAT:
 `3 2 1 10 2 1 5`
-*(IG, TT, HT, UserTalks, CoffeeChats, BlogPosts, Workouts)*"""
+(IG, TT, HT, UserTalks, CoffeeChats, BlogPosts, Workouts)"""
     }
 
     return json.dumps(message)
