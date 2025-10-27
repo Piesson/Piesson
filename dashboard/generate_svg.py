@@ -1,11 +1,35 @@
 import json
 import datetime
+import subprocess
 from pathlib import Path
+
+def get_git_commits_this_week():
+    """Count commits in current week"""
+    try:
+        today = datetime.datetime.now()
+        monday = today - datetime.timedelta(days=today.weekday())
+        monday_str = monday.strftime('%Y-%m-%d')
+
+        result = subprocess.run([
+            'git', 'rev-list', '--count', '--since', monday_str, 'HEAD'
+        ], capture_output=True, text=True)
+
+        return int(result.stdout.strip()) if result.returncode == 0 else 0
+    except:
+        return 0
 
 def generate_dashboard_svg():
     # Load data
     with open('dashboard/data.json', 'r') as f:
         data = json.load(f)
+
+    # Auto-update commits from git
+    current_commits = get_git_commits_this_week()
+    data['currentWeek']['metrics']['commits'] = current_commits
+
+    # Save updated data back
+    with open('dashboard/data.json', 'w') as f:
+        json.dump(data, f, indent=2)
 
     current = data['currentWeek']['metrics']
 
