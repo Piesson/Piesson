@@ -12,64 +12,47 @@ from graphql_stats import get_github_activity_stats_graphql
 
 def get_github_data(username, token):
     """Fetch GitHub user data and calculate statistics"""
-    headers = {
-        'Accept': 'application/vnd.github.v3+json'
+    # Try to get commit count from GraphQL first (includes private repos)
+    graphql_result = get_github_activity_stats_graphql(username, token)
+    total_commits = graphql_result['commits'] if graphql_result else 0
+
+    # If GraphQL failed or no token, fallback to public repo count
+    if total_commits == 0:
+        print("GraphQL failed for total commits, using public repo approximation...")
+        headers = {
+            'Accept': 'application/vnd.github.v3+json'
+        }
+        if token:
+            headers['Authorization'] = f'token {token}'
+
+        try:
+            repos_response = requests.get(f'https://api.github.com/users/{username}/repos?per_page=100', headers=headers)
+            if repos_response.status_code == 200:
+                repos_data = repos_response.json()
+                for repo in repos_data:
+                    if not repo['fork']:
+                        commits_response = requests.get(f'https://api.github.com/repos/{username}/{repo["name"]}/commits?author={username}&per_page=1', headers=headers)
+                        if commits_response.status_code == 200:
+                            total_commits += len(commits_response.json())
+        except Exception as e:
+            print(f"Error fetching public repos: {e}")
+
+    # Use fixed join date: January 2025
+    created_at = datetime.datetime(2025, 1, 1)
+
+    # Calculate days since joining (fixed date)
+    today = datetime.datetime.now()
+    days_since_join = (today - created_at).days
+
+    # Calculate daily average based on Jan 1, 2025
+    daily_avg = total_commits / max(days_since_join, 1) if days_since_join > 0 else 0
+
+    return {
+        'total_commits': total_commits,
+        'join_date': 'Jan 2025',
+        'daily_avg': round(daily_avg, 1),
+        'days_since_join': days_since_join
     }
-
-    # Add authorization header only if token is provided
-    if token:
-        headers['Authorization'] = f'token {token}'
-
-    try:
-        # Get user basic info
-        user_response = requests.get(f'https://api.github.com/users/{username}', headers=headers)
-        if user_response.status_code != 200:
-            print(f"Failed to get user data: {user_response.status_code}")
-            raise Exception(f"GitHub API error: {user_response.status_code}")
-        user_data = user_response.json()
-
-        # Get repositories
-        repos_response = requests.get(f'https://api.github.com/users/{username}/repos?per_page=100', headers=headers)
-        if repos_response.status_code != 200:
-            print(f"Failed to get repos: {repos_response.status_code}")
-            raise Exception(f"GitHub API error: {repos_response.status_code}")
-        repos_data = repos_response.json()
-
-        # Calculate total commits (approximate from recent activity)
-        total_commits = 0
-        for repo in repos_data:
-            if not repo['fork']:  # Skip forked repos
-                commits_response = requests.get(f'https://api.github.com/repos/{username}/{repo["name"]}/commits?author={username}&per_page=1', headers=headers)
-                if commits_response.status_code == 200:
-                    # Get commit count from headers (GitHub API limitation workaround)
-                    total_commits += len(commits_response.json())
-
-        # Use fixed join date: January 2025
-        created_at = datetime.datetime(2025, 1, 1)
-
-        # Calculate days since joining (fixed date)
-        today = datetime.datetime.now()
-        days_since_join = (today - created_at).days
-
-        # Calculate daily average based on Jan 1, 2025
-        daily_avg = total_commits / max(days_since_join, 1) if days_since_join > 0 else 0
-
-        return {
-            'total_commits': total_commits,
-            'join_date': 'Jan 2025',
-            'daily_avg': round(daily_avg, 1),
-            'days_since_join': days_since_join
-        }
-
-    except Exception as e:
-        print(f"Error fetching GitHub data: {e}")
-        # Return default values if API fails
-        return {
-            'total_commits': 0,
-            'join_date': 'Jan 2025',
-            'daily_avg': 0.0,
-            'days_since_join': 0
-        }
 
 def get_github_activity_stats(username, token):
     """Fetch GitHub activity statistics from API - Try GraphQL first, then REST API"""
