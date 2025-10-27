@@ -48,6 +48,11 @@ jobs:
         run: |
           python3 dashboard/update_readme_history.py
 
+      - name: Update README with charts
+        if: steps.check_weekly.outputs.reset_happened == '0'
+        run: |
+          python3 dashboard/update_readme_charts.py
+
       - name: Commit weekly reset changes
         if: steps.check_weekly.outputs.reset_happened == '0'
         run: |
@@ -135,6 +140,10 @@ Auto-generated weekly history SVGs and updated README"
       - name: Update README with history
         run: |
           python3 dashboard/update_readme_history.py
+
+      - name: Update README with charts
+        run: |
+          python3 dashboard/update_readme_charts.py
 
       - name: Commit and push if changed
         run: |
