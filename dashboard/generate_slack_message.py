@@ -60,24 +60,24 @@ def generate_slack_message(message_type="morning"):
     total_social = m['instagram'] + m['tiktok'] + m['hellotalk']
     total_workouts = m['running'] + m['gym']
 
-    # Different greetings based on time
+    # Different vibes based on time
     if message_type == "evening":
-        greeting = "🌆 Evening Reminder - No input received today!"
-        icon = ":warning:"
-        motivation = "Don't break the streak! 💪"
+        greeting = "🚨 GRIND CHECK: Still 0 today?"
+        icon = ":rotating_light:"
+        motivation = "Time to lock in! 💪"
     else:
-        greeting = "🌅 Good morning! Time to track your progress"
+        greeting = "⏰ Time to grind"
         icon = ":fire:"
-        motivation = "Let's build something great today! 🚀"
+        motivation = "Let's ship it! 🚀"
 
     message = {
         "username": "GrindBot",
         "icon_emoji": icon,
         "text": f"""{greeting}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📊 CURRENT WEEK PROGRESS
+╔══════════════════════════╗
+║  📊 THIS WEEK'S GRIND     ║
+╚══════════════════════════╝
 
 🚀 Code Commits: `{m['commits']}` builds
 
@@ -96,14 +96,12 @@ def generate_slack_message(message_type="morning"):
 
 📝 Blog Posts: `{m['blogposts']}` AI/startup articles
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-📥 INPUT FORMAT (Daily additions):
-`1 0 0 2 0 0 1 1`
-(+IG, +TT, +HT, +UserTalks, +CoffeeChats, +BlogPosts, +Running, +Gym)
+📥 INPUT: `1 0 0 2 0 0 1 1`
+(IG, TT, HT, UserTalks, CoffeeChats, BlogPosts, Running, Gym)
 
-💡 {motivation}
-Enter how many you did TODAY (will be added to current totals)"""
+💡 {motivation}"""
     }
 
     return json.dumps(message)
