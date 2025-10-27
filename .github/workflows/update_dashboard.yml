@@ -13,7 +13,18 @@ permissions:
   contents: write
 
 jobs:
+  daily-reminder:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send daily reminder
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"📊 Daily dashboard check!\n\nReply with your metrics:\nInstagram: 0, TikTok: 0, HelloTalk: 1, UserTalks: 1, CoffeeChats: 0, BlogPosts: 0, Running: 1, Gym: 1"}' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
+
   update-dashboard:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
