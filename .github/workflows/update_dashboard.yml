@@ -2,9 +2,11 @@ name: Update Dashboard
 
 on:
   schedule:
-    # Run every day at 10 PM UTC (7 AM KST) - Morning reminder
-    - cron: '0 22 * * *'
-    # Run every day at 10 AM UTC (7 PM KST) - Evening reminder if no input
+    # Monday 7 AM KST: Weekly reset only (no reminder)
+    - cron: '0 22 * * 1'
+    # Tue-Sun 7 AM KST: Morning reminder
+    - cron: '0 22 * * 2-0'
+    # Every day 7 PM KST: Evening reminder if no input
     - cron: '0 10 * * *'
   workflow_dispatch: # Allow manual trigger
   push:
@@ -62,8 +64,17 @@ Auto-generated weekly history SVGs and updated README"
       - name: Check if reminder needed
         id: check_update
         run: |
-          python3 dashboard/check_daily_update.py
-          echo "send_reminder=$?" >> $GITHUB_OUTPUT
+          CURRENT_HOUR=$(date -u +%H)
+          DAY_OF_WEEK=$(date -u +%u)
+
+          # Skip morning reminder on Monday (weekly reset day)
+          if [ "$CURRENT_HOUR" -eq "22" ] && [ "$DAY_OF_WEEK" -eq "1" ]; then
+            echo "🔄 Monday morning: Weekly reset completed, skipping reminder"
+            echo "send_reminder=1" >> $GITHUB_OUTPUT
+          else
+            python3 dashboard/check_daily_update.py
+            echo "send_reminder=$?" >> $GITHUB_OUTPUT
+          fi
 
       - name: Generate and send daily reminder
         if: steps.check_update.outputs.send_reminder == '0'
