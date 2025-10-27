@@ -29,6 +29,36 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Check weekly reset
+        id: check_weekly
+        run: |
+          python3 dashboard/check_weekly_reset.py
+          echo "reset_happened=$?" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Generate weekly history SVGs
+        if: steps.check_weekly.outputs.reset_happened == '0'
+        run: |
+          python3 dashboard/generate_weekly_history.py
+
+      - name: Update README with history
+        if: steps.check_weekly.outputs.reset_happened == '0'
+        run: |
+          python3 dashboard/update_readme_history.py
+
+      - name: Commit weekly reset changes
+        if: steps.check_weekly.outputs.reset_happened == '0'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add dashboard/data.json dashboard/history/ README.md
+          if ! git diff --staged --quiet; then
+            git commit -m "Weekly reset: save history and reset metrics
+
+Auto-generated weekly history SVGs and updated README"
+            git push
+          fi
+
       - name: Check if reminder needed
         id: check_update
         run: |
@@ -77,11 +107,15 @@ jobs:
           cd ${{ github.workspace }}
           python dashboard/generate_svg.py
 
+      - name: Update README with history
+        run: |
+          python3 dashboard/update_readme_history.py
+
       - name: Commit and push if changed
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dashboard/weekly_dashboard.svg
+          git add dashboard/weekly_dashboard.svg README.md
           if ! git diff --staged --quiet; then
             git commit -m "update: automated dashboard generation"
             git push
