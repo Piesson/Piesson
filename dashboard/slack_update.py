@@ -11,9 +11,22 @@ from datetime import datetime
 
 def parse_metrics(text):
     """Extract numbers from Slack message (supports both formats)"""
-    # Try new 7-number format first: "3 2 1 10 2 1 5"
+    # Try new 8-number format first: "1 0 0 2 0 0 1 1"
     numbers = re.findall(r'\d+', text.strip())
-    if len(numbers) >= 7:
+    if len(numbers) >= 8:
+        # Order: Instagram, TikTok, HelloTalk, UserTalks, CoffeeChats, BlogPosts, Running, Gym
+        return {
+            'instagram': int(numbers[0]),
+            'tiktok': int(numbers[1]),
+            'hellotalk': int(numbers[2]),
+            'usertalks': int(numbers[3]),
+            'coffeechats': int(numbers[4]),
+            'blogposts': int(numbers[5]),
+            'running': int(numbers[6]),
+            'gym': int(numbers[7])
+        }
+    elif len(numbers) >= 7:
+        # Fallback to 7-number format: "3 2 1 10 2 1 5"
         # Order: Instagram, TikTok, HelloTalk, UserTalks, CoffeeChats, BlogPosts, Workouts
         return {
             'instagram': int(numbers[0]),
@@ -164,4 +177,4 @@ if __name__ == "__main__":
         if webhook_url:
             send_confirmation_message(webhook_url, result)
     else:
-        print("Usage: echo '1 0 0 2 0 0 1' | python3 slack_update.py")
+        print("Usage: echo '1 0 0 2 0 0 1 1' | python3 slack_update.py")
