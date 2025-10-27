@@ -138,9 +138,8 @@ def generate_chart_urls(weekly_history):
     chart_data = f"{commits_data}|{talks_data}|{social_data}|{chats_data}|{workouts_data}|{posts_data}"
     colors = "FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40"
     legend = "Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts"
-    markers = "N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11"
 
-    combined_url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=900x450&chxt=x,y&chxl=0:|{weeks_with_dates}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm={markers}"
+    combined_url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=900x450&chxt=x,y&chxl=0:|{weeks_with_dates}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5"
 
     individual_urls = {
         'commits': f"https://image-charts.com/chart?cht=lc&chd=t:{commits_data}&chs=380x200&chxt=x,y&chxl=0:|{weeks_label}&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF",
