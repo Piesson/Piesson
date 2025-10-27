@@ -33,7 +33,7 @@
 ## Individual Metrics
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83&chs=380x200&chxt=x,y&chxl=0:|W42|W43&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Code Commits Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83&chs=380x200&chxt=x,y&chxl=0:|W42|W43&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Commits Progress">
   <img src="https://image-charts.com/chart?cht=lc&chd=t:0,2&chs=380x200&chxt=x,y&chxl=0:|W42|W43&chco=36A2EB&chtt=User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
 </p>
 
