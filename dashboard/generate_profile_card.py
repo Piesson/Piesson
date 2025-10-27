@@ -91,7 +91,7 @@ def generate_contribution_heatmap():
 
 def generate_profile_card():
     """Generate the custom profile summary card"""
-    username = os.getenv('GITHUB_REPOSITORY_OWNER', 'Piesson')
+    username = os.getenv('USERNAME', 'Piesson')
     token = os.getenv('GITHUB_TOKEN', '')
 
     # Get GitHub data
