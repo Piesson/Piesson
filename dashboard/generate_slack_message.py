@@ -63,24 +63,29 @@ def generate_slack_message():
     message = {
         "username": "GrindBot",
         "icon_emoji": ":fire:",
-        "text": f"""Yo, what did you do today?
+        "text": f"""🔥 **Daily Progress Tracker**
 
-```
-Commits:       [{m['commits']}] (code building)
-Instagram:     [{m['instagram']}]  (posts)
-TikTok:        [{m['tiktok']}]  (posts)
-HelloTalk:     [{m['hellotalk']}]  (posts)
-Social Total:  [{total_social}]  (IG+TT+HT)
-User Talks:    [{m['usertalks']}] (conversations)
-Coffee Chats:  [{m['coffeechats']}] (co-founder meetings)
-Blog Posts:    [{m['blogposts']}] (AI/startup articles)
-Workouts:      [{total_workouts}] (running + gym total)
-  Running:     [{m['running']}]  (times)
-  Gym:         [{m['gym']}]  (times)
-```
+━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Type 7 numbers: 3 2 1 10 2 1 5
-(Instagram, TikTok, HelloTalk, UserTalks, CoffeeChats, BlogPosts, Workouts)"""
+**📊 CORE METRICS**
+
+🚀 **Code Commits:** `{m['commits']}` builds
+💬 **User Talks:** `{m['usertalks']}` conversations
+📱 **Social Posts:** `{total_social}` total
+    ├─ Instagram: `{m['instagram']}`
+    ├─ TikTok: `{m['tiktok']}`
+    └─ HelloTalk: `{m['hellotalk']}`
+☕ **Coffee Chats:** `{m['coffeechats']}` co-founder meetings
+🏃 **Workouts:** `{total_workouts}` sessions
+    ├─ Running: `{m['running']}`
+    └─ Gym: `{m['gym']}`
+📝 **Blog Posts:** `{m['blogposts']}` AI/startup articles
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+**📥 INPUT FORMAT:**
+`3 2 1 10 2 1 5`
+*(IG, TT, HT, UserTalks, CoffeeChats, BlogPosts, Workouts)*"""
     }
 
     return json.dumps(message)
