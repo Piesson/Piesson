@@ -16,6 +16,14 @@
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
 </p>
 
+# Weekly History
+
+| Week | Period | Commits | Social | Talks | Chats | Workouts | Posts |
+|------|--------|---------|--------|-------|-------|----------|-------|
+| [**Week 44**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W44.svg) | 10/27 - 11/02 | 42 | 5 | 127 | 4 | 5 | 2 |
+| [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W43.svg) | 10/20 - 10/26 | 38 | 4 | 115 | 3 | 4 | 1 |
+
+
 # Tech Stack
 
 ### Languages
