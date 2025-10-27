@@ -37,7 +37,7 @@ def generate_dashboard_svg():
     </text>
 
     <!-- Metrics Grid -->
-    <!-- Row 1 -->
+    <!-- Row 1: Commits, User Talks, Social Posts -->
     <!-- Commits -->
     <g transform="translate(60, 90)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
@@ -45,42 +45,42 @@ def generate_dashboard_svg():
             {current['commits']}
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            CODE COMMITS
+            🚀 CODE COMMITS
         </text>
         <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
             Building the future
         </text>
     </g>
 
-    <!-- Social Content -->
+    <!-- User Talks -->
     <g transform="translate(200, 90)">
-        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            {current['socialContent']['instagram'] + current['socialContent']['tiktok'] + current['socialContent']['hellotalk']}
-        </text>
-        <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            SOCIAL POSTS
-        </text>
-        <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
-            IG·TT·HT content
-        </text>
-    </g>
-
-    <!-- User Sessions -->
-    <g transform="translate(340, 90)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
             {current['userSessions']}
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            USER TALKS
+            💬 USER TALKS
         </text>
         <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
             Real conversations
         </text>
     </g>
 
-    <!-- Row 2 -->
+    <!-- Social Posts -->
+    <g transform="translate(340, 90)">
+        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
+        <text x="60" y="35" text-anchor="middle" fill="#0f172a" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+            {current['socialContent']['instagram'] + current['socialContent']['tiktok'] + current['socialContent']['hellotalk']}
+        </text>
+        <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+            📱 SOCIAL POSTS
+        </text>
+        <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
+            IG:{current['socialContent']['instagram']} TT:{current['socialContent']['tiktok']} HT:{current['socialContent']['hellotalk']}
+        </text>
+    </g>
+
+    <!-- Row 2: Coffee Chats, Workouts, Blog Posts -->
     <!-- Coffee Chats -->
     <g transform="translate(60, 210)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
@@ -88,7 +88,7 @@ def generate_dashboard_svg():
             {current['ctoMeetings']}
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            COFFEE CHATS
+            ☕ COFFEE CHATS
         </text>
         <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
             Co-founder search
@@ -102,10 +102,10 @@ def generate_dashboard_svg():
             {current['workouts']['running'] + current['workouts']['gym']}
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            WORKOUTS
+            🏃 WORKOUTS
         </text>
         <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
-            Run: {current['workouts']['running']} Gym: {current['workouts']['gym']}
+            Run:{current['workouts']['running']} Gym:{current['workouts']['gym']}
         </text>
     </g>
 
@@ -116,7 +116,7 @@ def generate_dashboard_svg():
             {current['blogPosts']}
         </text>
         <text x="60" y="55" text-anchor="middle" fill="#374151" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            BLOG POSTS
+            📝 BLOG POSTS
         </text>
         <text x="60" y="75" text-anchor="middle" fill="#6b7280" font-size="9" font-family="system-ui, -apple-system, sans-serif">
             AI &amp; Startup content
