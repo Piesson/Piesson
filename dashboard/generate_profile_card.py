@@ -170,9 +170,9 @@ def generate_quadrant_pie_chart(data):
     percentages = data['percentages']
 
     # Chart dimensions
-    size = 120
+    size = 144
     center = size // 2
-    radius = 45
+    radius = 54
 
     # Colors for each quadrant
     colors = {
@@ -259,14 +259,14 @@ def generate_profile_card():
     </text>
 
     <!-- Left Side: 4-Quadrant Chart + Legend -->
-    <g transform="translate(25, 55)">
+    <g transform="translate(15, 55)">
         <!-- Pie Chart -->
-        <g transform="translate(45, 30)">
+        <g transform="translate(20, 20)">
             {pie_chart}
         </g>
 
         <!-- Legend -->
-        <g transform="translate(175, 40)">
+        <g transform="translate(180, 42)">
             <!-- Commits -->
             <g transform="translate(0, 0)">
                 <rect x="0" y="0" width="12" height="12" fill="#3b82f6"/>
