@@ -7,7 +7,7 @@
 
 ![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg)
 
-## Weekly Progress
+# Weekly Progress
 
 ![Weekly Dashboard](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg)
 
