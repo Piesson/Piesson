@@ -62,36 +62,106 @@ def parse_metrics(text):
     return result
 
 def update_data(metrics):
-    """Update data.json with new metrics"""
+    """Update data.json by adding new metrics to existing values"""
     with open('dashboard/data.json', 'r') as f:
         data = json.load(f)
 
-    # Update metrics (keep commits as is - auto-calculated)
+    # Get current values
+    current = data['currentWeek']['metrics']
+    current_social = current['socialContent']
+    current_workouts = current['workouts']
+
+    # Add new metrics to existing values (additive approach)
     data['currentWeek']['metrics']['socialContent'] = {
-        'instagram': metrics['instagram'],
-        'tiktok': metrics['tiktok'],
-        'hellotalk': metrics['hellotalk']
+        'instagram': current_social['instagram'] + metrics['instagram'],
+        'tiktok': current_social['tiktok'] + metrics['tiktok'],
+        'hellotalk': current_social['hellotalk'] + metrics['hellotalk']
     }
-    data['currentWeek']['metrics']['userSessions'] = metrics['usertalks']
-    data['currentWeek']['metrics']['ctoMeetings'] = metrics['coffeechats']
-    data['currentWeek']['metrics']['blogPosts'] = metrics['blogposts']
+    data['currentWeek']['metrics']['userSessions'] = current['userSessions'] + metrics['usertalks']
+    data['currentWeek']['metrics']['ctoMeetings'] = current['ctoMeetings'] + metrics['coffeechats']
+    data['currentWeek']['metrics']['blogPosts'] = current['blogPosts'] + metrics['blogposts']
     data['currentWeek']['metrics']['workouts'] = {
-        'running': metrics['running'],
-        'gym': metrics['gym']
+        'running': current_workouts['running'] + metrics['running'],
+        'gym': current_workouts['gym'] + metrics['gym']
     }
     data['lastUpdated'] = datetime.now().strftime("%Y-%m-%d")
 
     with open('dashboard/data.json', 'w') as f:
         json.dump(data, f, indent=2)
 
-    print(f"Updated: {metrics}")
+    # Return both added and new totals for confirmation message
+    new_totals = {
+        'added': metrics,
+        'totals': {
+            'instagram': data['currentWeek']['metrics']['socialContent']['instagram'],
+            'tiktok': data['currentWeek']['metrics']['socialContent']['tiktok'],
+            'hellotalk': data['currentWeek']['metrics']['socialContent']['hellotalk'],
+            'usertalks': data['currentWeek']['metrics']['userSessions'],
+            'coffeechats': data['currentWeek']['metrics']['ctoMeetings'],
+            'blogposts': data['currentWeek']['metrics']['blogPosts'],
+            'running': data['currentWeek']['metrics']['workouts']['running'],
+            'gym': data['currentWeek']['metrics']['workouts']['gym']
+        }
+    }
+
+    print(f"Added: {metrics}")
+    print(f"New totals: {new_totals['totals']}")
+    return new_totals
+
+def send_confirmation_message(webhook_url, result):
+    """Send confirmation message to Slack"""
+    import requests
+
+    added = result['added']
+    totals = result['totals']
+
+    total_social = totals['instagram'] + totals['tiktok'] + totals['hellotalk']
+    total_workouts = totals['running'] + totals['gym']
+
+    confirmation = {
+        "username": "GrindBot",
+        "icon_emoji": ":white_check_mark:",
+        "text": f"""✅ Well done! Progress updated successfully!
+
+🔄 ADDED TODAY:
+├─ Social: +{added['instagram'] + added['tiktok'] + added['hellotalk']} (IG: +{added['instagram']}, TT: +{added['tiktok']}, HT: +{added['hellotalk']})
+├─ User Talks: +{added['usertalks']}
+├─ Coffee Chats: +{added['coffeechats']}
+├─ Workouts: +{added['running'] + added['gym']} (Run: +{added['running']}, Gym: +{added['gym']})
+└─ Blog Posts: +{added['blogposts']}
+
+📊 NEW TOTALS:
+├─ Social Posts: {total_social} total
+├─ User Talks: {totals['usertalks']}
+├─ Coffee Chats: {totals['coffeechats']}
+├─ Workouts: {total_workouts} sessions
+└─ Blog Posts: {totals['blogposts']}
+
+Keep building! 🚀"""
+    }
+
+    try:
+        response = requests.post(webhook_url, json=confirmation)
+        if response.status_code == 200:
+            print("Confirmation message sent successfully!")
+        else:
+            print(f"Failed to send confirmation: {response.status_code}")
+    except Exception as e:
+        print(f"Error sending confirmation: {e}")
 
 if __name__ == "__main__":
+    import os
+
     # Read from stdin or argument
     text = sys.stdin.read() if not sys.stdin.isatty() else ' '.join(sys.argv[1:])
 
     if text:
         metrics = parse_metrics(text)
-        update_data(metrics)
+        result = update_data(metrics)
+
+        # Send confirmation message if webhook URL is provided
+        webhook_url = os.environ.get('SLACK_WEBHOOK_URL')
+        if webhook_url:
+            send_confirmation_message(webhook_url, result)
     else:
-        print("Usage: echo 'Instagram: 3, TikTok: 2, ...' | python3 slack_update.py")
+        print("Usage: echo '1 0 0 2 0 0 1' | python3 slack_update.py")

@@ -88,9 +88,11 @@ def generate_slack_message():
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📥 INPUT FORMAT:
-`3 2 1 10 2 1 5`
-(IG, TT, HT, UserTalks, CoffeeChats, BlogPosts, Workouts)"""
+📥 INPUT FORMAT (Daily additions):
+`1 0 0 2 0 0 1`
+(+IG, +TT, +HT, +UserTalks, +CoffeeChats, +BlogPosts, +Workouts)
+
+💡 Enter how many you did TODAY (will be added to current totals)"""
     }
 
     return json.dumps(message)
