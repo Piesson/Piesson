@@ -7,7 +7,10 @@ Usage: echo "Instagram: 3, TikTok: 2" | python3 slack_update.py
 import json
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+# KST = UTC + 9 hours
+KST = timezone(timedelta(hours=9))
 
 def parse_metrics(text):
     """Extract numbers from Slack message (supports both formats)"""
@@ -97,7 +100,7 @@ def update_data(metrics):
         'running': current_workouts['running'] + metrics['running'],
         'gym': current_workouts['gym'] + metrics['gym']
     }
-    data['lastUpdated'] = datetime.now().strftime("%Y-%m-%d")
+    data['lastUpdated'] = datetime.now(KST).strftime("%Y-%m-%d")
 
     with open('dashboard/data.json', 'w') as f:
         json.dump(data, f, indent=2)
