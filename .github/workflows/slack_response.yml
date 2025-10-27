@@ -1,0 +1,39 @@
+name: Process Slack Response
+
+on:
+  workflow_dispatch:
+    inputs:
+      metrics:
+        description: 'Metrics from Slack (e.g., Instagram: 3, TikTok: 2, ...)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  update-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Update metrics
+        run: |
+          echo "${{ github.event.inputs.metrics }}" | python3 dashboard/slack_update.py
+
+      - name: Generate dashboard
+        run: python3 dashboard/generate_svg.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add dashboard/
+          git commit -m "update: daily metrics from Slack"
+          git push
