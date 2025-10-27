@@ -17,10 +17,21 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - name: Send daily reminder
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Generate and send daily reminder
         run: |
+          MESSAGE_JSON=$(python3 dashboard/generate_slack_message.py)
           curl -X POST -H 'Content-type: application/json' \
-            --data '{"username":"GrindBot","icon_emoji":":fire:","text":"Yo, what did you do today?\n\n```\nCommits:       [auto] (code building)\nInstagram:     [ ]   (posts)\nTikTok:        [ ]   (posts)  \nHelloTalk:     [ ]   (posts)\nUser Talks:    [ ]   (conversations)\nCoffee Chats:  [ ]   (co-founder meetings)\nBlog Posts:    [ ]   (AI/startup articles)\nWorkouts:      [ ]   (running + gym total)\n```\n\nType 7 numbers: 3 2 1 10 2 1 5\n(Instagram, TikTok, HelloTalk, UserTalks, CoffeeChats, BlogPosts, Workouts)"}' \
+            --data "$MESSAGE_JSON" \
             ${{ secrets.SLACK_WEBHOOK_URL }}
 
   update-dashboard:
