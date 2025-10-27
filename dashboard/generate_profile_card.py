@@ -297,7 +297,7 @@ def generate_profile_card():
                 {github_data['daily_avg']}
             </text>
             <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-                Daily Average
+                Daily commit avg.
             </text>
         </g>
     </g>
