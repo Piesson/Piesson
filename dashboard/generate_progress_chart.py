@@ -103,7 +103,7 @@ def generate_chart_url(data):
 
     colors = "FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40"
 
-    legend = "Code Commits|User Talks|Social Posts|Coffee Chats|Workouts|Blog Posts"
+    legend = "Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts"
 
     url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=800x400&chxt=x,y&chxl=0:|{weeks_label}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=2|2|2|2|2|2&chg=20,20,1,5"
 

@@ -27,7 +27,7 @@
 # Cumulative Progress
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:38,80|115,242|4,9|3,7|4,9|1,3&chs=800x400&chxt=x,y&chxl=0:|W43|W44&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code Commits|User Talks|Social Posts|Coffee Chats|Workouts|Blog Posts&chtt=Cumulative+Progress&chts=000000,16&chls=2|2|2|2|2|2&chg=20,20,1,5" alt="Cumulative Progress - All Metrics">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:38,80|115,242|4,9|3,7|4,9|1,3&chs=800x400&chxt=x,y&chxl=0:|W43|W44&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=Cumulative+Progress&chts=000000,16&chls=2|2|2|2|2|2&chg=20,20,1,5" alt="Cumulative Progress - All Metrics">
 </p>
 
 ## Individual Metrics
