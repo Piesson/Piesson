@@ -129,24 +129,24 @@ def main():
     manual_metrics = {
         # 📱 Social Media Posts (인스타그램 + 틱톡 + HelloTalk 개수)
         "socialContent": {
-            "instagram": 4,   # ← 이 주에 올린 인스타 포스트 개수
-            "tiktok": 3,      # ← 이 주에 올린 틱톡 개수
-            "hellotalk": 5    # ← 이 주에 올린 HelloTalk 포스트 개수
+            "instagram": 0,   # ← 이 주에 올린 인스타 포스트 개수
+            "tiktok": 0,      # ← 이 주에 올린 틱톡 개수
+            "hellotalk": 1    # ← 이 주에 올린 HelloTalk 포스트 개수
         },
 
         # 👥 User Conversations (사용자와 대화한 총 횟수)
-        "userSessions": 134,  # ← 채팅/이메일/줌콜/실제만남 모든 대화 횟수
+        "userSessions": 1,  # ← 채팅/이메일/줌콜/실제만남 모든 대화 횟수
 
         # ☕ Co-founder Coffee Chats (잠재적 공동창업자와 커피챗 횟수)
-        "ctoMeetings": 5,     # ← 이번 주 공동창업자 후보와 커피챗 횟수
+        "ctoMeetings": 0,     # ← 이번 주 공동창업자 후보와 커피챗 횟수
 
         # ✍️ Blog Posts (블로그/웹사이트에 쓴 글 개수)
-        "blogPosts": 3,       # ← AI/스타트업 관련 포스트 개수
+        "blogPosts": 0,       # ← AI/스타트업 관련 포스트 개수
 
         # 🏃‍♂️ Workouts (운동 횟수)
         "workouts": {
-            "running": 3,     # ← 이번 주 러닝 횟수
-            "gym": 2          # ← 이번 주 헬스장 간 횟수
+            "running": 1,     # ← 이번 주 러닝 횟수
+            "gym": 1          # ← 이번 주 헬스장 간 횟수
         }
     }
 
