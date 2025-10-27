@@ -117,9 +117,7 @@ def generate_chart_url(data):
 
     legend = "Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts"
 
-    markers = "N*f0,000000,0,-1,11|N*f1,000000,1,-1,11|N*f2,000000,2,-1,11|N*f3,000000,3,-1,11|N*f4,000000,4,-1,11|N*f5,000000,5,-1,11"
-
-    url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=900x450&chxt=x,y&chxl=0:|{weeks_with_dates}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm={markers}"
+    url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=900x450&chxt=x,y&chxl=0:|{weeks_with_dates}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5"
 
     return url
 
