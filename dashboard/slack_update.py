@@ -10,7 +10,24 @@ import sys
 from datetime import datetime
 
 def parse_metrics(text):
-    """Extract numbers from Slack message"""
+    """Extract numbers from Slack message (supports both formats)"""
+    # Try simple number format first: "5 10 2 1 3 2"
+    numbers = re.findall(r'\d+', text.strip())
+    if len(numbers) >= 6:
+        # Order: Social, UserTalks, CoffeeChats, BlogPosts, Running, Gym
+        total_social = int(numbers[0])
+        return {
+            'instagram': total_social // 3,  # Split social posts roughly
+            'tiktok': total_social // 3,
+            'hellotalk': total_social - (2 * (total_social // 3)),
+            'usertalks': int(numbers[1]),
+            'coffeechats': int(numbers[2]),
+            'blogposts': int(numbers[3]),
+            'running': int(numbers[4]),
+            'gym': int(numbers[5])
+        }
+
+    # Fallback to old format: "Instagram: 3, TikTok: 2, ..."
     patterns = {
         'instagram': r'instagram:\s*(\d+)',
         'tiktok': r'tiktok:\s*(\d+)',
