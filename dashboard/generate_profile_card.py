@@ -260,14 +260,14 @@ def generate_profile_card():
     </text>
 
     <!-- Left Side: 4-Quadrant Chart + Legend -->
-    <g transform="translate(30, 50)">
+    <g transform="translate(20, 50)">
         <!-- Pie Chart -->
-        <g transform="translate(30, 20)">
+        <g transform="translate(50, 30)">
             {pie_chart}
         </g>
 
         <!-- Legend -->
-        <g transform="translate(170, 30)">
+        <g transform="translate(180, 40)">
             <!-- Commits -->
             <g transform="translate(0, 0)">
                 <rect x="0" y="0" width="12" height="12" fill="#3b82f6"/>
