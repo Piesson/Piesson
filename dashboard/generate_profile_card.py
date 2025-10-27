@@ -10,6 +10,27 @@ from pathlib import Path
 import os
 from graphql_stats import get_github_activity_stats_graphql
 
+def get_github_data_from_stats(activity_stats):
+    """Create github_data dict from already-fetched activity stats"""
+    total_commits = activity_stats.get('commits', 0)
+
+    # Use fixed join date: January 2025
+    created_at = datetime.datetime(2025, 1, 1)
+
+    # Calculate days since joining (fixed date)
+    today = datetime.datetime.now()
+    days_since_join = (today - created_at).days
+
+    # Calculate daily average based on Jan 1, 2025
+    daily_avg = total_commits / max(days_since_join, 1) if days_since_join > 0 else 0
+
+    return {
+        'total_commits': total_commits,
+        'join_date': 'Jan 2025',
+        'daily_avg': round(daily_avg, 1),
+        'days_since_join': days_since_join
+    }
+
 def get_github_data(username, token):
     """Fetch GitHub user data and calculate statistics"""
     # Try to get commit count from GraphQL first (includes private repos)
@@ -119,10 +140,8 @@ def get_github_activity_stats(username, token):
             'issues': 8
         }
 
-def generate_four_quadrant_stats(username, token):
-    """Generate 4-quadrant statistics data from GitHub API"""
-    stats = get_github_activity_stats(username, token)
-
+def generate_four_quadrant_stats_from_data(stats):
+    """Generate 4-quadrant statistics data from already-fetched stats"""
     # Only set minimum if ALL values are 0 (to avoid empty pie chart)
     if all(value == 0 for value in stats.values()):
         for key in stats:
@@ -137,6 +156,11 @@ def generate_four_quadrant_stats(username, token):
         'percentages': percentages,
         'total': total
     }
+
+def generate_four_quadrant_stats(username, token):
+    """Generate 4-quadrant statistics data from GitHub API (legacy)"""
+    stats = get_github_activity_stats(username, token)
+    return generate_four_quadrant_stats_from_data(stats)
 
 def generate_quadrant_pie_chart(data):
     """Generate a 4-quadrant pie chart SVG"""
@@ -205,12 +229,15 @@ def generate_profile_card():
     username = os.getenv('USERNAME', 'Piesson')
     token = os.getenv('GITHUB_TOKEN', '')
 
-    # Get GitHub data
-    github_data = get_github_data(username, token)
+    # Get activity stats ONCE (used by both pie chart and total commits)
+    activity_stats = get_github_activity_stats(username, token)
 
-    # Generate 4-quadrant stats from GitHub API
-    quadrant_data = generate_four_quadrant_stats(username, token)
+    # Generate 4-quadrant stats from the same data
+    quadrant_data = generate_four_quadrant_stats_from_data(activity_stats)
     pie_chart = generate_quadrant_pie_chart(quadrant_data)
+
+    # Get GitHub data using the same commit count
+    github_data = get_github_data_from_stats(activity_stats)
 
     # SVG dimensions
     card_width = 500
