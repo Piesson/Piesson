@@ -61,62 +61,14 @@ def get_github_data(username, token):
             'days_since_join': 0
         }
 
-def generate_contribution_graph():
-    """Generate a 4-quadrant contribution graph SVG"""
-    import random
-    random.seed(42)  # Consistent pattern
-
-    # Generate sample data for 12 months
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-    # Generate commit data (0-100 range)
-    commits_data = [random.randint(20, 100) for _ in range(12)]
-
-    # SVG dimensions
-    width = 200
-    height = 80
-    max_value = max(commits_data)
-
-    # Create path for the area chart
-    points = []
-    for i, value in enumerate(commits_data):
-        x = (i / (len(commits_data) - 1)) * width
-        y = height - (value / max_value) * height
-        points.append(f"{x},{y}")
-
-    # Create the path string
-    path_points = " ".join(points)
-
-    graph_svg = f'''
-    <!-- Contribution Graph -->
-    <svg width="{width}" height="{height}" viewBox="0 0 {width} {height}">
-        <!-- Grid lines -->
-        <g opacity="0.1">
-            <line x1="0" y1="{height//4}" x2="{width}" y2="{height//4}" stroke="#6b7280" stroke-width="1"/>
-            <line x1="0" y1="{height//2}" x2="{width}" y2="{height//2}" stroke="#6b7280" stroke-width="1"/>
-            <line x1="0" y1="{3*height//4}" x2="{width}" y2="{3*height//4}" stroke="#6b7280" stroke-width="1"/>
-        </g>
-
-        <!-- Area fill -->
-        <path d="M 0,{height} L {path_points} L {width},{height} Z"
-              fill="#3b82f6" fill-opacity="0.1" stroke="none"/>
-
-        <!-- Main line -->
-        <polyline points="{path_points}"
-                  fill="none" stroke="#3b82f6" stroke-width="2"/>
-
-        <!-- Data points -->'''
-
-    for i, value in enumerate(commits_data):
-        x = (i / (len(commits_data) - 1)) * width
-        y = height - (value / max_value) * height
-        graph_svg += f'<circle cx="{x}" cy="{y}" r="2" fill="#3b82f6"/>'
-
-    graph_svg += '''
-    </svg>'''
-
-    return graph_svg
+def generate_four_quadrant_stats():
+    """Generate 4-quadrant statistics data"""
+    return {
+        'commits': 156,
+        'code_reviews': 23,
+        'pull_requests': 12,
+        'issues': 8
+    }
 
 def generate_profile_card():
     """Generate the custom profile summary card"""
@@ -126,12 +78,12 @@ def generate_profile_card():
     # Get GitHub data
     github_data = get_github_data(username, token)
 
-    # Generate contribution graph
-    graph = generate_contribution_graph()
+    # Generate 4-quadrant stats
+    stats = generate_four_quadrant_stats()
 
     # SVG dimensions
     card_width = 500
-    card_height = 200
+    card_height = 220
 
     svg_content = f'''<svg width="{card_width}" height="{card_height}" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -149,40 +101,67 @@ def generate_profile_card():
         GitHub Activity Overview
     </text>
 
-    <!-- Contribution Graph -->
-    <g transform="translate(30, 50)">
-        <text x="0" y="-10" fill="#6b7280" font-size="12" font-weight="500" font-family="system-ui, -apple-system, sans-serif">
-            Contributions
+    <!-- 4-Quadrant Layout -->
+
+    <!-- Top Left: Commits -->
+    <g transform="translate(30, 60)">
+        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
+        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+            {stats['commits']}
         </text>
-        {graph}
+        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+            Commits
+        </text>
+        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
+            Joined {github_data['join_date']}
+        </text>
     </g>
 
-    <!-- Statistics -->
-    <g transform="translate(280, 60)">
-        <!-- Total Commits -->
-        <text x="0" y="20" fill="#111827" font-size="24" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            {github_data['total_commits']:,}
+    <!-- Top Right: Code Reviews -->
+    <g transform="translate(250, 60)">
+        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
+        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+            {stats['code_reviews']}
         </text>
-        <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-            Total Commits
+        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+            Code Reviews
         </text>
-
-        <!-- Join Date -->
-        <text x="0" y="65" fill="#111827" font-size="16" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {github_data['join_date']}
-        </text>
-        <text x="0" y="80" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-            Joined GitHub
-        </text>
-
-        <!-- Daily Average -->
-        <text x="0" y="110" fill="#111827" font-size="16" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {github_data['daily_avg']}
-        </text>
-        <text x="0" y="125" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-            Daily Average
+        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
+            Total {github_data['total_commits']:,} commits
         </text>
     </g>
+
+    <!-- Bottom Left: Pull Requests -->
+    <g transform="translate(30, 145)">
+        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
+        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+            {stats['pull_requests']}
+        </text>
+        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+            Pull Requests
+        </text>
+        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
+            Daily avg {github_data['daily_avg']}
+        </text>
+    </g>
+
+    <!-- Bottom Right: Issues -->
+    <g transform="translate(250, 145)">
+        <rect width="200" height="65" fill="#ffffff" rx="8" stroke="#e5e7eb" stroke-width="1"/>
+        <text x="15" y="25" fill="#111827" font-size="28" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+            {stats['issues']}
+        </text>
+        <text x="15" y="45" fill="#6b7280" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+            Issues
+        </text>
+        <text x="15" y="58" fill="#9ca3af" font-size="10" font-family="system-ui, -apple-system, sans-serif">
+            Opened & closed
+        </text>
+    </g>
+
+    <!-- Center divider lines -->
+    <line x1="250" y1="60" x2="250" y2="210" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="30" y1="135" x2="450" y2="135" stroke="#e5e7eb" stroke-width="1"/>
 </svg>'''
 
     # Save SVG
