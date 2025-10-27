@@ -9,6 +9,9 @@ on:
     paths:
       - 'dashboard/data.json'
 
+permissions:
+  contents: write
+
 jobs:
   update-dashboard:
     runs-on: ubuntu-latest
@@ -17,11 +20,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
       - name: Generate Dashboard SVG
         run: |
@@ -33,5 +42,9 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add dashboard/weekly_dashboard.svg
-          git diff --staged --quiet || git commit -m "🔄 Update weekly dashboard [automated]"
-          git push
+          if ! git diff --staged --quiet; then
+            git commit -m "update: automated dashboard generation"
+            git push
+          else
+            echo "No changes to commit"
+          fi
