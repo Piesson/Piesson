@@ -27,9 +27,9 @@
       "metrics": {
         "commits": 83,
         "socialContent": {
-          "instagram": 1,
-          "tiktok": 1,
-          "hellotalk": 1
+          "instagram": 0,
+          "tiktok": 0,
+          "hellotalk": 3
         },
         "userSessions": 2,
         "ctoMeetings": 0,
