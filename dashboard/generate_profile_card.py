@@ -14,19 +14,19 @@ def get_github_data_from_stats(activity_stats):
     """Create github_data dict from already-fetched activity stats"""
     total_commits = activity_stats.get('commits', 0)
 
-    # Use fixed join date: January 2025
-    created_at = datetime.datetime(2025, 1, 1)
+    # Use actual join date: August 2024
+    created_at = datetime.datetime(2024, 8, 1)
 
-    # Calculate days since joining (fixed date)
+    # Calculate days since joining
     today = datetime.datetime.now()
     days_since_join = (today - created_at).days
 
-    # Calculate daily average based on Jan 1, 2025
+    # Calculate daily average based on actual join date
     daily_avg = total_commits / max(days_since_join, 1) if days_since_join > 0 else 0
 
     return {
         'total_commits': total_commits,
-        'join_date': 'Jan 2025',
+        'join_date': 'Aug 2024',
         'daily_avg': round(daily_avg, 1),
         'days_since_join': days_since_join
     }
