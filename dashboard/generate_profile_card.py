@@ -8,6 +8,7 @@ import requests
 import datetime
 from pathlib import Path
 import os
+from graphql_stats import get_github_activity_stats_graphql
 
 def get_github_data(username, token):
     """Fetch GitHub user data and calculate statistics"""
@@ -71,7 +72,14 @@ def get_github_data(username, token):
         }
 
 def get_github_activity_stats(username, token):
-    """Fetch GitHub activity statistics from API"""
+    """Fetch GitHub activity statistics from API - Try GraphQL first, then REST API"""
+    # Try GraphQL first for accurate totals (includes private repos)
+    graphql_result = get_github_activity_stats_graphql(username, token)
+    if graphql_result:
+        return graphql_result
+
+    # Fallback to REST API
+    print("Using REST API fallback...")
     headers = {
         'Accept': 'application/vnd.github.v3+json'
     }
