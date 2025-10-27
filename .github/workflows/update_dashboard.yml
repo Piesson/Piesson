@@ -2,8 +2,10 @@ name: Update Dashboard
 
 on:
   schedule:
-    # Run every day at 9 AM UTC (6 PM KST)
-    - cron: '0 9 * * *'
+    # Run every day at 10 PM UTC (7 AM KST) - Morning reminder
+    - cron: '0 22 * * *'
+    # Run every day at 10 AM UTC (7 PM KST) - Evening reminder if no input
+    - cron: '0 10 * * *'
   workflow_dispatch: # Allow manual trigger
   push:
     paths:
@@ -27,9 +29,25 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Generate and send daily reminder
+      - name: Check if reminder needed
+        id: check_update
         run: |
-          MESSAGE_JSON=$(python3 dashboard/generate_slack_message.py)
+          python3 dashboard/check_daily_update.py
+          echo "send_reminder=$?" >> $GITHUB_OUTPUT
+
+      - name: Generate and send daily reminder
+        if: steps.check_update.outputs.send_reminder == '0'
+        run: |
+          CURRENT_HOUR=$(date -u +%H)
+          if [ "$CURRENT_HOUR" -eq "22" ]; then
+            echo "🌅 Morning reminder (7 AM KST)"
+            MESSAGE_TYPE="morning"
+          else
+            echo "🌆 Evening reminder (7 PM KST) - No input received today"
+            MESSAGE_TYPE="evening"
+          fi
+
+          MESSAGE_JSON=$(python3 dashboard/generate_slack_message.py "$MESSAGE_TYPE")
           curl -X POST -H 'Content-type: application/json' \
             --data "$MESSAGE_JSON" \
             ${{ secrets.SLACK_WEBHOOK_URL }}

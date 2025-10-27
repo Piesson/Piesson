@@ -53,21 +53,31 @@ def load_current_metrics():
             'running': 0, 'gym': 0
         }
 
-def generate_slack_message():
+def generate_slack_message(message_type="morning"):
     """Generate Slack message JSON with current metrics"""
     m = load_current_metrics()
 
     total_social = m['instagram'] + m['tiktok'] + m['hellotalk']
     total_workouts = m['running'] + m['gym']
 
+    # Different greetings based on time
+    if message_type == "evening":
+        greeting = "🌆 Evening Reminder - No input received today!"
+        icon = ":warning:"
+        motivation = "Don't break the streak! 💪"
+    else:
+        greeting = "🌅 Good morning! Time to track your progress"
+        icon = ":fire:"
+        motivation = "Let's build something great today! 🚀"
+
     message = {
         "username": "GrindBot",
-        "icon_emoji": ":fire:",
-        "text": f"""🔥 Daily Progress Tracker
+        "icon_emoji": icon,
+        "text": f"""{greeting}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📊 CORE METRICS
+📊 CURRENT WEEK PROGRESS
 
 🚀 Code Commits: `{m['commits']}` builds
 
@@ -92,10 +102,13 @@ def generate_slack_message():
 `1 0 0 2 0 0 1 1`
 (+IG, +TT, +HT, +UserTalks, +CoffeeChats, +BlogPosts, +Running, +Gym)
 
-💡 Enter how many you did TODAY (will be added to current totals)"""
+💡 {motivation}
+Enter how many you did TODAY (will be added to current totals)"""
     }
 
     return json.dumps(message)
 
 if __name__ == "__main__":
-    print(generate_slack_message())
+    import sys
+    message_type = sys.argv[1] if len(sys.argv) > 1 else "morning"
+    print(generate_slack_message(message_type))
