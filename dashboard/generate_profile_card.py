@@ -34,19 +34,19 @@ def get_github_data(username, token):
                     # Get commit count from headers (GitHub API limitation workaround)
                     total_commits += len(commits_response.json())
 
-        # Parse join date
-        created_at = datetime.datetime.strptime(user_data['created_at'], '%Y-%m-%dT%H:%M:%SZ')
+        # Use fixed join date: January 2025
+        created_at = datetime.datetime(2025, 1, 1)
 
-        # Calculate days since joining
+        # Calculate days since joining (fixed date)
         today = datetime.datetime.now()
         days_since_join = (today - created_at).days
 
-        # Calculate daily average
+        # Calculate daily average based on Jan 1, 2025
         daily_avg = total_commits / max(days_since_join, 1) if days_since_join > 0 else 0
 
         return {
             'total_commits': total_commits,
-            'join_date': created_at.strftime('%b %Y'),
+            'join_date': 'Jan 2025',
             'daily_avg': round(daily_avg, 1),
             'days_since_join': days_since_join
         }
@@ -56,38 +56,67 @@ def get_github_data(username, token):
         # Return default values if API fails
         return {
             'total_commits': 0,
-            'join_date': 'Oct 2023',
+            'join_date': 'Jan 2025',
             'daily_avg': 0.0,
             'days_since_join': 0
         }
 
-def generate_contribution_heatmap():
-    """Generate a simple contribution heatmap SVG"""
-    # Simple 7x52 grid for contribution heatmap
-    weeks = 52
-    days = 7
-    cell_size = 3
-    spacing = 1
-
-    heatmap_svg = ""
-
-    # Generate random-ish contribution pattern (for now)
+def generate_contribution_graph():
+    """Generate a 4-quadrant contribution graph SVG"""
     import random
     random.seed(42)  # Consistent pattern
 
-    for week in range(weeks):
-        for day in range(days):
-            x = week * (cell_size + spacing)
-            y = day * (cell_size + spacing)
+    # Generate sample data for 12 months
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-            # Generate contribution level (0-4)
-            level = random.randint(0, 4)
-            colors = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']
-            color = colors[level]
+    # Generate commit data (0-100 range)
+    commits_data = [random.randint(20, 100) for _ in range(12)]
 
-            heatmap_svg += f'<rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}" fill="{color}" rx="1"/>'
+    # SVG dimensions
+    width = 200
+    height = 80
+    max_value = max(commits_data)
 
-    return heatmap_svg
+    # Create path for the area chart
+    points = []
+    for i, value in enumerate(commits_data):
+        x = (i / (len(commits_data) - 1)) * width
+        y = height - (value / max_value) * height
+        points.append(f"{x},{y}")
+
+    # Create the path string
+    path_points = " ".join(points)
+
+    graph_svg = f'''
+    <!-- Contribution Graph -->
+    <svg width="{width}" height="{height}" viewBox="0 0 {width} {height}">
+        <!-- Grid lines -->
+        <g opacity="0.1">
+            <line x1="0" y1="{height//4}" x2="{width}" y2="{height//4}" stroke="#6b7280" stroke-width="1"/>
+            <line x1="0" y1="{height//2}" x2="{width}" y2="{height//2}" stroke="#6b7280" stroke-width="1"/>
+            <line x1="0" y1="{3*height//4}" x2="{width}" y2="{3*height//4}" stroke="#6b7280" stroke-width="1"/>
+        </g>
+
+        <!-- Area fill -->
+        <path d="M 0,{height} L {path_points} L {width},{height} Z"
+              fill="#3b82f6" fill-opacity="0.1" stroke="none"/>
+
+        <!-- Main line -->
+        <polyline points="{path_points}"
+                  fill="none" stroke="#3b82f6" stroke-width="2"/>
+
+        <!-- Data points -->'''
+
+    for i, value in enumerate(commits_data):
+        x = (i / (len(commits_data) - 1)) * width
+        y = height - (value / max_value) * height
+        graph_svg += f'<circle cx="{x}" cy="{y}" r="2" fill="#3b82f6"/>'
+
+    graph_svg += '''
+    </svg>'''
+
+    return graph_svg
 
 def generate_profile_card():
     """Generate the custom profile summary card"""
@@ -97,8 +126,8 @@ def generate_profile_card():
     # Get GitHub data
     github_data = get_github_data(username, token)
 
-    # Generate contribution heatmap
-    heatmap = generate_contribution_heatmap()
+    # Generate contribution graph
+    graph = generate_contribution_graph()
 
     # SVG dimensions
     card_width = 500
@@ -120,12 +149,12 @@ def generate_profile_card():
         GitHub Activity Overview
     </text>
 
-    <!-- Contribution Heatmap -->
+    <!-- Contribution Graph -->
     <g transform="translate(30, 50)">
         <text x="0" y="-10" fill="#6b7280" font-size="12" font-weight="500" font-family="system-ui, -apple-system, sans-serif">
             Contributions
         </text>
-        {heatmap}
+        {graph}
     </g>
 
     <!-- Statistics -->
@@ -135,7 +164,7 @@ def generate_profile_card():
             {github_data['total_commits']:,}
         </text>
         <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-            📊 Total Commits
+            Total Commits
         </text>
 
         <!-- Join Date -->
@@ -143,7 +172,7 @@ def generate_profile_card():
             {github_data['join_date']}
         </text>
         <text x="0" y="80" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-            📅 Joined GitHub
+            Joined GitHub
         </text>
 
         <!-- Daily Average -->
@@ -151,7 +180,7 @@ def generate_profile_card():
             {github_data['daily_avg']}
         </text>
         <text x="0" y="125" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-            ⚡ Daily Average
+            Daily Average
         </text>
     </g>
 </svg>'''
