@@ -92,6 +92,18 @@ def generate_chart_url(data):
 
     weeks_label = '|'.join(data['weeks'])
 
+    week_dates = []
+    for week_id in [f"2025-W{w.replace('W', '')}" for w in data['weeks']]:
+        week_num = int(week_id.split('-W')[1])
+        year = int(week_id.split('-W')[0])
+        from datetime import datetime, timedelta
+        jan_1 = datetime(year, 1, 1)
+        days_to_monday = (week_num - 1) * 7 - jan_1.weekday()
+        monday = jan_1 + timedelta(days=days_to_monday)
+        week_dates.append(monday.strftime('%m/%d/%y'))
+
+    weeks_with_dates = '|'.join([f"{w}+({d})" for w, d in zip(data['weeks'], week_dates)])
+
     commits_data = ','.join(map(str, data['commits']))
     talks_data = ','.join(map(str, data['user_talks']))
     social_data = ','.join(map(str, data['social_posts']))
@@ -105,7 +117,9 @@ def generate_chart_url(data):
 
     legend = "Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts"
 
-    url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=800x400&chxt=x,y&chxl=0:|{weeks_label}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=2|2|2|2|2|2&chg=20,20,1,5"
+    markers = "N*f0,000000,0,-1,11|N*f1,000000,1,-1,11|N*f2,000000,2,-1,11|N*f3,000000,3,-1,11|N*f4,000000,4,-1,11|N*f5,000000,5,-1,11"
+
+    url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=900x450&chxt=x,y&chxl=0:|{weeks_with_dates}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm={markers}"
 
     return url
 
