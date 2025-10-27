@@ -5,11 +5,11 @@
 - Built the iOS app, taught myself backend logic
 - Pouring everything that i've got into making conversations feel natural and fun
 
+![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg)
+
 ## 📊 Weekly Progress Dashboard
 
 ![Weekly Dashboard](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg)
-
-![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg)
 
 ## Tech Stack
 
