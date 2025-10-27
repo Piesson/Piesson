@@ -6,8 +6,11 @@ Weekly data collection script for startup progress dashboard
 import json
 import os
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# KST = UTC + 9 hours
+KST = timezone(timedelta(hours=9))
 
 class DataCollector:
     def __init__(self):
@@ -20,7 +23,7 @@ class DataCollector:
                 return json.load(f)
         else:
             return {
-                "lastUpdated": datetime.now().strftime("%Y-%m-%d"),
+                "lastUpdated": datetime.now(KST).strftime("%Y-%m-%d"),
                 "currentWeek": {},
                 "weeklyHistory": []
             }
@@ -156,7 +159,7 @@ def main():
     # Update current week
     current_week = collector.update_metrics(manual_metrics)
     data['currentWeek'] = current_week
-    data['lastUpdated'] = datetime.now().strftime("%Y-%m-%d")
+    data['lastUpdated'] = datetime.now(KST).strftime("%Y-%m-%d")
 
     # Add to history if it's a new week
     week_info = collector.get_week_dates()

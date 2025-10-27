@@ -6,16 +6,19 @@ Returns exit code 0 if update needed, 1 if already updated
 
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+# KST = UTC + 9 hours
+KST = timezone(timedelta(hours=9))
 
 def check_daily_update():
-    """Check if data.json was updated today"""
+    """Check if data.json was updated today (KST timezone)"""
     try:
         with open('dashboard/data.json', 'r') as f:
             data = json.load(f)
 
         last_updated = data.get('lastUpdated', '')
-        today = datetime.now().strftime('%Y-%m-%d')
+        today = datetime.now(KST).strftime('%Y-%m-%d')
 
         if last_updated == today:
             print(f"Already updated today: {today}")
