@@ -18,10 +18,10 @@
 
 # Weekly History
 
-| Week | Period | Commits | Social | Talks | Chats | Workouts | Posts |
-|------|--------|---------|--------|-------|-------|----------|-------|
-| [**Week 44**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W44.svg) | 10/27 - 11/02 | 42 | 5 | 127 | 4 | 5 | 2 |
-| [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W43.svg) | 10/20 - 10/26 | 38 | 4 | 115 | 3 | 4 | 1 |
+| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |
+|------|--------|-----------|----------|---------|---------|------------|----------|
+| [**Week 44**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W44.svg) | 10/27/2025 - 11/02/2025 | 42 | 5 | 127 | 4 | 5 | 2 |
+| [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W43.svg) | 10/20/2025 - 10/26/2025 | 38 | 4 | 115 | 3 | 4 | 1 |
 
 
 # Cumulative Progress
@@ -33,18 +33,18 @@
 ## Individual Metrics
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:38,80&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FF6384&chtt=🚀+Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Code Commits Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:115,242&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=36A2EB&chtt=💬+User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:38,80&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Code Commits Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:115,242&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=36A2EB&chtt=User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
 </p>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:4,9&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FFCE56&chtt=📱+Social+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:3,7&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=4BC0C0&chtt=☕+Coffee+Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:4,9&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FFCE56&chtt=Social+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:3,7&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=4BC0C0&chtt=Coffee+Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
 </p>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:4,9&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=9966FF&chtt=🏃+Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:1,3&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FF9F40&chtt=📝+Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:4,9&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=9966FF&chtt=Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:1,3&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FF9F40&chtt=Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
 </p>
 
 

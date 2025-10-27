@@ -17,8 +17,8 @@ def generate_history_table(weekly_history):
     lines = []
     lines.append("# Weekly History")
     lines.append("")
-    lines.append("| Week | Period | Commits | Social | Talks | Chats | Workouts | Posts |")
-    lines.append("|------|--------|---------|--------|-------|-------|----------|-------|")
+    lines.append("| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |")
+    lines.append("|------|--------|-----------|----------|---------|---------|------------|----------|")
 
     for entry in weekly_history[:12]:
         week_id = entry['week']
@@ -27,7 +27,7 @@ def generate_history_table(weekly_history):
         try:
             start_date = datetime.strptime(entry['startDate'], '%m/%d/%Y')
             end_date = datetime.strptime(entry['endDate'], '%m/%d/%Y')
-            period = f"{start_date.strftime('%m/%d')} - {end_date.strftime('%m/%d')}"
+            period = f"{start_date.strftime('%m/%d/%Y')} - {end_date.strftime('%m/%d/%Y')}"
         except:
             period = f"{entry['startDate']} - {entry['endDate']}"
 

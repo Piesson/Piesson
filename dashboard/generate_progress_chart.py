@@ -118,32 +118,32 @@ def generate_individual_chart_urls(data):
 
     charts = {
         'commits': {
-            'title': '🚀 Code Commits',
+            'title': 'Code+Commits',
             'data': ','.join(map(str, data['commits'])),
             'color': 'FF6384'
         },
         'user_talks': {
-            'title': '💬 User Talks',
+            'title': 'User+Talks',
             'data': ','.join(map(str, data['user_talks'])),
             'color': '36A2EB'
         },
         'social_posts': {
-            'title': '📱 Social Posts',
+            'title': 'Social+Posts',
             'data': ','.join(map(str, data['social_posts'])),
             'color': 'FFCE56'
         },
         'coffee_chats': {
-            'title': '☕ Coffee Chats',
+            'title': 'Coffee+Chats',
             'data': ','.join(map(str, data['coffee_chats'])),
             'color': '4BC0C0'
         },
         'workouts': {
-            'title': '🏃 Workouts',
+            'title': 'Workouts',
             'data': ','.join(map(str, data['workouts'])),
             'color': '9966FF'
         },
         'blog_posts': {
-            'title': '📝 Blog Posts',
+            'title': 'Blog+Posts',
             'data': ','.join(map(str, data['blog_posts'])),
             'color': 'FF9F40'
         }
@@ -151,8 +151,7 @@ def generate_individual_chart_urls(data):
 
     urls = {}
     for key, chart in charts.items():
-        title_encoded = chart['title'].replace(' ', '+')
-        url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart['data']}&chs=380x200&chxt=x,y&chxl=0:|{weeks_label}&chco={chart['color']}&chtt={title_encoded}&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF"
+        url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart['data']}&chs=380x200&chxt=x,y&chxl=0:|{weeks_label}&chco={chart['color']}&chtt={chart['title']}&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF"
         urls[key] = url
 
     return urls
