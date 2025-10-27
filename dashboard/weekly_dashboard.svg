@@ -1,16 +1,4 @@
-import json
-import datetime
-from pathlib import Path
-
-def generate_dashboard_svg():
-    # Load data
-    with open('dashboard/data.json', 'r') as f:
-        data = json.load(f)
-
-    current = data['currentWeek']['metrics']
-
-    # SVG template with modern dark theme
-    svg_content = f'''<svg width="950" height="520" xmlns="http://www.w3.org/2000/svg">
+<svg width="950" height="520" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
@@ -29,7 +17,7 @@ def generate_dashboard_svg():
         📊 My Weekly Startup Journey
     </text>
     <text x="475" y="65" text-anchor="middle" fill="#94a3b8" font-size="14" font-family="system-ui, -apple-system, sans-serif">
-        Building dreams one week at a time • {data['currentWeek']['startDate']} → {data['currentWeek']['endDate']}
+        Building dreams one week at a time • 2025-01-20 → 2025-01-26
     </text>
 
     <!-- Subtitle descriptions -->
@@ -42,7 +30,7 @@ def generate_dashboard_svg():
     <g transform="translate(50, 110)">
         <rect width="140" height="120" fill="#0f3460" rx="8" filter="url(#shadow)"/>
         <text x="70" y="35" text-anchor="middle" fill="#60a5fa" font-size="32" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
-            {current['commits']}
+            42
         </text>
         <text x="70" y="55" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
             💻 Code Commits
@@ -62,7 +50,7 @@ def generate_dashboard_svg():
     <g transform="translate(210, 110)">
         <rect width="140" height="120" fill="#0f3460" rx="8" filter="url(#shadow)"/>
         <text x="70" y="35" text-anchor="middle" fill="#f472b6" font-size="32" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
-            {current['socialContent']['instagram'] + current['socialContent']['tiktok'] + current['socialContent']['hellotalk']}
+            9
         </text>
         <text x="70" y="55" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
             📱 Social Posts
@@ -71,7 +59,7 @@ def generate_dashboard_svg():
             Sharing my story.
         </text>
         <text x="70" y="88" text-anchor="middle" fill="#64748b" font-size="10" font-family="system-ui, -apple-system, sans-serif">
-            IG:{current['socialContent']['instagram']} TT:{current['socialContent']['tiktok']} HT:{current['socialContent']['hellotalk']}
+            IG:3 TT:2 HT:4
         </text>
         <text x="70" y="105" text-anchor="middle" fill="#4ade80" font-size="14" font-family="system-ui, -apple-system, sans-serif">
             ↑ +25%
@@ -82,7 +70,7 @@ def generate_dashboard_svg():
     <g transform="translate(370, 110)">
         <rect width="140" height="120" fill="#0f3460" rx="8" filter="url(#shadow)"/>
         <text x="70" y="35" text-anchor="middle" fill="#fbbf24" font-size="32" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
-            {current['userSessions']}
+            127
         </text>
         <text x="70" y="55" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
             👥 User Talks
@@ -102,7 +90,7 @@ def generate_dashboard_svg():
     <g transform="translate(530, 110)">
         <rect width="140" height="120" fill="#0f3460" rx="8" filter="url(#shadow)"/>
         <text x="70" y="35" text-anchor="middle" fill="#c084fc" font-size="32" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
-            {current['ctoMeetings']}
+            4
         </text>
         <text x="70" y="55" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
             ☕ Coffee Chats
@@ -122,7 +110,7 @@ def generate_dashboard_svg():
     <g transform="translate(690, 110)">
         <rect width="140" height="120" fill="#0f3460" rx="8" filter="url(#shadow)"/>
         <text x="70" y="35" text-anchor="middle" fill="#fb7185" font-size="32" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
-            {current['workouts']['running'] + current['workouts']['gym']}
+            5
         </text>
         <text x="70" y="55" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
             🏃‍♂️ Workouts
@@ -131,7 +119,7 @@ def generate_dashboard_svg():
             Staying healthy.
         </text>
         <text x="70" y="88" text-anchor="middle" fill="#64748b" font-size="10" font-family="system-ui, -apple-system, sans-serif">
-            Run: {current['workouts']['running']} | Gym: {current['workouts']['gym']}
+            Run: 3 | Gym: 2
         </text>
         <text x="70" y="105" text-anchor="middle" fill="#4ade80" font-size="14" font-family="system-ui, -apple-system, sans-serif">
             ↑ +25%
@@ -142,7 +130,7 @@ def generate_dashboard_svg():
     <g transform="translate(390, 260)">
         <rect width="220" height="120" fill="#0f3460" rx="8" filter="url(#shadow)"/>
         <text x="110" y="35" text-anchor="middle" fill="#34d399" font-size="32" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">
-            {current['blogPosts']}
+            2
         </text>
         <text x="110" y="55" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, -apple-system, sans-serif">
             ✍️ AI & Startup Posts
@@ -159,7 +147,7 @@ def generate_dashboard_svg():
 
     <!-- Footer -->
     <text x="475" y="420" text-anchor="middle" fill="#475569" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-        Last updated: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} UTC
+        Last updated: 2025-10-27 16:47 UTC
     </text>
 
     <!-- Motivational quote -->
@@ -171,12 +159,4 @@ def generate_dashboard_svg():
     <text x="475" y="470" text-anchor="middle" fill="#fbbf24" font-size="11" font-family="system-ui, -apple-system, sans-serif">
         💪 Weekly consistency streak: Building habits that build the future
     </text>
-</svg>'''
-
-    # Save SVG
-    output_path = Path('dashboard/weekly_dashboard.svg')
-    output_path.write_text(svg_content)
-    print(f"Dashboard generated: {output_path}")
-
-if __name__ == "__main__":
-    generate_dashboard_svg()
+</svg>

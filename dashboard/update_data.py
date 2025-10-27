@@ -137,8 +137,8 @@ def main():
         # 👥 User Conversations (사용자와 대화한 총 횟수)
         "userSessions": 134,  # ← 채팅/이메일/줌콜/실제만남 모든 대화 횟수
 
-        # 🤝 CTO Meetings (잠재적 공동창업자와 만난 횟수)
-        "ctoMeetings": 5,     # ← 이번 주 CTO 후보와 미팅한 횟수
+        # ☕ Co-founder Coffee Chats (잠재적 공동창업자와 커피챗 횟수)
+        "ctoMeetings": 5,     # ← 이번 주 공동창업자 후보와 커피챗 횟수
 
         # ✍️ Blog Posts (블로그/웹사이트에 쓴 글 개수)
         "blogPosts": 3,       # ← AI/스타트업 관련 포스트 개수
