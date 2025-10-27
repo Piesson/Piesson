@@ -5,11 +5,15 @@
 - Built the iOS app, taught myself backend logic
 - Pouring everything that i've got into making conversations feel natural and fun
 
-![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg" alt="Profile Details">
+</p>
 
 # Grinding metics
 
-![Weekly Dashboard](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
+</p>
 
 # Tech Stack
 
