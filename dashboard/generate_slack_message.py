@@ -5,15 +5,20 @@ Generate Slack message with current metrics from data.json
 
 import json
 import subprocess
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
+# KST = UTC + 9 hours
+KST = timezone(timedelta(hours=9))
 
 def get_git_commits_this_week():
-    """Count commits in current week"""
+    """Count commits in current week (KST timezone)"""
     try:
-        # Get Monday of current week
-        today = datetime.now()
+        # Get Monday of current week in KST
+        today = datetime.now(KST)
         monday = today - timedelta(days=today.weekday())
-        monday_str = monday.strftime('%Y-%m-%d')
+        # Convert KST monday to UTC for git --since
+        monday_utc = monday.astimezone(timezone.utc)
+        monday_str = monday_utc.strftime('%Y-%m-%d %H:%M:%S')
 
         # Count commits since Monday
         result = subprocess.run([
