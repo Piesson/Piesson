@@ -24,6 +24,29 @@
 | [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W43.svg) | 10/20 - 10/26 | 38 | 4 | 115 | 3 | 4 | 1 |
 
 
+# Cumulative Progress
+
+<p align="center">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:38,80|115,242|4,9|3,7|4,9|1,3&chs=800x400&chxt=x,y&chxl=0:|W43|W44&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code Commits|User Talks|Social Posts|Coffee Chats|Workouts|Blog Posts&chtt=Cumulative Progress&chts=000000,16&chls=2|2|2|2|2|2&chg=20,20,1,5" alt="Cumulative Progress - All Metrics">
+</p>
+
+## Individual Metrics
+
+<p align="center">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:38,80&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FF6384&chtt=%F0%9F%9A%80%20Code%20Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Code Commits Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:115,242&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=36A2EB&chtt=%F0%9F%92%AC%20User%20Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
+</p>
+
+<p align="center">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:4,9&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FFCE56&chtt=%F0%9F%93%B1%20Social%20Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:3,7&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=4BC0C0&chtt=%E2%98%95%20Coffee%20Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
+</p>
+
+<p align="center">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:4,9&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=9966FF&chtt=%F0%9F%8F%83%20Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:1,3&chs=380x200&chxt=x,y&chxl=0:|W43|W44&chco=FF9F40&chtt=%F0%9F%93%9D%20Blog%20Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
+</p>
+
 # Tech Stack
 
 ### Languages
