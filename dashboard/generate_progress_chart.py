@@ -105,20 +105,7 @@ def generate_chart_url(data):
 
     legend = "Code Commits|User Talks|Social Posts|Coffee Chats|Workouts|Blog Posts"
 
-    url = (
-        f"https://image-charts.com/chart?"
-        f"cht=lc"
-        f"&chd=t:{chart_data}"
-        f"&chs=800x400"
-        f"&chxt=x,y"
-        f"&chxl=0:|{weeks_label}"
-        f"&chco={colors}"
-        f"&chdl={legend}"
-        f"&chtt=Cumulative Progress"
-        f"&chts=000000,16"
-        f"&chls=2|2|2|2|2|2"
-        f"&chg=20,20,1,5"
-    )
+    url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=800x400&chxt=x,y&chxl=0:|{weeks_label}&chco={colors}&chdl={legend}&chtt=Cumulative+Progress&chts=000000,16&chls=2|2|2|2|2|2&chg=20,20,1,5"
 
     return url
 
@@ -164,20 +151,8 @@ def generate_individual_chart_urls(data):
 
     urls = {}
     for key, chart in charts.items():
-        url = (
-            f"https://image-charts.com/chart?"
-            f"cht=lc"
-            f"&chd=t:{chart['data']}"
-            f"&chs=380x200"
-            f"&chxt=x,y"
-            f"&chxl=0:|{weeks_label}"
-            f"&chco={chart['color']}"
-            f"&chtt={quote(chart['title'])}"
-            f"&chts=000000,14"
-            f"&chls=3"
-            f"&chg=20,20,1,5"
-            f"&chf=bg,s,FFFFFF"
-        )
+        title_encoded = chart['title'].replace(' ', '+')
+        url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart['data']}&chs=380x200&chxt=x,y&chxl=0:|{weeks_label}&chco={chart['color']}&chtt={title_encoded}&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF"
         urls[key] = url
 
     return urls
