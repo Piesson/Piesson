@@ -61,6 +61,20 @@ Auto-generated weekly history SVGs and updated README"
             git push
           fi
 
+      - name: Send weekly summary to Slack
+        if: steps.check_weekly.outputs.reset_happened == '0'
+        run: |
+          echo "📊 Sending weekly summary..."
+          SUMMARY_JSON=$(python3 dashboard/generate_weekly_summary.py)
+          if [ $? -eq 0 ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "$SUMMARY_JSON" \
+              ${{ secrets.SLACK_WEBHOOK_URL }}
+            echo "✅ Weekly summary sent!"
+          else
+            echo "⚠️ Failed to generate weekly summary"
+          fi
+
       - name: Check if reminder needed
         id: check_update
         run: |
