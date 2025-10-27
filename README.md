@@ -5,6 +5,8 @@
 - Built the iOS app, taught myself backend logic
 - Pouring everything that i've got into making conversations feel natural and fun
 
+**🔗 Curious about my story?** → [kimkb.com](https://www.kimkb.com)
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg" alt="Profile Details">
 </p>
