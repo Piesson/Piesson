@@ -12,17 +12,26 @@ import os
 def get_github_data(username, token):
     """Fetch GitHub user data and calculate statistics"""
     headers = {
-        'Authorization': f'token {token}',
         'Accept': 'application/vnd.github.v3+json'
     }
+
+    # Add authorization header only if token is provided
+    if token:
+        headers['Authorization'] = f'token {token}'
 
     try:
         # Get user basic info
         user_response = requests.get(f'https://api.github.com/users/{username}', headers=headers)
+        if user_response.status_code != 200:
+            print(f"Failed to get user data: {user_response.status_code}")
+            raise Exception(f"GitHub API error: {user_response.status_code}")
         user_data = user_response.json()
 
         # Get repositories
         repos_response = requests.get(f'https://api.github.com/users/{username}/repos?per_page=100', headers=headers)
+        if repos_response.status_code != 200:
+            print(f"Failed to get repos: {repos_response.status_code}")
+            raise Exception(f"GitHub API error: {repos_response.status_code}")
         repos_data = repos_response.json()
 
         # Calculate total commits (approximate from recent activity)
@@ -64,14 +73,20 @@ def get_github_data(username, token):
 def get_github_activity_stats(username, token):
     """Fetch GitHub activity statistics from API"""
     headers = {
-        'Authorization': f'token {token}',
         'Accept': 'application/vnd.github.v3+json'
     }
+
+    # Add authorization header only if token is provided
+    if token:
+        headers['Authorization'] = f'token {token}'
 
     try:
         # Get user repositories
         repos_response = requests.get(f'https://api.github.com/users/{username}/repos?per_page=100', headers=headers)
-        repos = repos_response.json() if repos_response.status_code == 200 else []
+        if repos_response.status_code != 200:
+            print(f"Failed to get repos for activity: {repos_response.status_code}")
+            raise Exception(f"GitHub API error: {repos_response.status_code}")
+        repos = repos_response.json()
 
         # Count commits across all repos
         total_commits = 0
@@ -117,10 +132,10 @@ def generate_four_quadrant_stats(username, token):
     """Generate 4-quadrant statistics data from GitHub API"""
     stats = get_github_activity_stats(username, token)
 
-    # Ensure minimum values for visualization
-    for key in stats:
-        if stats[key] == 0:
-            stats[key] = 1  # Minimum 1 for pie chart visibility
+    # Only set minimum if ALL values are 0 (to avoid empty pie chart)
+    if all(value == 0 for value in stats.values()):
+        for key in stats:
+            stats[key] = 1  # Minimum 1 for pie chart visibility when no data
 
     # Calculate percentages
     total = sum(stats.values())
