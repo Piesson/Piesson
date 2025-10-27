@@ -1,4 +1,4 @@
-<svg width="500" height="200" xmlns="http://www.w3.org/2000/svg">
+<svg width="500" height="220" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
@@ -7,7 +7,7 @@
     </defs>
 
     <!-- Background -->
-    <rect width="500" height="200" fill="url(#cardBg)" rx="12" stroke="#e5e7eb" stroke-width="1"/>
+    <rect width="500" height="220" fill="url(#cardBg)" rx="12" stroke="#e5e7eb" stroke-width="1"/>
 
     <!-- Title -->
     <text x="250" y="30" text-anchor="middle" fill="#111827" font-size="18" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
@@ -15,14 +15,14 @@
     </text>
 
     <!-- Left Side: 4-Quadrant Chart + Legend -->
-    <g transform="translate(20, 50)">
+    <g transform="translate(25, 55)">
         <!-- Pie Chart -->
-        <g transform="translate(50, 30)">
+        <g transform="translate(45, 30)">
             <svg width="120" height="120" viewBox="0 0 120 120"><path d="M 60,60 L 60.0,15.0 A 45,45 0 1,1 16.01812046549817,50.48189763594815 Z" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/><text x="79.77847116023705" y="84.51656743028418" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">78%</text><path d="M 60,60 L 16.01812046549817,50.48189763594815 A 45,45 0 0,1 33.434848862856214,23.677930330710666 Z" fill="#10b981" stroke="#ffffff" stroke-width="2"/><text x="33.586392058522605" y="42.8369199875453" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">12%</text><path d="M 60,60 L 33.434848862856214,23.677930330710666 A 45,45 0 0,1 48.75391669333611,16.427926257067178 Z" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/><text x="46.5249908671284" y="31.52766028460206" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">6%</text><path d="M 60,60 L 48.75391669333611,16.427926257067178 A 45,45 0 0,1 59.99999999999999,15.0 Z" fill="#ef4444" stroke="#ffffff" stroke-width="2"/><text x="56.03226929036688" y="28.750886204312383" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">4%</text></svg>
         </g>
 
         <!-- Legend -->
-        <g transform="translate(180, 40)">
+        <g transform="translate(175, 40)">
             <!-- Commits -->
             <g transform="translate(0, 0)">
                 <rect x="0" y="0" width="12" height="12" fill="#3b82f6"/>
@@ -55,10 +55,10 @@
     </g>
 
     <!-- Vertical Divider -->
-    <line x1="350" y1="50" x2="350" y2="180" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="350" y1="55" x2="350" y2="195" stroke="#e5e7eb" stroke-width="1"/>
 
     <!-- Right Side: Statistics Cards -->
-    <g transform="translate(370, 60)">
+    <g transform="translate(370, 65)">
         <!-- Total Commits -->
         <g transform="translate(0, 0)">
             <text x="0" y="20" fill="#111827" font-size="24" font-weight="700" font-family="system-ui, -apple-system, sans-serif">

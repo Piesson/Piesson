@@ -239,9 +239,8 @@ def generate_profile_card():
     # Get GitHub data using the same commit count
     github_data = get_github_data_from_stats(activity_stats)
 
-    # SVG dimensions
     card_width = 500
-    card_height = 200
+    card_height = 220
 
     svg_content = f'''<svg width="{card_width}" height="{card_height}" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -260,14 +259,14 @@ def generate_profile_card():
     </text>
 
     <!-- Left Side: 4-Quadrant Chart + Legend -->
-    <g transform="translate(20, 50)">
+    <g transform="translate(25, 55)">
         <!-- Pie Chart -->
-        <g transform="translate(50, 30)">
+        <g transform="translate(45, 30)">
             {pie_chart}
         </g>
 
         <!-- Legend -->
-        <g transform="translate(180, 40)">
+        <g transform="translate(175, 40)">
             <!-- Commits -->
             <g transform="translate(0, 0)">
                 <rect x="0" y="0" width="12" height="12" fill="#3b82f6"/>
@@ -300,10 +299,10 @@ def generate_profile_card():
     </g>
 
     <!-- Vertical Divider -->
-    <line x1="350" y1="50" x2="350" y2="180" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="350" y1="55" x2="350" y2="195" stroke="#e5e7eb" stroke-width="1"/>
 
     <!-- Right Side: Statistics Cards -->
-    <g transform="translate(370, 60)">
+    <g transform="translate(370, 65)">
         <!-- Total Commits -->
         <g transform="translate(0, 0)">
             <text x="0" y="20" fill="#111827" font-size="24" font-weight="700" font-family="system-ui, -apple-system, sans-serif">

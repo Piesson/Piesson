@@ -18,8 +18,7 @@ def generate_dashboard_svg():
     week_start = monday.strftime('%m/%d/%Y')
     week_end = sunday.strftime('%m/%d/%Y')
 
-    # SVG template with modern monochrome theme
-    svg_content = f'''<svg width="520" height="440" xmlns="http://www.w3.org/2000/svg">
+    svg_content = f'''<svg width="520" height="380" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
@@ -35,20 +34,20 @@ def generate_dashboard_svg():
     </defs>
 
     <!-- Background -->
-    <rect width="520" height="440" fill="url(#bg)" rx="16" stroke="#e2e8f0" stroke-width="1"/>
+    <rect width="520" height="380" fill="url(#bg)" rx="16" stroke="#e2e8f0" stroke-width="1"/>
 
     <!-- Title -->
-    <text x="260" y="40" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+    <text x="260" y="35" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
         Moved the needle this week? 📈
     </text>
-    <text x="260" y="70" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+    <text x="260" y="60" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
         {week_start} — {week_end}
     </text>
 
     <!-- Metrics Grid -->
     <!-- Row 1: Commits, User Talks, Social Posts -->
     <!-- Commits -->
-    <g transform="translate(60, 90)">
+    <g transform="translate(60, 85)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="40" text-anchor="middle" fill="#000000" font-size="36" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
             {current['commits']}
@@ -62,7 +61,7 @@ def generate_dashboard_svg():
     </g>
 
     <!-- User Talks -->
-    <g transform="translate(200, 90)">
+    <g transform="translate(200, 85)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="40" text-anchor="middle" fill="#000000" font-size="36" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
             {current['userSessions']}
@@ -76,7 +75,7 @@ def generate_dashboard_svg():
     </g>
 
     <!-- Social Posts -->
-    <g transform="translate(340, 90)">
+    <g transform="translate(340, 85)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="40" text-anchor="middle" fill="#000000" font-size="36" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
             {current['socialContent']['instagram'] + current['socialContent']['tiktok'] + current['socialContent']['hellotalk']}
@@ -91,7 +90,7 @@ def generate_dashboard_svg():
 
     <!-- Row 2: Coffee Chats, Workouts, Blog Posts -->
     <!-- Coffee Chats -->
-    <g transform="translate(60, 210)">
+    <g transform="translate(60, 200)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="40" text-anchor="middle" fill="#000000" font-size="36" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
             {current['ctoMeetings']}
@@ -105,7 +104,7 @@ def generate_dashboard_svg():
     </g>
 
     <!-- Workouts -->
-    <g transform="translate(200, 210)">
+    <g transform="translate(200, 200)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="40" text-anchor="middle" fill="#000000" font-size="36" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
             {current['workouts']['running'] + current['workouts']['gym']}
@@ -119,7 +118,7 @@ def generate_dashboard_svg():
     </g>
 
     <!-- Blog Posts -->
-    <g transform="translate(340, 210)">
+    <g transform="translate(340, 200)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="40" text-anchor="middle" fill="#000000" font-size="36" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
             {current['blogPosts']}
