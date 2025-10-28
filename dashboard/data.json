@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-10-27",
+  "lastUpdated": "2025-10-28",
   "currentWeek": {
     "startDate": "2025-10-27",
     "endDate": "2025-11-02",
@@ -14,8 +14,8 @@
       "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "running": 1,
-        "gym": 1
+        "running": 2,
+        "gym": 2
       }
     }
   },
