@@ -66,6 +66,7 @@ jobs:
           git add dashboard/data.json dashboard/history/ README.md
           if ! git diff --staged --quiet; then
             git commit -m "Weekly reset: save history and reset metrics" -m "Auto-generated weekly history SVGs and updated README"
+            git pull --rebase
             git push
           fi
 
@@ -161,6 +162,7 @@ jobs:
           git add dashboard/data.json dashboard/weekly_dashboard.svg README.md
           if ! git diff --staged --quiet; then
             git commit -m "update: automated dashboard generation"
+            git pull --rebase
             git push
           else
             echo "No changes to commit"
