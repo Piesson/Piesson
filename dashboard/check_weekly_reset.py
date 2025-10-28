@@ -6,12 +6,15 @@ Runs daily at 7 AM KST before sending reminder
 
 import json
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# KST = UTC + 9 hours
+KST = timezone(timedelta(hours=9))
 
 def get_current_week_info():
     """Get current week's Monday and ISO week identifier"""
-    today = datetime.now()
+    today = datetime.now(KST)
     monday = today - timedelta(days=today.weekday())
     sunday = monday + timedelta(days=6)
 
