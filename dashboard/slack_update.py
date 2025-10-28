@@ -127,6 +127,7 @@ def update_data(metrics):
 def send_confirmation_message(webhook_url, result):
     """Send confirmation message to Slack"""
     import requests
+    from get_weekly_commits import get_weekly_commits
 
     added = result['added']
     totals = result['totals']
@@ -134,24 +135,28 @@ def send_confirmation_message(webhook_url, result):
     total_social = totals['instagram'] + totals['tiktok'] + totals['hellotalk']
     total_workouts = totals['running'] + totals['gym']
 
+    # Get current commit count
+    commits = get_weekly_commits()
+
     confirmation = {
         "username": "GrindBot",
         "icon_emoji": ":white_check_mark:",
         "text": f"""✅ Well done! Progress updated successfully!
 
 🔄 ADDED TODAY:
-├─ Social: +{added['instagram'] + added['tiktok'] + added['hellotalk']} (IG: +{added['instagram']}, TT: +{added['tiktok']}, HT: +{added['hellotalk']})
-├─ User Talks: +{added['usertalks']}
-├─ Coffee Chats: +{added['coffeechats']}
-├─ Workouts: +{added['running'] + added['gym']} (Run: +{added['running']}, Gym: +{added['gym']})
-└─ Blog Posts: +{added['blogposts']}
+├─ 📱 Social: +{added['instagram'] + added['tiktok'] + added['hellotalk']} (IG: +{added['instagram']}, TT: +{added['tiktok']}, HT: +{added['hellotalk']})
+├─ 💬 User Talks: +{added['usertalks']}
+├─ ☕ Coffee Chats: +{added['coffeechats']}
+├─ 🏃 Workouts: +{added['running'] + added['gym']} (Run: +{added['running']}, Gym: +{added['gym']})
+└─ 📝 Blog Posts: +{added['blogposts']}
 
 📊 NEW TOTALS:
-├─ Social Posts: {total_social} total
-├─ User Talks: {totals['usertalks']}
-├─ Coffee Chats: {totals['coffeechats']}
-├─ Workouts: {total_workouts} sessions
-└─ Blog Posts: {totals['blogposts']}
+├─ 🚀 Code Commits: {commits} builds
+├─ 📱 Social Posts: {total_social} total
+├─ 💬 User Talks: {totals['usertalks']} sessions
+├─ ☕ Coffee Chats: {totals['coffeechats']} meetings
+├─ 🏃 Workouts: {total_workouts} sessions
+└─ 📝 Blog Posts: {totals['blogposts']} articles
 
 Keep building! 🚀"""
     }
