@@ -20,9 +20,6 @@ def generate_history_table(weekly_history):
     lines = []
     lines.append("# Weekly History")
     lines.append("")
-    current_date = datetime.now(KST).strftime('%m/%d/%y')
-    lines.append(f"<sub>updated at {current_date}</sub>")
-    lines.append("")
     lines.append("| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |")
     lines.append("|------|--------|-----------|----------|---------|---------|------------|----------|")
 
@@ -64,6 +61,8 @@ def generate_history_table(weekly_history):
         )
 
     lines.append("")
+    current_date = datetime.now(KST).strftime('%m/%d/%y')
+    lines.append(f'<div align="right"><sub>updated at {current_date}</sub></div>')
     lines.append("")
     return "\n".join(lines)
 
@@ -186,7 +185,7 @@ def update_readme_with_history():
     history_table = generate_history_table(weekly_history)
     combined_url, individual_urls = generate_chart_urls(weekly_history)
 
-    history_pattern = r'# Weekly History\n\n(?:<sub>updated at \d{2}/\d{2}/\d{2}</sub>\n\n)?\|.*?\n\|.*?\n(?:\|.*?\n)*\n\n?'
+    history_pattern = r'# Weekly History\n\n\|.*?\n\|.*?\n(?:\|.*?\n)*\n(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n)?\n?'
 
     if re.search(history_pattern, readme_content):
         readme_content = re.sub(history_pattern, history_table, readme_content)

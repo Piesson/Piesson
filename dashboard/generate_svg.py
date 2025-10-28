@@ -50,14 +50,11 @@ def generate_dashboard_svg():
     <rect width="520" height="330" fill="url(#bg)" rx="16" stroke="#e2e8f0" stroke-width="1"/>
 
     <!-- Title -->
-    <text x="260" y="30" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+    <text x="260" y="35" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
         Moved the needle this week? 📈
     </text>
-    <text x="260" y="50" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+    <text x="260" y="60" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
         {week_start} — {week_end}
-    </text>
-    <text x="260" y="68" text-anchor="middle" fill="#9ca3af" font-size="9" font-family="system-ui, -apple-system, sans-serif">
-        updated at {today.strftime('%m/%d/%y')}
     </text>
 
     <!-- Metrics Grid -->
@@ -169,11 +166,11 @@ def update_readme_dashboard_timestamp(today):
         content = f.read()
 
     current_date = today.strftime('%m/%d/%y')
-    timestamp_line = f"<sub>updated at {current_date}</sub>"
+    timestamp_line = f'<div align="right"><sub>updated at {current_date}</sub></div>'
 
-    # Pattern: # Grinding metics followed by optional timestamp, then <p align="center">
-    pattern = r'(# Grinding metics\n\n)(?:<sub>updated at \d{2}/\d{2}/\d{2}</sub>\n\n)?(<p align="center">)'
-    replacement = f'\\1{timestamp_line}\n\n\\2'
+    # Pattern: # Grinding metics, <p> with image, then optional timestamp
+    pattern = r'(# Grinding metics\n\n<p align="center">\n  <img src="[^"]+" alt="Weekly Dashboard">\n</p>)\n*(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>)?'
+    replacement = f'\\1\n\n{timestamp_line}'
 
     content = re.sub(pattern, replacement, content)
 

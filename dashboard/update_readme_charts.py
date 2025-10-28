@@ -31,8 +31,6 @@ def update_readme_with_charts():
 
     charts_section = f"""# Progress Tracker
 
-<sub>updated at {current_date}</sub>
-
 <p align="center">
   <img src="{combined_url}" alt="Progress Tracker">
 </p>
@@ -57,6 +55,8 @@ def update_readme_with_charts():
 
 </details>
 
+<div align="right"><sub>updated at {current_date}</sub></div>
+
 """
 
     with open(readme_path, 'r') as f:
@@ -68,7 +68,7 @@ def update_readme_with_charts():
     old_pattern2 = r'## Individual Metrics\n\n.*?(?=\n# Tech Stack)'
     readme_content = re.sub(old_pattern2, '', readme_content, flags=re.DOTALL)
 
-    charts_pattern = r'# Progress Tracker\n\n(?:<sub>updated at \d{2}/\d{2}/\d{2}</sub>\n\n)?.*?</details>\n\n'
+    charts_pattern = r'# Progress Tracker\n\n.*?</details>\n\n(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n)?\n?'
 
     if re.search(charts_pattern, readme_content, re.DOTALL):
         readme_content = re.sub(charts_pattern, charts_section, readme_content, flags=re.DOTALL)
