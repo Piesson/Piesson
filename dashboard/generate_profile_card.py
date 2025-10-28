@@ -256,11 +256,8 @@ def generate_profile_card():
     <rect width="{card_width}" height="{card_height}" fill="url(#cardBg)" rx="12" stroke="#e5e7eb" stroke-width="1"/>
 
     <!-- Title -->
-    <text x="250" y="25" text-anchor="middle" fill="#111827" font-size="18" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+    <text x="250" y="30" text-anchor="middle" fill="#111827" font-size="18" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
         GitHub Activity
-    </text>
-    <text x="250" y="42" text-anchor="middle" fill="#9ca3af" font-size="9" font-family="system-ui, -apple-system, sans-serif">
-        updated at {datetime.datetime.now(KST).strftime('%m/%d/%y')}
     </text>
 
     <!-- Left Side: 4-Quadrant Chart + Legend -->
@@ -345,6 +342,34 @@ def generate_profile_card():
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(svg_content)
     print(f"Profile card generated: {output_path}")
+
+    # Update README with timestamp
+    update_readme_profile_timestamp()
+
+def update_readme_profile_timestamp():
+    """Update README.md profile section with timestamp"""
+    import re
+    readme_path = Path('README.md')
+
+    if not readme_path.exists():
+        return
+
+    with open(readme_path, 'r') as f:
+        content = f.read()
+
+    current_date = datetime.datetime.now(KST).strftime('%m/%d/%y')
+    timestamp_line = f'<div align="right"><sub>updated at {current_date}</sub></div>'
+
+    # Pattern: profile image <p>, then optional timestamp, then next # section
+    pattern = r'(<p align="center">\n  <img src="[^"]+0-profile-details\.svg" alt="Profile Details">\n</p>)\n*(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n*)?'
+    replacement = f'\\1\n\n{timestamp_line}\n\n'
+
+    content = re.sub(pattern, replacement, content)
+
+    with open(readme_path, 'w') as f:
+        f.write(content)
+
+    print(f"✅ Updated profile card timestamp: {current_date}")
 
 if __name__ == "__main__":
     generate_profile_card()

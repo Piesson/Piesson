@@ -191,7 +191,7 @@ def update_readme_with_history():
         readme_content = re.sub(history_pattern, history_table, readme_content)
         print("✅ Updated existing Weekly History section")
     else:
-        progress_tracker_pattern = r'(# Progress Tracker\n\n.*?<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n)'
+        progress_tracker_pattern = r'(# Progress Tracker\n\n.*?</details>\n\n<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n)'
         match = re.search(progress_tracker_pattern, readme_content, re.DOTALL)
 
         if match:
