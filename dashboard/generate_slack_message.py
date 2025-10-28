@@ -52,11 +52,9 @@ def generate_slack_message(message_type="morning"):
     if message_type == "evening":
         greeting = "🚨 GRIND CHECK: Still 0 today?"
         icon = ":rotating_light:"
-        motivation = "Time to lock in! 💪"
     else:
-        greeting = "⏰ Time to grind"
+        greeting = "Time to get things done"
         icon = ":fire:"
-        motivation = "Let's ship it! 🚀"
 
     message = {
         "username": "GrindBot",
@@ -86,8 +84,8 @@ def generate_slack_message(message_type="morning"):
 
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
-📥 INPUT: `1 0 0 2 0 0 1 1`
-(IG, TT, HT, UserTalks, CoffeeChats, BlogPosts, Running, Gym)
+📥 INPUT: `2 1 0 3 0 1 2 0`
+(Talks, IG, TT, HT, Coffee, Blog, Run, Gym)
 
 💡 {motivation}"""
     }

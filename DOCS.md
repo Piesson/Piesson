@@ -67,23 +67,72 @@ GitHub Profile (README.md)
 
 ---
 
-## Slack Input Format
+## Slack Messages & Input
 
-**8 numbers**: `1 0 0 2 0 0 1 1`
+### 3 Types of Messages
 
-Order: `[IG] [TT] [HT] [Talks] [Coffee] [Blog] [Run] [Gym]`
+| Type | When | Icon | Who |
+|------|------|------|-----|
+| **Weekly Summary** | Mon 7AM KST | 🎉 | GrindBot |
+| **Morning Reminder** | Tue-Sun 7AM KST | 🔥 | GrindBot |
+| **Evening Reminder** | Daily 7PM KST | 🚨 | GrindBot |
 
-Example: `1 0 0 2 0 0 1 1`
+### When You Get Messages
+
+**Monday 7AM**: Weekly Summary (last week's totals + daily avg)
+```
+🎉 Fresh week huh?
+Last Week: 83 commits, 2 talks, 3 social, 0 coffee, 7 workouts, 0 blog
+```
+
+**Tue-Sun 7AM**: Morning Reminder (this week's current totals)
+```
+🔥 Time to get things done
+THIS WEEK: 120 commits, 15 talks, 9 social, 2 coffee, 9 workouts, 1 blog
+📥 INPUT: 2 1 0 3 0 1 2 0
+(Talks, IG, TT, HT, Coffee, Blog, Run, Gym)
+```
+
+**Daily 7PM**: Evening Reminder (same as morning, different tone)
+```
+🚨 GRIND CHECK: Still 0 today?
+THIS WEEK: 120 commits, 15 talks, 9 social, 2 coffee, 9 workouts, 1 blog
+📥 INPUT: 2 1 0 3 0 1 2 0
+(Talks, IG, TT, HT, Coffee, Blog, Run, Gym)
+```
+
+### Message Skip Logic
+
+Messages skip if `data.json → lastUpdated` == today (KST).
+
+**Example**:
+- 7AM: Morning reminder arrives
+- 8AM: You input "2 1 0 3 0 1 2 0" → `lastUpdated` = today
+- 7PM: Evening reminder **skipped** (already updated today)
+- Next day 7AM: Morning reminder arrives again (new day)
+
+### Input Format
+
+**8 numbers**: `2 1 0 3 0 1 2 0`
+
+**Order** (matches dashboard layout: Talks → Social → Coffee → Workouts → Blog):
+```
+[Talks] [IG] [TT] [HT] [Coffee] [Blog] [Run] [Gym]
+```
+
+**Example**: `2 1 0 3 0 1 2 0`
+- User Talks: 2
 - Instagram: 1
 - TikTok: 0
-- HelloTalk: 0
-- User Talks: 2
+- HelloTalk: 3
 - Coffee Chats: 0
-- Blog Posts: 0
-- Running: 1
-- Gym: 1
+- Blog Posts: 1
+- Running: 2
+- Gym: 0
 
 **Additive**: New values ADD to existing totals.
+
+**Note**: Commits auto-counted from git. Don't input manually.
 
 ---
 
@@ -103,7 +152,7 @@ python dashboard/update_readme_charts.py
 
 ### Process Slack Input
 ```bash
-echo "1 0 0 2 0 0 1 1" | python dashboard/slack_update.py
+echo "2 1 0 3 0 1 2 0" | python dashboard/slack_update.py
 python dashboard/generate_svg.py
 ```
 
