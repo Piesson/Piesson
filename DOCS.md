@@ -10,7 +10,7 @@
 GitHub Profile (README.md)
 ├─ Profile Card         ← GitHub API (2020-2025 data, daily 7AM KST)
 ├─ Weekly Dashboard     ← Git commits + Slack input (real-time)
-├─ Progress Tracker     ← Cumulative charts (weekly reset)
+├─ Consistent enough?   ← Cumulative charts (weekly reset)
 └─ Weekly History       ← Last 12 weeks table
 ```
 
@@ -46,7 +46,7 @@ GitHub Profile (README.md)
 4. Update README.md
    ├─ Profile card timestamp (below card)
    ├─ Dashboard timestamp (below SVG)
-   ├─ Progress Tracker charts + timestamp
+   ├─ Consistent enough? charts + timestamp
    └─ Weekly History table + timestamp
         ↓
 5. Git commit + push
@@ -60,7 +60,7 @@ GitHub Profile (README.md)
 |--------|---------|--------|
 | `generate_profile_card.py` | 4-quadrant pie chart | Profile SVG + README timestamp |
 | `generate_svg.py` | Weekly dashboard 6 metrics | Dashboard SVG + README timestamp |
-| `update_readme_charts.py` | Progress Tracker charts | README Progress section |
+| `update_readme_charts.py` | Consistent enough? charts | README Consistent section |
 | `update_readme_history.py` | Weekly history table | README History section |
 | `slack_update.py` | Parse Slack input | data.json (additive) |
 | `check_weekly_reset.py` | Monday reset | Save history, reset metrics |
@@ -190,7 +190,7 @@ dashboard/
 ├─ data.json                    (Single source of truth)
 ├─ generate_profile_card.py     (Profile SVG + README)
 ├─ generate_svg.py              (Dashboard SVG + README)
-├─ update_readme_charts.py      (Progress Tracker)
+├─ update_readme_charts.py      (Consistent enough?)
 ├─ update_readme_history.py     (Weekly History)
 ├─ slack_update.py              (Parse Slack → data.json)
 └─ check_weekly_reset.py        (Monday reset)
@@ -276,11 +276,11 @@ datetime.now(KST).strftime('%m/%d/%y')
 Profile Card Image
 <div align="right"><sub>updated at MM/DD/YY</sub></div>  ← generate_profile_card.py
 
-# Grinding metics
+# Grinding enough?
 Dashboard SVG
 <div align="right"><sub>updated at MM/DD/YY</sub></div>  ← generate_svg.py
 
-# Progress Tracker
+# Consistent enough?
 Cumulative Chart
 <details><strong>More details</strong></details>
 <div align="right"><sub>updated at MM/DD/YY</sub></div>  ← update_readme_charts.py
