@@ -56,6 +56,7 @@
 | [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W43.svg) | 10/20/2025 - 10/26/2025 | 83 | 3 | 2 | 0 | 7 | 0 |
 
 <div align="right"><sub>updated at 10/28/25</sub></div>
+
 # Tech Stack
 
 ### Languages

@@ -64,6 +64,7 @@ def generate_history_table(weekly_history):
     current_date = datetime.now(KST).strftime('%m/%d/%y')
     lines.append(f'<div align="right"><sub>updated at {current_date}</sub></div>')
     lines.append("")
+    lines.append("")  # Extra blank line before next section
     return "\n".join(lines)
 
 def generate_chart_urls(weekly_history):
