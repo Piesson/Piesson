@@ -65,9 +65,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add dashboard/data.json dashboard/history/ README.md
           if ! git diff --staged --quiet; then
-            git commit -m "Weekly reset: save history and reset metrics
-
-Auto-generated weekly history SVGs and updated README"
+            git commit -m "Weekly reset: save history and reset metrics" -m "Auto-generated weekly history SVGs and updated README"
             git push
           fi
 
