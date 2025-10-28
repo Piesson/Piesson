@@ -16,8 +16,9 @@ def get_weekly_commits_graphql(username, token):
     Get commit count for current week using GitHub GraphQL API
     This includes ALL repositories (private + public)
     """
+    import sys
     if not token:
-        print("Warning: No GITHUB_TOKEN provided, cannot fetch weekly commits")
+        print("Warning: No GITHUB_TOKEN provided, cannot fetch weekly commits", file=sys.stderr)
         return 0
 
     # Calculate current week's Monday and Sunday in KST
@@ -33,8 +34,8 @@ def get_weekly_commits_graphql(username, token):
     from_date = monday_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
     to_date = sunday_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
 
-    print(f"Fetching commits for week: {monday.strftime('%Y-%m-%d')} to {sunday.strftime('%Y-%m-%d')} (KST)")
-    print(f"GitHub API query: {from_date} to {to_date} (UTC)")
+    print(f"Fetching commits for week: {monday.strftime('%Y-%m-%d')} to {sunday.strftime('%Y-%m-%d')} (KST)", file=sys.stderr)
+    print(f"GitHub API query: {from_date} to {to_date} (UTC)", file=sys.stderr)
 
     # GraphQL endpoint
     graphql_url = "https://api.github.com/graphql"
@@ -68,22 +69,22 @@ def get_weekly_commits_graphql(username, token):
         )
 
         if response.status_code != 200:
-            print(f"GraphQL API failed: {response.status_code}")
-            print(f"Response: {response.text}")
+            print(f"GraphQL API failed: {response.status_code}", file=sys.stderr)
+            print(f"Response: {response.text}", file=sys.stderr)
             return 0
 
         data = response.json()
 
         if 'errors' in data:
-            print(f"GraphQL errors: {data['errors']}")
+            print(f"GraphQL errors: {data['errors']}", file=sys.stderr)
             return 0
 
         commits = data['data']['user']['contributionsCollection']['totalCommitContributions']
-        print(f"✅ Weekly commits (all repos): {commits}")
+        print(f"✅ Weekly commits (all repos): {commits}", file=sys.stderr)
         return commits
 
     except Exception as e:
-        print(f"Error fetching weekly commits: {e}")
+        print(f"Error fetching weekly commits: {e}", file=sys.stderr)
         return 0
 
 def get_weekly_commits():
@@ -95,8 +96,9 @@ def get_weekly_commits():
     token = os.getenv('GITHUB_TOKEN', os.getenv('SUMMARY_CARDS_TOKEN', ''))
 
     if not token:
-        print("⚠️ No GitHub token found. Set GITHUB_TOKEN or SUMMARY_CARDS_TOKEN environment variable.")
-        print("Falling back to 0 commits")
+        import sys
+        print("⚠️ No GitHub token found. Set GITHUB_TOKEN or SUMMARY_CARDS_TOKEN environment variable.", file=sys.stderr)
+        print("Falling back to 0 commits", file=sys.stderr)
         return 0
 
     return get_weekly_commits_graphql(username, token)

@@ -116,10 +116,16 @@ jobs:
             MESSAGE_TYPE="evening"
           fi
 
+          echo "📊 Sending daily reminder..."
           MESSAGE_JSON=$(python3 dashboard/generate_slack_message.py "$MESSAGE_TYPE")
-          curl -X POST -H 'Content-type: application/json' \
-            --data "$MESSAGE_JSON" \
-            ${{ secrets.SLACK_WEBHOOK_URL }}
+          if [ $? -eq 0 ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data "$MESSAGE_JSON" \
+              ${{ secrets.SLACK_WEBHOOK_URL }}
+            echo "✅ Daily reminder sent!"
+          else
+            echo "⚠️ Failed to generate daily reminder"
+          fi
 
   update-dashboard:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
