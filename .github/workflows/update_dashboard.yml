@@ -158,7 +158,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dashboard/weekly_dashboard.svg README.md
+          git add dashboard/data.json dashboard/weekly_dashboard.svg README.md
           if ! git diff --staged --quiet; then
             git commit -m "update: automated dashboard generation"
             git push

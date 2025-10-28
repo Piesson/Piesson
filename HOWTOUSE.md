@@ -68,7 +68,7 @@ GitHub 프로필에 **자동으로 업데이트되는 2개의 멋진 카드**가
 🔥 ⏰ Time to grind
 📅 Week 44: 10/27/2025 — 11/02/2025
 
-📊 THIS WEEK SO FAR:
+📊 THIS WEEK SO FAR: (예시)
 🚀 Code Commits: 120 (모든 레포지토리)
 💬 User Talks: 15
 📱 Social Posts: 9 (IG: 5, TT: 3, HT: 1)
