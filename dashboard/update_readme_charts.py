@@ -25,16 +25,17 @@ def update_readme_with_charts():
     combined_url = generate_chart_url(data)
     individual_urls = generate_individual_chart_urls(data)
 
-    charts_section = f"""# Cumulative Progress
+    charts_section = f"""# Progress Tracker
 
 <p align="center">
-  <img src="{combined_url}" alt="Cumulative Progress - All Metrics">
+  <img src="{combined_url}" alt="Progress Tracker">
 </p>
 
-## Individual Metrics
+<details>
+<summary><sub>More details</sub></summary>
 
 <p align="center">
-  <img src="{individual_urls['commits']}" alt="Code Commits Progress">
+  <img src="{individual_urls['commits']}" alt="Commits Progress">
   <img src="{individual_urls['user_talks']}" alt="User Talks Progress">
 </p>
 
@@ -48,16 +49,24 @@ def update_readme_with_charts():
   <img src="{individual_urls['blog_posts']}" alt="Blog Posts Progress">
 </p>
 
+</details>
+
 """
 
     with open(readme_path, 'r') as f:
         readme_content = f.read()
 
-    charts_pattern = r'# Cumulative Progress\n\n.*?(?=\n# )'
+    old_pattern = r'# Cumulative Progress\n\n.*?(?=\n# Tech Stack)'
+    readme_content = re.sub(old_pattern, '', readme_content, flags=re.DOTALL)
+
+    old_pattern2 = r'## Individual Metrics\n\n.*?(?=\n# Tech Stack)'
+    readme_content = re.sub(old_pattern2, '', readme_content, flags=re.DOTALL)
+
+    charts_pattern = r'# Progress Tracker\n\n.*?</details>\n\n'
 
     if re.search(charts_pattern, readme_content, re.DOTALL):
-        readme_content = re.sub(charts_pattern, charts_section.rstrip() + '\n\n', readme_content, flags=re.DOTALL)
-        print("✅ Updated existing Cumulative Progress section")
+        readme_content = re.sub(charts_pattern, charts_section, readme_content, flags=re.DOTALL)
+        print("✅ Updated existing Progress Tracker section")
     else:
         tech_stack_index = readme_content.find('# Tech Stack')
 
@@ -67,10 +76,10 @@ def update_readme_with_charts():
                 charts_section +
                 readme_content[tech_stack_index:]
             )
-            print("✅ Added new Cumulative Progress section before Tech Stack")
+            print("✅ Added new Progress Tracker section before Tech Stack")
         else:
             readme_content += '\n\n' + charts_section
-            print("✅ Added new Cumulative Progress section at end")
+            print("✅ Added new Progress Tracker section at end")
 
     with open(readme_path, 'w') as f:
         f.write(readme_content)
