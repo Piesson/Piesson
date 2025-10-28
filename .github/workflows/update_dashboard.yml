@@ -5,7 +5,7 @@ on:
     # Monday 7 AM KST: Weekly reset only (no reminder)
     - cron: '0 22 * * 1'
     # Tue-Sun 7 AM KST: Morning reminder
-    - cron: '0 22 * * 2-0'
+    - cron: '0 22 * * 2,3,4,5,6,0'
     # Every day 7 PM KST: Evening reminder if no input
     - cron: '0 10 * * *'
   workflow_dispatch: # Allow manual trigger
