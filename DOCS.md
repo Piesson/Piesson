@@ -8,7 +8,7 @@
 
 ```
 GitHub Profile (README.md)
-├─ Profile Card         ← GitHub API (2020-2025 data, hourly)
+├─ Profile Card         ← GitHub API (2020-2025 data, daily 7AM KST)
 ├─ Weekly Dashboard     ← Git commits + Slack input (real-time)
 ├─ Progress Tracker     ← Cumulative charts (weekly reset)
 └─ Weekly History       ← Last 12 weeks table
@@ -264,6 +264,9 @@ datetime.now(KST).strftime('%m/%d/%y')
 
 **Monday reset not working?**
 → Verify cron: `0 22 * * 1` (10PM UTC = 7AM KST Monday).
+
+**Profile cards workflow failing with git push error?**
+→ vn7n24fzkq action auto-commit is disabled (`COMMIT_MESSAGE: ''`). All commits happen in Step 3 with `git pull --rebase` to prevent conflicts.
 
 ---
 

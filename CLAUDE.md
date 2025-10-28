@@ -61,7 +61,7 @@ Piesson/
 │   └── README.md                      # Theme documentation
 │
 ├── .github/workflows/
-│   ├── profile-summary-cards.yml     # Hourly (cron: 0 * * * *): GitHub profile cards
+│   ├── profile-summary-cards.yml     # Daily 7 AM KST (cron: 0 22 * * *): GitHub profile cards
 │   ├── update_dashboard.yml          # Multi-schedule: reminders (7 AM/7 PM KST) + weekly reset (Mon 7 AM KST)
 │   └── slack_response.yml            # Manual workflow_dispatch: Slack input processing
 │
@@ -71,13 +71,13 @@ Piesson/
 ## 🔄 System 1: GitHub Profile Cards
 
 ### Workflow: `profile-summary-cards.yml`
-**Trigger**: Every hour (`0 * * * *`) + manual dispatch
+**Trigger**: Daily at 7 AM KST (`0 22 * * *`) + manual dispatch
 **Runs on**: ubuntu-latest
 **Permissions**: contents: write
 
 **Process Flow**:
 ```
-1. GitHub Actions runs hourly
+1. GitHub Actions runs daily at 7 AM KST
    ↓
 2. vn7n24fzkq/github-profile-summary-cards@release
    - Fetches accurate GitHub contribution data
@@ -85,6 +85,7 @@ Piesson/
    - Themes: default, 2077, algolia, aura, dracula, nord, etc.
    - Includes private repos with SUMMARY_CARDS_TOKEN
    - UTC_OFFSET: 9 (KST timezone)
+   - COMMIT_MESSAGE: '' (auto-commit disabled to prevent conflicts)
    ↓
 3. generate_profile_card.py (custom Python script)
    - Calls graphql_stats.py to fetch 2020-2025 data
@@ -95,6 +96,7 @@ Piesson/
    - Output: profile-summary-card-output/default/0-profile-details.svg
    ↓
 4. Git commit + push to main branch
+   - git pull --rebase (prevents conflicts with dashboard workflow)
    - Only commits if files changed (git diff --staged --quiet)
    - Commit message: "update: automated profile cards generation (original + custom 4-quadrant)"
    - Pushes to main branch
