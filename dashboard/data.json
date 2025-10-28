@@ -6,16 +6,16 @@
     "metrics": {
       "commits": 120,
       "socialContent": {
-        "instagram": 5,
-        "tiktok": 3,
-        "hellotalk": 1
+        "instagram": 0,
+        "tiktok": 0,
+        "hellotalk": 0
       },
-      "userSessions": 15,
-      "ctoMeetings": 2,
-      "blogPosts": 1,
+      "userSessions": 1,
+      "ctoMeetings": 0,
+      "blogPosts": 0,
       "workouts": {
-        "running": 3,
-        "gym": 6
+        "running": 1,
+        "gym": 1
       }
     }
   },
