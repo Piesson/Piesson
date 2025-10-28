@@ -209,7 +209,7 @@ A: **완전히 다른 데이터 소스**를 사용하기 때문입니다:
 │                                                                       │
 │  Cron:                                                                │
 │  • 월요일 7 AM: 0 22 * * 1  (주간 리셋만, 리마인더 스킵)               │
-│  • 화~일 7 AM: 0 22 * * 2-0 (아침 리마인더)                          │
+│  • 화~일 7 AM: 0 22 * * 2,3,4,5,6,0 (아침 리마인더)                  │
 │  • 매일 7 PM: 0 10 * * *    (저녁 리마인더)                          │
 └─────────────────────────────────────────────────────────────────────┘
                               ↓
@@ -703,7 +703,7 @@ name: Update Dashboard
 on:
   schedule:
     - cron: '0 22 * * 1'   # 월요일 7 AM KST (주간 리셋)
-    - cron: '0 22 * * 2-0' # 화~일 7 AM KST (아침 리마인더)
+    - cron: '0 22 * * 2,3,4,5,6,0' # 화~일 7 AM KST (아침 리마인더)
     - cron: '0 10 * * *'   # 매일 7 PM KST (저녁 리마인더)
   push:
     paths:
@@ -1163,8 +1163,73 @@ git 커밋 → data.json (덮어쓰기) ─┤
 3. **확인**: README 새로고침 → 대시보드가 자동 업데이트됨!
 4. **분석**: 주간 히스토리 테이블에서 진행 상황 추적
 
+---
+
+## ⚠️ 중요: 코드 수정 시 주의사항
+
+### 자동 커밋 충돌 문제
+
+GitHub Actions가 **매시간** (프로필 카드) + **데이터 변경 시** (대시보드)마다 자동으로 커밋합니다.
+이로 인해 로컬과 remote가 자주 달라져서 rebase가 필요합니다.
+
+### 코드 수정 전 필수 설정
+
+```bash
+# 자동 rebase 설정 (한 번만 실행)
+git config pull.rebase true
+
+# 이제 git pull 하면 자동으로 rebase됨
+```
+
+### 추천 워크플로우
+
+```bash
+# 1. 항상 pull 먼저!
+git pull
+
+# 2. 코드 수정
+vim CLAUDE.md
+
+# 3. 커밋 전 다시 pull
+git pull
+
+# 4. 커밋
+git commit -m "fix: 수정사항"
+
+# 5. 푸시 전 마지막 pull
+git pull
+
+# 6. 푸시
+git push
+```
+
+### 충돌 발생 시
+
+```bash
+# 자동생성 파일은 remote 버전 사용
+git checkout --theirs dashboard/weekly_dashboard.svg
+git add dashboard/weekly_dashboard.svg
+git rebase --continue
+git push
+```
+
+### 절대 수정하면 안 되는 파일 (자동생성)
+- `dashboard/weekly_dashboard.svg`
+- `profile-summary-card-output/**/*.svg`
+- `README.md`의 차트 섹션
+
+### 안전하게 수정 가능한 파일
+- `CLAUDE.md`, `HOWTOUSE.md`, `SYSTEM_FLOW_EXPLAINED.md`
+- Python 스크립트 (`dashboard/*.py`)
+- 워크플로우 파일 (`.github/workflows/*.yml`)
+
+**자세한 내용**: CLAUDE.md의 "Working with Auto-Commit Workflows" 섹션 참고
+
+---
+
 **더 궁금한 점이 있다면?**
-- CLAUDE.md: 개발자용 상세 문서
+- CLAUDE.md: 개발자용 상세 문서 + Auto-commit 가이드
+- HOWTOUSE.md: 일반 사용자용 사용 설명서
 - dashboard/README.md: 대시보드 설정 가이드
 - .github/workflows/: 워크플로우 설정 파일
 
