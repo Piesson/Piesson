@@ -53,7 +53,7 @@ def generate_weekly_summary():
         "text": f"""Fresh week huh?
 
 Last Week Summary (Week {week_num}: {start_date} - {end_date})
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━
 🚀 Code Commits: `{commits}` builds (avg `{commits/7:.1f}` per day)
 
 💬 User Talks: `{user_sessions}` sessions (avg `{user_sessions/7:.1f}` per day)
@@ -66,7 +66,7 @@ Last Week Summary (Week {week_num}: {start_date} - {end_date})
 
 📝 Blog Posts: `{blog_posts}` articles (avg `{blog_posts/7:.1f}` per day)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━
 """
     }
 
