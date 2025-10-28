@@ -29,10 +29,10 @@ def update_readme_with_charts():
     KST = timezone(timedelta(hours=9))
     current_date = datetime.now(KST).strftime('%m/%d/%y')
 
-    charts_section = f"""# Progress Tracker
+    charts_section = f"""# Consistent enough?
 
 <p align="center">
-  <img src="{combined_url}" alt="Progress Tracker">
+  <img src="{combined_url}" alt="Consistent enough?">
 </p>
 
 <details>
@@ -68,11 +68,11 @@ def update_readme_with_charts():
     old_pattern2 = r'## Individual Metrics\n\n.*?(?=\n# Tech Stack)'
     readme_content = re.sub(old_pattern2, '', readme_content, flags=re.DOTALL)
 
-    charts_pattern = r'# Progress Tracker\n\n.*?</details>\n\n<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n'
+    charts_pattern = r'# Consistent enough\?\n\n.*?</details>\n\n<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n'
 
     if re.search(charts_pattern, readme_content, re.DOTALL):
         readme_content = re.sub(charts_pattern, charts_section, readme_content, flags=re.DOTALL)
-        print("✅ Updated existing Progress Tracker section")
+        print("✅ Updated existing Consistent enough? section")
     else:
         tech_stack_index = readme_content.find('# Tech Stack')
 
@@ -82,10 +82,10 @@ def update_readme_with_charts():
                 charts_section +
                 readme_content[tech_stack_index:]
             )
-            print("✅ Added new Progress Tracker section before Tech Stack")
+            print("✅ Added new Consistent enough? section before Tech Stack")
         else:
             readme_content += '\n\n' + charts_section
-            print("✅ Added new Progress Tracker section at end")
+            print("✅ Added new Consistent enough? section at end")
 
     with open(readme_path, 'w') as f:
         f.write(readme_content)

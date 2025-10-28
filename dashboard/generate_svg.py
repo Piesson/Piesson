@@ -155,7 +155,7 @@ def generate_dashboard_svg():
     update_readme_dashboard_timestamp(today)
 
 def update_readme_dashboard_timestamp(today):
-    """Update README.md Grinding metics section with timestamp"""
+    """Update README.md Grinding enough? section with timestamp"""
     import re
     readme_path = Path('README.md')
 
@@ -168,8 +168,8 @@ def update_readme_dashboard_timestamp(today):
     current_date = today.strftime('%m/%d/%y')
     timestamp_line = f'<div align="right"><sub>updated at {current_date}</sub></div>'
 
-    # Pattern: # Grinding metics, <p> with image, then optional timestamp
-    pattern = r'(# Grinding metics\n\n<p align="center">\n  <img src="[^"]+" alt="Weekly Dashboard">\n</p>)\n*(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>)?'
+    # Pattern: # Grinding enough?, <p> with image, then optional timestamp
+    pattern = r'(# Grinding enough\?\n\n<p align="center">\n  <img src="[^"]+" alt="Weekly Dashboard">\n</p>)\n*(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>)?'
     replacement = f'\\1\n\n{timestamp_line}'
 
     content = re.sub(pattern, replacement, content)
@@ -177,7 +177,7 @@ def update_readme_dashboard_timestamp(today):
     with open(readme_path, 'w') as f:
         f.write(content)
 
-    print(f"✅ Updated Grinding metics timestamp: {current_date}")
+    print(f"✅ Updated Grinding enough? timestamp: {current_date}")
 
 if __name__ == "__main__":
     generate_dashboard_svg()
