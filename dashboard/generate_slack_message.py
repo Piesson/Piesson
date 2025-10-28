@@ -65,13 +65,13 @@ THIS WEEK'S GRIND
 ━━━━━━━━━━━━━━━━━
 🚀 Code Commits: `{m['commits']}` builds
 
-💬 User Talks: `{m['usertalks']}` conversations
+💬 User Talks: `{m['usertalks']}` sessions
 
-📱 Social Posts: `{total_social}` total (IG: `{m['instagram']}`, TT: `{m['tiktok']}`, HT: `{m['hellotalk']}`)
+📱 Social Posts: `{total_social}` total
 
 ☕ Coffee Chats: `{m['coffeechats']}` meetings
 
-🏃 Workouts: `{total_workouts}` sessions (Run: `{m['running']}`, Gym: `{m['gym']}`)
+🏃 Workouts: `{total_workouts}` sessions
 
 📝 Blog Posts: `{m['blogposts']}` articles
 
