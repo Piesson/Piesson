@@ -6,8 +6,8 @@ on:
     - cron: '0 22 * * 1'
     # Tue-Sun 7 AM KST: Morning reminder
     - cron: '0 22 * * 2,3,4,5,6,0'
-    # Every day 8:45 PM KST: Evening reminder if no input
-    - cron: '45 11 * * *'
+    # Every day 9:15 PM KST: Evening reminder if no input
+    - cron: '15 12 * * *'
   workflow_dispatch: # Allow manual trigger
   push:
     paths:
