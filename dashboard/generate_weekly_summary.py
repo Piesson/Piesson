@@ -50,9 +50,9 @@ def generate_weekly_summary():
     message = {
         "username": "GrindBot",
         "icon_emoji": ":tada:",
-        "text": f"""🎉 New week started!
+        "text": f"""Fresh week huh?
 
-📊 Last Week Summary (Week {week_num}: {start_date} - {end_date})
+Last Week Summary (Week {week_num}: {start_date} - {end_date})
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Code Commits: `{commits}` builds (avg `{commits/7:.1f}` per day)
 
@@ -67,7 +67,7 @@ def generate_weekly_summary():
 📝 Blog Posts: `{blog_posts}` articles (avg `{blog_posts/7:.1f}` per day)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💪 Let's ship it this week! 🚀"""
+"""
     }
 
     return json.dumps(message)
