@@ -50,10 +50,10 @@ def generate_slack_message(message_type="morning"):
 
     # Different vibes based on time
     if message_type == "evening":
-        greeting = "🚨 GRIND CHECK: Still 0 today?"
+        greeting = "GRIND CHECK: Still 0 today? 🚨"
         icon = ":rotating_light:"
     else:
-        greeting = "Time to get things done"
+        greeting = "Time to get things done 🔥"
         icon = ":fire:"
 
     message = {
