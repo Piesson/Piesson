@@ -223,7 +223,7 @@ Piesson/
       - CURRENT_HOUR=10 (UTC) → 7 PM KST → MESSAGE_TYPE="evening"
    b. generate_slack_message.py
       - Loads current metrics from data.json
-      - Counts commits: `git rev-list --count --since <Monday UTC> HEAD`
+      - Counts commits: GitHub GraphQL API (all repos, private included)
       - Generates formatted Slack message JSON
       - Morning: ":fire:" emoji, "⏰ Time to grind", "Let's ship it! 🚀"
       - Evening: ":rotating_light:" emoji, "🚨 GRIND CHECK: Still 0 today?", "Time to lock in! 💪"
@@ -245,8 +245,9 @@ Piesson/
 2. GitHub Actions detects push to dashboard/data.json
    ↓
 3. generate_svg.py
-   - Step 1: Auto-calculate commits from git
-     → `git rev-list --count --since <Monday UTC> HEAD`
+   - Step 1: Auto-calculate commits from GitHub GraphQL API
+     → Calls get_weekly_commits() → queries GitHub API for current week
+     → Gets commits from ALL repositories (private + public)
      → Overwrites data.json → currentWeek.metrics.commits
      → Saves data.json (commit count auto-updated)
    - Step 2: Load metrics from data.json
@@ -390,11 +391,12 @@ Each card has 3 text elements:
 3. **Subtitle** (y=78): 8px font, weight 400, color #9ca3af
 
 **Card 1: Code Commits** (🚀) at translate(60, 85)
-- Source: **Auto-calculated from git** (NOT from data.json)
-- Command: `git rev-list --count --since <Monday UTC> HEAD`
-- KST Monday → UTC conversion: monday_utc = monday_kst.astimezone(timezone.utc)
+- Source: **Auto-calculated from GitHub GraphQL API** (NOT from data.json)
+- Method: `get_weekly_commits()` → GitHub API query for current week
+- Scope: ALL repositories (private + public)
+- Time range: Monday 00:00:00 KST → now
 - Current value: 120 commits (as of Oct 28, 2025)
-- Data flow: git → generate_svg.py → data.json (overwrites) → SVG
+- Data flow: GitHub API → generate_svg.py → data.json (overwrites) → SVG
 - Subtitle: "Daily goal: 20 commits"
 
 **Card 2: User Talks** (💬) at translate(200, 85)
@@ -435,11 +437,12 @@ Each card has 3 text elements:
   - Example: If today is Thursday (weekday=3), monday = today - 3 days
 - **Sunday calculation**: `sunday = monday + timedelta(days=6)`
   - Always adds exactly 6 days to Monday
-- **Git command UTC conversion** (critical for accurate commit counting):
-  - Problem: `git --since` uses UTC timestamps, but we calculate week in KST
+- **GitHub API UTC conversion** (critical for accurate commit counting):
+  - Problem: GitHub API uses UTC timestamps, but we calculate week in KST
   - Solution: `monday_utc = monday.astimezone(timezone.utc)`
-  - Format: `monday_utc.strftime('%Y-%m-%d %H:%M:%S')`
+  - Format: ISO 8601 string `monday_utc.strftime('%Y-%m-%dT%H:%M:%SZ')`
   - Example: Monday Oct 27 00:00:00 KST → Sunday Oct 26 15:00:00 UTC
+  - GraphQL query uses: `from: "2025-10-26T15:00:00Z", to: "2025-11-02T14:59:59Z"`
 - **Display format**: MM/DD/YYYY (US format)
   - Format: `monday.strftime('%m/%d/%Y')` and `sunday.strftime('%m/%d/%Y')`
   - Example: "10/27/2025 — 11/02/2025"
@@ -460,10 +463,11 @@ Each card has 3 text elements:
     "endDate": "2025-11-02",             // YYYY-MM-DD format (Sunday of current week, KST)
                                           // Both auto-calculated by generate_svg.py or check_weekly_reset.py
     "metrics": {
-      "commits": 120,                     // **AUTO-CALCULATED from git** (NEVER manually set)
-                                          // Source: `git rev-list --count --since <Monday UTC> HEAD`
+      "commits": 120,                     // **AUTO-CALCULATED from GitHub API** (NEVER manually set)
+                                          // Source: GitHub GraphQL API (all repos, private included)
                                           // Updated by: generate_svg.py (overwrites this field every time)
                                           // Calculation: Counts commits since Monday 00:00:00 KST (converted to UTC)
+                                          // Scope: ALL repositories, not just current repo
                                           // Current value: 120 commits (Oct 27-28, 2025)
       "socialContent": {
         "instagram": 5,                  // Updated by: slack_update.py (additive)
@@ -527,10 +531,11 @@ Each card has 3 text elements:
 - **Single source of truth**: `data.json` is the authoritative source (except commits)
   - All scripts read from data.json (generate_svg.py, generate_slack_message.py, etc.)
   - Weekly history saved to data.json (check_weekly_reset.py)
-- **Commits exception**: Commits are ALWAYS auto-calculated from git
-  - Source of truth: git history (not data.json)
+- **Commits exception**: Commits are ALWAYS auto-calculated from GitHub GraphQL API
+  - Source of truth: GitHub API (not data.json, not local git)
+  - Scope: ALL repositories (private + public), not just current repo
   - data.json commits field is overwritten every time generate_svg.py runs
-  - This ensures commit count is always accurate and cannot be manually manipulated
+  - This ensures commit count is always accurate and reflects all your work
 - **Automatic timestamp**: `lastUpdated` set to today (KST) when user inputs data
   - Format: `datetime.now(KST).strftime("%Y-%m-%d")`
   - Used by check_daily_update.py to prevent duplicate reminders

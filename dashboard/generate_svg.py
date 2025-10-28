@@ -1,35 +1,19 @@
 import json
 import datetime
-import subprocess
+import os
 from pathlib import Path
+from get_weekly_commits import get_weekly_commits
 
 # KST = UTC + 9 hours
 KST = datetime.timezone(datetime.timedelta(hours=9))
-
-def get_git_commits_this_week():
-    """Count commits in current week (KST timezone)"""
-    try:
-        today = datetime.datetime.now(KST)
-        monday = today - datetime.timedelta(days=today.weekday())
-        # Convert KST monday to UTC for git --since
-        monday_utc = monday.astimezone(datetime.timezone.utc)
-        monday_str = monday_utc.strftime('%Y-%m-%d %H:%M:%S')
-
-        result = subprocess.run([
-            'git', 'rev-list', '--count', '--since', monday_str, 'HEAD'
-        ], capture_output=True, text=True)
-
-        return int(result.stdout.strip()) if result.returncode == 0 else 0
-    except:
-        return 0
 
 def generate_dashboard_svg():
     # Load data
     with open('dashboard/data.json', 'r') as f:
         data = json.load(f)
 
-    # Auto-update commits from git
-    current_commits = get_git_commits_this_week()
+    # Auto-update commits from GitHub GraphQL API (all repos)
+    current_commits = get_weekly_commits()
     data['currentWeek']['metrics']['commits'] = current_commits
 
     # Save updated data back

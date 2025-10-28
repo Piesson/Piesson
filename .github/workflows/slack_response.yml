@@ -35,6 +35,9 @@ jobs:
           echo "${{ github.event.inputs.metrics }}" | python3 dashboard/slack_update.py
 
       - name: Generate dashboard
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
         run: python3 dashboard/generate_svg.py
 
       - name: Commit and push
