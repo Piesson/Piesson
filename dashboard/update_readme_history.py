@@ -191,18 +191,29 @@ def update_readme_with_history():
         readme_content = re.sub(history_pattern, history_table, readme_content)
         print("✅ Updated existing Weekly History section")
     else:
-        tech_stack_index = readme_content.find('# Tech Stack')
+        progress_tracker_pattern = r'(# Progress Tracker\n\n.*?<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n)'
+        match = re.search(progress_tracker_pattern, readme_content, re.DOTALL)
 
-        if tech_stack_index != -1:
+        if match:
+            insert_pos = match.end()
             readme_content = (
-                readme_content[:tech_stack_index] +
-                history_table + '\n\n' +
-                readme_content[tech_stack_index:]
+                readme_content[:insert_pos] +
+                history_table + '\n' +
+                readme_content[insert_pos:]
             )
-            print("✅ Added new Weekly History section before Tech Stack")
+            print("✅ Added new Weekly History section after Progress Tracker")
         else:
-            readme_content += '\n\n' + history_table
-            print("✅ Added new Weekly History section at end")
+            tech_stack_index = readme_content.find('# Tech Stack')
+            if tech_stack_index != -1:
+                readme_content = (
+                    readme_content[:tech_stack_index] +
+                    history_table + '\n\n' +
+                    readme_content[tech_stack_index:]
+                )
+                print("✅ Added new Weekly History section before Tech Stack")
+            else:
+                readme_content += '\n\n' + history_table
+                print("✅ Added new Weekly History section at end")
 
     if combined_url and individual_urls:
         cumulative_pattern = r'<p align="center">\s*<img src="https://image-charts\.com/chart\?cht=lc&chd=t:[^"]*" alt="Cumulative Progress - All Metrics">\s*</p>'
