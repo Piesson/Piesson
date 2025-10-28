@@ -104,6 +104,8 @@ Piesson/
 
 #### GraphQL API Integration (`graphql_stats.py`)
 - **Multi-year fetching**: Loops through 2020-2025 (6 years)
+  - **Start year**: `max(2020, current_year - 5)` → Always 2020 as of 2025
+  - **Loop**: `for year in range(2020, 2026)` → 6 separate queries
   - 2020: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
   - 2021: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
   - 2022: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
@@ -111,12 +113,15 @@ Piesson/
   - 2024: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
   - 2025: Jan 1 00:00:00 → Dec 31 23:59:59 UTC (current year)
 - **Query per year**: `contributionsCollection(from: DateTime!, to: DateTime!)`
+  - Each query fetches one full year of contributions
+  - Example: `from: "2020-01-01T00:00:00Z", to: "2020-12-31T23:59:59Z"`
 - **Data retrieved and aggregated**:
   - `totalCommitContributions` → all_stats['commits']
   - `totalPullRequestReviewContributions` → all_stats['code_reviews']
   - `totalPullRequestContributions` → all_stats['pull_requests']
   - `totalIssueContributions` → all_stats['issues']
 - **Accumulation logic**: `all_stats[key] += contributions[key]` (6 years summed)
+  - Example: commits_2020 + commits_2021 + ... + commits_2025 = total_commits
 - **Requires**: `SUMMARY_CARDS_TOKEN` (GitHub PAT with repo scope) for private repos
 - **Fallback**: Returns None if token missing or API fails
 
@@ -144,11 +149,13 @@ Piesson/
   3. Right-side "Total Commits" display
 - **Join date logic**:
   - Hardcoded: `datetime(2025, 1, 1)` (Jan 1, 2025)
-  - **CRITICAL BUG**: Code has TWO different join dates!
-    - Line 18: `datetime(2024, 8, 1)` (Aug 2024) in `get_github_data_from_stats()`
-    - Line 62: `datetime(2025, 1, 1)` (Jan 2025) in `get_github_data()` ← ACTUALLY USED
+  - **IMPORTANT**: Code has TWO different join dates defined
+    - Line 18: `datetime(2024, 8, 1)` (Aug 2024) in `get_github_data_from_stats()` - NOT USED
+    - Line 62: `datetime(2025, 1, 1)` (Jan 2025) in `get_github_data()` ← **ACTUALLY USED**
   - Daily avg calculation: `total_commits / days_since_join` (rounded to 1 decimal)
-  - Display format: "Jan 2025" (not Aug 2024)
+    - **Note**: Uses 6 years of commits (2020-2025) but divides by days since 2025-01-01
+    - Result: Artificially high daily average (e.g., 1476 commits ÷ 302 days = 4.9/day)
+  - Display format: "Jan 2025" (shown in profile card)
 
 #### Layout Optimization
 - **Card dimensions**: 500x220px
