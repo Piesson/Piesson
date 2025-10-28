@@ -33,6 +33,8 @@ jobs:
       - name: Update metrics
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
         run: |
           echo "${{ github.event.inputs.metrics }}" | python3 dashboard/slack_update.py
 
