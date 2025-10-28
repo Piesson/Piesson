@@ -61,28 +61,27 @@ def generate_slack_message(message_type="morning"):
         "icon_emoji": icon,
         "text": f"""{greeting}
 
-╔══════════════════════════╗
-║  📊 THIS WEEK'S GRIND     ║
-╚══════════════════════════╝
+*THIS WEEK'S GRIND*
+━━━━━━━━━━━━━━━━━
 
 🚀 Code Commits: `{m['commits']}` builds
 
 💬 User Talks: `{m['usertalks']}` conversations
 
 📱 Social Posts: `{total_social}` total
-    ├─ Instagram: `{m['instagram']}`
-    ├─ TikTok: `{m['tiktok']}`
-    └─ HelloTalk: `{m['hellotalk']}`
+  • Instagram: `{m['instagram']}`
+  • TikTok: `{m['tiktok']}`
+  • HelloTalk: `{m['hellotalk']}`
 
 ☕ Coffee Chats: `{m['coffeechats']}` co-founder meetings
 
 🏃 Workouts: `{total_workouts}` sessions
-    ├─ Running: `{m['running']}`
-    └─ Gym: `{m['gym']}`
+  • Running: `{m['running']}`
+  • Gym: `{m['gym']}`
 
 📝 Blog Posts: `{m['blogposts']}` AI/startup articles
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+━━━━━━━━━━━━━━━━━
 
 📥 INPUT: `2 1 0 3 0 1 2 0`
 (Talks, IG, TT, HT, Coffee, Blog, Run, Gym)"""
