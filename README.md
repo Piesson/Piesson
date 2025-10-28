@@ -24,13 +24,14 @@
 | [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W43.svg) | 10/20/2025 - 10/26/2025 | 83 | 3 | 2 | 0 | 7 | 0 |
 
 
-# Cumulative Progress
+# The Grind Never Stops 🚀
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83|0,2|0,3|0,0|0,7|0,0&chs=900x450&chxt=x,y&chxl=0:|W42+(10/13/25)|W43+(10/20/25)&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=Cumulative+Progress&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm=N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11" alt="Cumulative Progress - All Metrics">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83|0,2|0,3|0,0|0,7|0,0&chs=900x450&chxt=x,y&chxl=0:|W42+(10/13/25)|W43+(10/20/25)&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=The+Grind+Never+Stops&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm=N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11" alt="The Grind Never Stops">
 </p>
 
-## Individual Metrics
+<details>
+<summary><sub>More details</sub></summary>
 
 <p align="center">
   <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83&chs=380x200&chxt=x,y&chxl=0:|W42|W43&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Code Commits Progress">
@@ -46,6 +47,8 @@
   <img src="https://image-charts.com/chart?cht=lc&chd=t:0,7&chs=380x200&chxt=x,y&chxl=0:|W42|W43&chco=9966FF&chtt=Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
   <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0&chs=380x200&chxt=x,y&chxl=0:|W42|W43&chco=FF9F40&chtt=Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
 </p>
+
+</details>
 
 
 # Tech Stack
