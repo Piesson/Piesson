@@ -76,7 +76,9 @@ THIS WEEK'S GRIND
 📝 Blog Posts: `{m['blogposts']}` articles
 
 ━━━━━━━━━━━━━━━━━━
-"""
+
+📥 INPUT: `1 0 0 2 0 0 1 1`
+(Talks, IG, TT, HT, Coffee, Blog, Run, Gym)"""
     }
 
     return json.dumps(message)
