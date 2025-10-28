@@ -3,12 +3,17 @@ import datetime
 import subprocess
 from pathlib import Path
 
+# KST = UTC + 9 hours
+KST = datetime.timezone(datetime.timedelta(hours=9))
+
 def get_git_commits_this_week():
-    """Count commits in current week"""
+    """Count commits in current week (KST timezone)"""
     try:
-        today = datetime.datetime.now()
+        today = datetime.datetime.now(KST)
         monday = today - datetime.timedelta(days=today.weekday())
-        monday_str = monday.strftime('%Y-%m-%d')
+        # Convert KST monday to UTC for git --since
+        monday_utc = monday.astimezone(datetime.timezone.utc)
+        monday_str = monday_utc.strftime('%Y-%m-%d %H:%M:%S')
 
         result = subprocess.run([
             'git', 'rev-list', '--count', '--since', monday_str, 'HEAD'
@@ -33,8 +38,8 @@ def generate_dashboard_svg():
 
     current = data['currentWeek']['metrics']
 
-    # Calculate current week dates (Monday to Sunday)
-    today = datetime.datetime.now()
+    # Calculate current week dates (Monday to Sunday) in KST
+    today = datetime.datetime.now(KST)
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = monday + datetime.timedelta(days=6)
 
