@@ -25,7 +25,13 @@ def update_readme_with_charts():
     combined_url = generate_chart_url(data)
     individual_urls = generate_individual_chart_urls(data)
 
+    from datetime import datetime, timedelta, timezone
+    KST = timezone(timedelta(hours=9))
+    current_date = datetime.now(KST).strftime('%m/%d/%y')
+
     charts_section = f"""# Progress Tracker
+
+<sub>updated at {current_date}</sub>
 
 <p align="center">
   <img src="{combined_url}" alt="Progress Tracker">
@@ -62,7 +68,7 @@ def update_readme_with_charts():
     old_pattern2 = r'## Individual Metrics\n\n.*?(?=\n# Tech Stack)'
     readme_content = re.sub(old_pattern2, '', readme_content, flags=re.DOTALL)
 
-    charts_pattern = r'# Progress Tracker\n\n.*?</details>\n\n'
+    charts_pattern = r'# Progress Tracker\n\n(?:<sub>updated at \d{2}/\d{2}/\d{2}</sub>\n\n)?.*?</details>\n\n'
 
     if re.search(charts_pattern, readme_content, re.DOTALL):
         readme_content = re.sub(charts_pattern, charts_section, readme_content, flags=re.DOTALL)

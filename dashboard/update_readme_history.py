@@ -8,7 +8,9 @@ Auto-updates cumulative and individual progress chart URLs
 import json
 import re
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
+KST = timezone(timedelta(hours=9))
 
 def generate_history_table(weekly_history):
     """Generate Markdown table for weekly history"""
@@ -17,6 +19,9 @@ def generate_history_table(weekly_history):
 
     lines = []
     lines.append("# Weekly History")
+    lines.append("")
+    current_date = datetime.now(KST).strftime('%m/%d/%y')
+    lines.append(f"<sub>updated at {current_date}</sub>")
     lines.append("")
     lines.append("| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |")
     lines.append("|------|--------|-----------|----------|---------|---------|------------|----------|")
@@ -58,6 +63,7 @@ def generate_history_table(weekly_history):
             f"{user_sessions} | {cto_meetings} | {total_workouts} | {blog_posts} |"
         )
 
+    lines.append("")
     lines.append("")
     return "\n".join(lines)
 
@@ -180,10 +186,10 @@ def update_readme_with_history():
     history_table = generate_history_table(weekly_history)
     combined_url, individual_urls = generate_chart_urls(weekly_history)
 
-    history_pattern = r'# Weekly History\n\n\|.*?\n\|.*?\n(?:\|.*?\n)*\n'
+    history_pattern = r'# Weekly History\n\n(?:<sub>updated at \d{2}/\d{2}/\d{2}</sub>\n\n)?\|.*?\n\|.*?\n(?:\|.*?\n)*\n\n?'
 
     if re.search(history_pattern, readme_content):
-        readme_content = re.sub(history_pattern, history_table + '\n', readme_content)
+        readme_content = re.sub(history_pattern, history_table, readme_content)
         print("✅ Updated existing Weekly History section")
     else:
         tech_stack_index = readme_content.find('# Tech Stack')

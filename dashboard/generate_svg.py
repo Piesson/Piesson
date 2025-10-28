@@ -50,11 +50,14 @@ def generate_dashboard_svg():
     <rect width="520" height="330" fill="url(#bg)" rx="16" stroke="#e2e8f0" stroke-width="1"/>
 
     <!-- Title -->
-    <text x="260" y="35" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+    <text x="260" y="30" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
         Moved the needle this week? 📈
     </text>
-    <text x="260" y="60" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
+    <text x="260" y="50" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
         {week_start} — {week_end}
+    </text>
+    <text x="260" y="68" text-anchor="middle" fill="#9ca3af" font-size="9" font-family="system-ui, -apple-system, sans-serif">
+        updated at {today.strftime('%m/%d/%y')}
     </text>
 
     <!-- Metrics Grid -->
@@ -150,6 +153,34 @@ def generate_dashboard_svg():
     output_path = Path('dashboard/weekly_dashboard.svg')
     output_path.write_text(svg_content)
     print(f"Dashboard generated: {output_path}")
+
+    # Update README with timestamp
+    update_readme_dashboard_timestamp(today)
+
+def update_readme_dashboard_timestamp(today):
+    """Update README.md Grinding metics section with timestamp"""
+    import re
+    readme_path = Path('README.md')
+
+    if not readme_path.exists():
+        return
+
+    with open(readme_path, 'r') as f:
+        content = f.read()
+
+    current_date = today.strftime('%m/%d/%y')
+    timestamp_line = f"<sub>updated at {current_date}</sub>"
+
+    # Pattern: # Grinding metics followed by optional timestamp, then <p align="center">
+    pattern = r'(# Grinding metics\n\n)(?:<sub>updated at \d{2}/\d{2}/\d{2}</sub>\n\n)?(<p align="center">)'
+    replacement = f'\\1{timestamp_line}\n\n\\2'
+
+    content = re.sub(pattern, replacement, content)
+
+    with open(readme_path, 'w') as f:
+        f.write(content)
+
+    print(f"✅ Updated Grinding metics timestamp: {current_date}")
 
 if __name__ == "__main__":
     generate_dashboard_svg()

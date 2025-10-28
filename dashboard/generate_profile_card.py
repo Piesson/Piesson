@@ -10,6 +10,8 @@ from pathlib import Path
 import os
 from graphql_stats import get_github_activity_stats_graphql
 
+KST = datetime.timezone(datetime.timedelta(hours=9))
+
 def get_github_data_from_stats(activity_stats):
     """Create github_data dict from already-fetched activity stats"""
     total_commits = activity_stats.get('commits', 0)
@@ -254,8 +256,11 @@ def generate_profile_card():
     <rect width="{card_width}" height="{card_height}" fill="url(#cardBg)" rx="12" stroke="#e5e7eb" stroke-width="1"/>
 
     <!-- Title -->
-    <text x="250" y="30" text-anchor="middle" fill="#111827" font-size="18" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-        GitHub Activity Overview
+    <text x="250" y="25" text-anchor="middle" fill="#111827" font-size="18" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+        GitHub Activity
+    </text>
+    <text x="250" y="42" text-anchor="middle" fill="#9ca3af" font-size="9" font-family="system-ui, -apple-system, sans-serif">
+        updated at {datetime.datetime.now(KST).strftime('%m/%d/%y')}
     </text>
 
     <!-- Left Side: 4-Quadrant Chart + Legend -->
