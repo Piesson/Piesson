@@ -174,9 +174,9 @@ A: **완전히 다른 데이터 소스**를 사용하기 때문입니다:
 └─ 업데이트: 매시간 자동 (GitHub Actions)
 
 주간 대시보드 커밋 (120)
-├─ 소스: 로컬 git 명령어 (git rev-list)
+├─ 소스: GitHub GraphQL API (get_weekly_commits)
 ├─ 기간: 이번 주 월요일 ~ 현재 (10/27 ~ 10/28, 2일간)
-├─ 범위: 현재 레포지토리만 (Piesson/Piesson)
+├─ 범위: 모든 레포지토리 (private + public)
 └─ 업데이트: data.json 변경 시마다 (Slack 입력 후)
 ```
 
@@ -283,7 +283,7 @@ A: **완전히 다른 데이터 소스**를 사용하기 때문입니다:
 │  ┌───────────────────────────────────────────────────────────────┐  │
 │  │  1. data.json에서 현재 메트릭 로드                              │  │
 │  │  2. git에서 이번 주 커밋 카운트                                 │  │
-│  │     $ git rev-list --count --since <Monday UTC> HEAD           │  │
+│  │     GitHub API query (contributionsCollection)                  │  │
 │  │  3. Slack 메시지 JSON 생성                                     │  │
 │  │                                                                 │  │
 │  │  Morning 메시지:                                                │  │
@@ -438,7 +438,7 @@ A: **완전히 다른 데이터 소스**를 사용하기 때문입니다:
 │     monday = today - timedelta(days=today.weekday())                 │
 │     monday_utc = monday.astimezone(timezone.utc)                     │
 │                                                                       │
-│     $ git rev-list --count --since "2025-10-26 15:00:00 UTC" HEAD   │
+│     GitHub API query: from "2025-10-26T15:00:00Z" to "2025-11-02T14:59:59Z" │
 │       (Monday 10/27 00:00:00 KST = Sunday 10/26 15:00:00 UTC)       │
 │     → 결과: 121                                                       │
 │                                                                       │
@@ -524,7 +524,7 @@ A: **완전히 다른 데이터 소스**를 사용하기 때문입니다:
 │  • 범위: 모든 레포지토리 (private 포함)                                │
 │                                                                       │
 │  📊 주간 대시보드 - 커밋:                                              │
-│  • 소스: git rev-list (로컬 git 명령어)                               │
+│  • 소스: GitHub GraphQL API (모든 레포지토리)                         │
 │  • 저장: data.json에 자동 덮어쓰기 (매번)                             │
 │  • 범위: 현재 레포지토리 (Piesson/Piesson)                            │
 │  • 기간: 이번 주 월요일 00:00 KST ~ 현재                              │
@@ -552,7 +552,7 @@ A: **완전히 다른 데이터 소스**를 사용하기 때문입니다:
 │  ✏️ 덮어쓰기 방식 (OVERWRITE) - Git 커밋:                            │
 │  ┌───────────────────────────────────────────────────────────────┐  │
 │  │  현재 값: { commits: 100 }                                     │  │
-│  │  새 계산: git rev-list → 121                                   │  │
+│  │  새 계산: GitHub API query → 121                              │  │
 │  │  결과:    { commits: 121 }  (100 무시, 121로 교체)            │  │
 │  │                                                                 │  │
 │  │  이유: git이 이미 누적 카운트를 제공하므로 재계산만 필요         │  │
@@ -641,7 +641,7 @@ A: **완전히 다른 데이터 소스**를 사용하기 때문입니다:
 │  │  • 계산: 6년 치 누적                                           │  │
 │  │                                                                 │  │
 │  │  주간 대시보드:                                                 │  │
-│  │  • 소스: git rev-list (로컬)                                   │  │
+│  │  • 소스: GitHub GraphQL API (모든 레포)                       │  │
 │  │  • 쿼리: 2025-10-27 00:00 ~ 현재                              │  │
 │  │  • 범위: Piesson/Piesson 레포지토리만                          │  │
 │  │  • 계산: 이번 주만                                             │  │
@@ -924,7 +924,7 @@ GitHub Actions가 slack_response.yml 실행
 4. update_dashboard.yml 자동 트리거 (push):
    ├─ generate_svg.py
    │  ├─ Git 커밋 카운트:
-   │  │  $ git rev-list --count --since "2025-10-26 15:00:00 UTC" HEAD
+   │  │  GitHub API query: from "2025-10-26T15:00:00Z" to now
    │  │  → 1 commit
    │  ├─ data.json 업데이트: commits: 1
    │  └─ SVG 생성:
@@ -1039,7 +1039,7 @@ GitHub Actions가 slack_response.yml 실행
 
 4. generate_svg.py:
    ├─ Git 커밋 카운트:
-   │  $ git rev-list --count --since "2025-10-26 15:00:00 UTC" HEAD
+   │  GitHub API query: from "2025-10-26T15:00:00Z" to "2025-11-02T14:59:59Z"
    │  → 21 commits (어제 1개 + 오늘 20개)
    └─ SVG 생성:
       ┌──────────┬──────────┬──────────┐
@@ -1140,7 +1140,7 @@ git 커밋 → data.json (덮어쓰기) ─┤
 
 ```
 ✅ 커밋 수 (주간 대시보드):
-   매번 git rev-list로 재계산 → 절대 틀릴 수 없음
+   매번 GitHub API로 재계산 → 모든 레포지토리 포함, 절대 틀릴 수 없음
 
 ✅ Slack 메트릭:
    가산 방식 → 여러 번 입력해도 누적됨
