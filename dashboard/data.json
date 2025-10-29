@@ -1,5 +1,13 @@
 {
   "lastUpdated": "2025-10-28",
+  "goals": {
+    "weeklyCommits": 140,
+    "weeklyUserTalks": 7,
+    "weeklySocial": 7,
+    "weeklyCoffee": 2,
+    "weeklyWorkouts": 7,
+    "weeklyBlog": 1
+  },
   "currentWeek": {
     "startDate": "2025-10-27",
     "endDate": "2025-11-02",

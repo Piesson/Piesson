@@ -18,7 +18,7 @@
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
 </p>
 
-<div align="right"><sub>updated at 10/28/25</sub></div>
+<div align="right"><sub>updated at 10/29/25</sub></div>
 
 # Consistent enough?
 
