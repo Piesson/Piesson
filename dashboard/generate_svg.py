@@ -65,9 +65,11 @@ def generate_dashboard_svg():
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = monday + datetime.timedelta(days=6)
 
-    # Format dates in US format (MM/DD/YYYY)
-    week_start = monday.strftime('%m/%d/%Y')
-    week_end = sunday.strftime('%m/%d/%Y')
+    # Format dates: "October 27 - November 2 · W44"
+    week_start = monday.strftime('%B %-d')  # "October 27"
+    week_end = sunday.strftime('%B %-d')    # "November 2"
+    week_number = f"W{monday.isocalendar()[1]}"  # "W44"
+    date_range = f"{week_start} - {week_end} · {week_number}"
 
     # Calculate totals
     total_social = current['socialContent']['instagram'] + current['socialContent']['tiktok'] + current['socialContent']['hellotalk']
@@ -115,7 +117,7 @@ def generate_dashboard_svg():
         Moved the needle this week? 📈
     </text>
     <text x="260" y="60" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
-        {week_start} — {week_end}
+        {date_range}
     </text>
 
     <!-- Metrics Grid -->
