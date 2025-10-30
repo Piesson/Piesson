@@ -97,8 +97,11 @@ jobs:
             echo "🔄 Monday morning: Weekly reset completed, skipping reminder"
             echo "send_reminder=1" >> $GITHUB_OUTPUT
           else
+            set +e
             python3 dashboard/check_daily_update.py
-            echo "send_reminder=$?" >> $GITHUB_OUTPUT
+            EXIT_CODE=$?
+            set -e
+            echo "send_reminder=$EXIT_CODE" >> $GITHUB_OUTPUT
           fi
 
       - name: Generate and send daily reminder
