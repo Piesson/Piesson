@@ -119,7 +119,8 @@ def generate_chart_url(data):
 
     markers = "N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11"
 
-    url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=900x450&chxt=x,y&chxl=0:|{weeks_with_dates}&chco={colors}&chdl={legend}&chtt=Progress+Tracker&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm={markers}"
+    # Add chds for automatic Y-axis scaling
+    url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart_data}&chs=900x450&chxt=x,y&chxl=0:|{weeks_with_dates}&chds=a&chco={colors}&chdl={legend}&chtt=Progress+Tracker&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm={markers}"
 
     return url
 
@@ -165,7 +166,8 @@ def generate_individual_chart_urls(data):
 
     urls = {}
     for key, chart in charts.items():
-        url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart['data']}&chs=380x200&chxt=x,y&chxl=0:|{weeks_label}&chco={chart['color']}&chtt={chart['title']}&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF"
+        # Add chds=a for automatic Y-axis scaling
+        url = f"https://image-charts.com/chart?cht=lc&chd=t:{chart['data']}&chs=380x200&chxt=x,y&chxl=0:|{weeks_label}&chds=a&chco={chart['color']}&chtt={chart['title']}&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF"
         urls[key] = url
 
     return urls
