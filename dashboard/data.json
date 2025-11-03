@@ -33,18 +33,18 @@
       "startDate": "2025-10-27",
       "endDate": "2025-11-02",
       "metrics": {
-        "commits": 138,
+        "commits": 150,
         "socialContent": {
           "instagram": 0,
           "tiktok": 0,
-          "hellotalk": 1
+          "hellotalk": 3
         },
-        "userSessions": 3,
-        "ctoMeetings": 0,
+        "userSessions": 4,
+        "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "running": 4,
-          "gym": 3
+          "running": 5,
+          "gym": 4
         }
       }
     },
