@@ -36,7 +36,19 @@ def save_to_history(data, current_week_info):
         print("No metrics to save (empty week)")
         return False
 
-    week_id = current_week_info['week_id']
+    # Calculate the week_id from the stored startDate (last week)
+    # Don't use current_week_info['week_id'] as that's for the NEW week
+    stored_start = current.get('startDate')
+    if stored_start:
+        # Parse stored date and calculate its week number
+        stored_date = datetime.strptime(stored_start, '%Y-%m-%d')
+        week_num = stored_date.isocalendar()[1]
+        week_id = f"{stored_date.year}-W{week_num:02d}"
+    else:
+        # Fallback: calculate last week's ID
+        today = datetime.now(KST)
+        last_monday = today - timedelta(days=today.weekday() + 7)
+        week_id = f"{last_monday.year}-W{last_monday.isocalendar()[1]:02d}"
 
     history_entry = {
         "week": week_id,
