@@ -43,6 +43,7 @@ def save_to_history(data, current_week_info):
         "startDate": current.get('startDate', current_week_info['monday']),
         "endDate": current.get('endDate', current_week_info['sunday']),
         "metrics": {
+            "commits": current['metrics'].get('commits', 0),
             "socialContent": current['metrics'].get('socialContent', {
                 'instagram': 0,
                 'tiktok': 0,
