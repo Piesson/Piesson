@@ -23,7 +23,8 @@
       "workouts": {
         "running": 0,
         "gym": 0
-      }
+      },
+      "commits": 0
     }
   },
   "weeklyHistory": [
