@@ -89,12 +89,16 @@ jobs:
       - name: Check if reminder needed
         id: check_update
         run: |
-          CURRENT_HOUR=$(date -u +%H)
-          DAY_OF_WEEK=$(date -u +%u)
+          # Convert UTC to KST for proper day detection
+          CURRENT_HOUR_UTC=$(date -u +%H)
+          CURRENT_DATE_KST=$(TZ='Asia/Seoul' date +%Y-%m-%d)
+          DAY_OF_WEEK_KST=$(TZ='Asia/Seoul' date +%u)
 
-          # Skip morning reminder on Monday (weekly reset day)
-          if [ "$CURRENT_HOUR" -eq "22" ] && [ "$DAY_OF_WEEK" -eq "1" ]; then
-            echo "🔄 Monday morning: Weekly reset completed, skipping reminder"
+          echo "UTC Hour: $CURRENT_HOUR_UTC, KST Date: $CURRENT_DATE_KST, KST Day: $DAY_OF_WEEK_KST"
+
+          # Skip morning reminder on Monday KST (weekly reset day)
+          if [ "$CURRENT_HOUR_UTC" -eq "22" ] && [ "$DAY_OF_WEEK_KST" -eq "1" ]; then
+            echo "🔄 Monday morning (KST): Weekly reset completed, skipping reminder"
             echo "send_reminder=1" >> $GITHUB_OUTPUT
           else
             set +e
