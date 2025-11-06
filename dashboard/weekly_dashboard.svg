@@ -30,10 +30,10 @@
     <g transform="translate(60, 85)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            23
+            26
         </text>
         <text x="60" y="48" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            ▼ -84%
+            ▼ -82%
         </text>
         <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
             🚀 CODE COMMITS
@@ -42,7 +42,7 @@
             █░░░░░░░░░
         </text>
         <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            16% of goal
+            18% of goal
         </text>
     </g>
 
@@ -91,19 +91,19 @@
     <g transform="translate(60, 200)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            1
+            2
         </text>
-        <text x="60" y="48" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            ▼ -50%
+        <text x="60" y="48" text-anchor="middle" fill="#9ca3af" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+            
         </text>
         <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
             ☕ COFFEE CHATS
         </text>
         <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            █████░░░░░
+            ██████████
         </text>
         <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            50% of goal
+            100% of goal
         </text>
     </g>
 
@@ -111,19 +111,19 @@
     <g transform="translate(200, 200)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            4
+            6
         </text>
         <text x="60" y="48" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            ▼ -55%
+            ▼ -33%
         </text>
         <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
             🏃 WORKOUTS
         </text>
         <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            █████░░░░░
+            ████████░░
         </text>
         <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            57% of goal
+            85% of goal
         </text>
     </g>
 
