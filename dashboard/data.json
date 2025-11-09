@@ -9,25 +9,44 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2025-11-03",
-    "endDate": "2025-11-09",
+    "startDate": "2025-11-10",
+    "endDate": "2025-11-16",
     "metrics": {
       "socialContent": {
         "instagram": 0,
-        "tiktok": 3,
-        "hellotalk": 1
+        "tiktok": 0,
+        "hellotalk": 0
       },
-      "userSessions": 2,
-      "ctoMeetings": 3,
+      "userSessions": 0,
+      "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "running": 3,
-        "gym": 3
-      },
-      "commits": 27
+        "running": 0,
+        "gym": 0
+      }
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2025-W45",
+      "startDate": "2025-11-03",
+      "endDate": "2025-11-09",
+      "metrics": {
+        "commits": 27,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 3,
+          "hellotalk": 1
+        },
+        "userSessions": 2,
+        "ctoMeetings": 3,
+        "blogPosts": 0,
+        "workouts": {
+          "running": 3,
+          "gym": 3
+        }
+      }
+    },
     {
       "week": "2025-W44",
       "startDate": "2025-10-27",

@@ -23,40 +23,41 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83,233|0,2,6|0,3,6|0,0,2|0,7,16|0,0,0&chs=900x450&chxt=x,y&chxl=0:|W42+(10/13/25)|W43+(10/20/25)|W44+(10/27/25)&chds=a&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=Progress+Tracker&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm=N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11" alt="Consistent enough?">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83,233,260|0,2,6,8|0,3,6,10|0,0,2,5|0,7,16,22|0,0,0,0&chs=900x450&chxt=x,y&chxl=0:|W42+(10/13/25)|W43+(10/20/25)|W44+(10/27/25)|W45+(11/03/25)&chds=a&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=Progress+Tracker&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm=N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11" alt="Consistent enough?">
 </p>
 
 <details>
 <summary><strong>More details</strong></summary>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83,233&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44&chds=a&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Commits Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,2,6&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44&chds=a&chco=36A2EB&chtt=User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,83,233,260&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44|W45&chds=a&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Commits Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,2,6,8&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44|W45&chds=a&chco=36A2EB&chtt=User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
 </p>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,3,6&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44&chds=a&chco=FFCE56&chtt=Social+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0,2&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44&chds=a&chco=4BC0C0&chtt=Coffee+Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,3,6,10&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44|W45&chds=a&chco=FFCE56&chtt=Social+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0,2,5&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44|W45&chds=a&chco=4BC0C0&chtt=Coffee+Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
 </p>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,7,16&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44&chds=a&chco=9966FF&chtt=Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0,0&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44&chds=a&chco=FF9F40&chtt=Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,7,16,22&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44|W45&chds=a&chco=9966FF&chtt=Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0,0,0&chs=380x200&chxt=x,y&chxl=0:|W42|W43|W44|W45&chds=a&chco=FF9F40&chtt=Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
 </p>
 
 </details>
 
-<div align="right"><sub>updated at 11/07/25</sub></div>
+<div align="right"><sub>updated at 11/10/25</sub></div>
 
 # Weekly History
 
 | Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |
 |------|--------|-----------|----------|---------|---------|------------|----------|
+| [**Week 45**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W45.svg) | 2025-11-03 - 2025-11-09 | 27 | 4 | 2 | 3 | 6 | 0 |
 | [**Week 44**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W44.svg) | 2025-10-27 - 2025-11-02 | 150 | 3 | 4 | 2 | 9 | 0 |
 | [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W43.svg) | 10/20/2025 - 10/26/2025 | 83 | 3 | 2 | 0 | 7 | 0 |
 | [**Week 42**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W42.svg) | 10/13/2025 - 10/19/2025 | 0 | 0 | 0 | 0 | 0 | 0 |
 
-<div align="right"><sub>updated at 11/07/25</sub></div>
+<div align="right"><sub>updated at 11/10/25</sub></div>
 
 # Tech Stack
 
