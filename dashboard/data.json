@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-11-12",
+  "lastUpdated": "2025-11-13",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -14,8 +14,8 @@
     "metrics": {
       "socialContent": {
         "instagram": 0,
-        "tiktok": 0,
-        "hellotalk": 2
+        "tiktok": 1,
+        "hellotalk": 3
       },
       "userSessions": 1,
       "ctoMeetings": 1,
