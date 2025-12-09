@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-05",
+  "lastUpdated": "2025-12-09",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -23,7 +23,8 @@
       "workouts": {
         "running": 0,
         "gym": 0
-      }
+      },
+      "commits": 0
     }
   },
   "weeklyHistory": [
