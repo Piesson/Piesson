@@ -30,7 +30,7 @@
     <g transform="translate(60, 85)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            24
+            26
         </text>
         <text x="60" y="48" text-anchor="middle" fill="#9ca3af" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             
@@ -42,7 +42,7 @@
             █░░░░░░░░░
         </text>
         <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            17% of goal
+            18% of goal
         </text>
     </g>
 
@@ -50,7 +50,7 @@
     <g transform="translate(200, 85)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            7
+            8
         </text>
         <text x="60" y="48" text-anchor="middle" fill="#9ca3af" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             
@@ -111,7 +111,7 @@
     <g transform="translate(200, 200)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            19
+            21
         </text>
         <text x="60" y="48" text-anchor="middle" fill="#9ca3af" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             
