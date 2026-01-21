@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-19",
+  "lastUpdated": "2026-01-21",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -15,16 +15,16 @@
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 3
+        "hellotalk": 5
       },
-      "userSessions": 1,
-      "ctoMeetings": 0,
+      "userSessions": 2,
+      "ctoMeetings": 1,
       "blogPosts": 0,
       "workouts": {
-        "running": 1,
+        "running": 2,
         "gym": 1
       },
-      "commits": 3
+      "commits": 8
     }
   },
   "weeklyHistory": [
