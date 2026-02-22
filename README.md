@@ -23,35 +23,36 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,88,110,149,319,319,345,455,554,690,771,841|0,8,11,15,21,23,31,35,39,42,46,47|0,2,9,11,12,12,12,24,38,54,75,84|0,1,5,10,10,10,11,12,13,15,15,17|0,7,13,20,27,29,50,61,73,85,96,98|0,0,0,0,0,0,0,0,0,0,0,3&chs=900x450&chxt=x,y&chxl=0:|W01+(12/30/24)|W48+(11/24/25)|W49+(12/01/25)|W50+(12/08/25)|W51+(12/15/25)|W52+(12/22/25)|W02+(01/06/25)|W03+(01/13/25)|W04+(01/20/25)|W05+(01/27/25)|W06+(02/03/25)|W07+(02/10/25)&chds=a&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=Progress+Tracker&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm=N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11" alt="Consistent enough?">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,22,61,231,231,257,367,466,602,683,753,758|0,3,7,13,15,23,27,31,34,38,39,40|0,7,9,10,10,10,22,36,52,73,82,85|0,4,9,9,9,10,11,12,14,14,16,17|0,6,13,20,22,43,54,66,78,89,91,93|0,0,0,0,0,0,0,0,0,0,3,5&chs=900x450&chxt=x,y&chxl=0:|W01+(12/30/24)|W49+(12/01/25)|W50+(12/08/25)|W51+(12/15/25)|W52+(12/22/25)|W02+(01/06/25)|W03+(01/13/25)|W04+(01/20/25)|W05+(01/27/25)|W06+(02/03/25)|W07+(02/10/25)|W08+(02/17/25)&chds=a&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=Progress+Tracker&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm=N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11" alt="Consistent enough?">
 </p>
 
 <details>
 <summary><strong>More details</strong></summary>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,88,110,149,319,319,345,455,554,690,771,841&chs=380x200&chxt=x,y&chxl=0:|W01|W48|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07&chds=a&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Commits Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,8,11,15,21,23,31,35,39,42,46,47&chs=380x200&chxt=x,y&chxl=0:|W01|W48|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07&chds=a&chco=36A2EB&chtt=User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,22,61,231,231,257,367,466,602,683,753,758&chs=380x200&chxt=x,y&chxl=0:|W01|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07|W08&chds=a&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Commits Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,3,7,13,15,23,27,31,34,38,39,40&chs=380x200&chxt=x,y&chxl=0:|W01|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07|W08&chds=a&chco=36A2EB&chtt=User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
 </p>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,2,9,11,12,12,12,24,38,54,75,84&chs=380x200&chxt=x,y&chxl=0:|W01|W48|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07&chds=a&chco=FFCE56&chtt=Social+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,1,5,10,10,10,11,12,13,15,15,17&chs=380x200&chxt=x,y&chxl=0:|W01|W48|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07&chds=a&chco=4BC0C0&chtt=Coffee+Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,7,9,10,10,10,22,36,52,73,82,85&chs=380x200&chxt=x,y&chxl=0:|W01|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07|W08&chds=a&chco=FFCE56&chtt=Social+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,4,9,9,9,10,11,12,14,14,16,17&chs=380x200&chxt=x,y&chxl=0:|W01|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07|W08&chds=a&chco=4BC0C0&chtt=Coffee+Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
 </p>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,7,13,20,27,29,50,61,73,85,96,98&chs=380x200&chxt=x,y&chxl=0:|W01|W48|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07&chds=a&chco=9966FF&chtt=Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0,0,0,0,0,0,0,0,0,0,3&chs=380x200&chxt=x,y&chxl=0:|W01|W48|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07&chds=a&chco=FF9F40&chtt=Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,6,13,20,22,43,54,66,78,89,91,93&chs=380x200&chxt=x,y&chxl=0:|W01|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07|W08&chds=a&chco=9966FF&chtt=Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
+  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0,0,0,0,0,0,0,0,0,3,5&chs=380x200&chxt=x,y&chxl=0:|W01|W49|W50|W51|W52|W02|W03|W04|W05|W06|W07|W08&chds=a&chco=FF9F40&chtt=Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
 </p>
 
 </details>
 
-<div align="right"><sub>updated at 02/16/26</sub></div>
+<div align="right"><sub>updated at 02/23/26</sub></div>
 
 # Weekly History
 
 | Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |
 |------|--------|-----------|----------|---------|---------|------------|----------|
+| [**Week 08**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W08.svg) | 2026-02-16 - 2026-02-22 | 5 | 3 | 1 | 1 | 2 | 2 |
 | [**Week 07**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W07.svg) | 2026-02-09 - 2026-02-15 | 70 | 9 | 1 | 2 | 2 | 3 |
 | [**Week 06**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W06.svg) | 2026-02-02 - 2026-02-08 | 81 | 21 | 4 | 0 | 11 | 0 |
 | [**Week 05**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W05.svg) | 2026-01-26 - 2026-02-01 | 136 | 16 | 3 | 2 | 12 | 0 |
@@ -63,9 +64,8 @@
 | [**Week 51**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W51.svg) | 2025-12-15 - 2025-12-21 | 170 | 1 | 6 | 0 | 7 | 0 |
 | [**Week 50**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W50.svg) | 2025-12-08 - 2025-12-14 | 39 | 2 | 4 | 5 | 7 | 0 |
 | [**Week 49**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W49.svg) | 2025-12-01 - 2025-12-07 | 22 | 7 | 3 | 4 | 6 | 0 |
-| [**Week 48**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W48.svg) | 2025-11-24 - 2025-11-30 | 88 | 2 | 8 | 1 | 7 | 0 |
 
-<div align="right"><sub>updated at 02/16/26</sub></div>
+<div align="right"><sub>updated at 02/23/26</sub></div>
 
 # Tech Stack
 
