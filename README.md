@@ -1,6 +1,6 @@
 # Started from zero code for my thing
 
-- Started with a simple idea: make language learning feel like chatting with a friend
+- Started with a simple idea: make language learning feel like talking with a friend
 - But, I couldn't code. So I learned from scratch
 - Built the iOS app, taught myself backend logic
 - Pouring everything that i've got into making conversations feel natural and fun
