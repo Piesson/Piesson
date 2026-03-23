@@ -18,7 +18,7 @@
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
 </p>
 
-<div align="right"><sub>updated at 03/20/26</sub></div>
+<div align="right"><sub>updated at 03/24/26</sub></div>
 
 # Consistent enough?
 
@@ -46,7 +46,7 @@
 
 </details>
 
-<div align="right"><sub>updated at 03/23/26</sub></div>
+<div align="right"><sub>updated at 03/24/26</sub></div>
 
 # Weekly History
 
@@ -65,7 +65,7 @@
 | [**Week 02**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W02.svg) | 2026-01-05 - 2026-01-11 | 26 | 0 | 8 | 1 | 21 | 0 |
 | [**Week 01**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2025-W01.svg) | 2025-12-29 - 2026-01-04 | 0 | 0 | 0 | 0 | 0 | 0 |
 
-<div align="right"><sub>updated at 03/23/26</sub></div>
+<div align="right"><sub>updated at 03/24/26</sub></div>
 
 # Tech Stack
 
