@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-04",
+  "lastUpdated": "2026-04-07",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -9,25 +9,45 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-03-30",
-    "endDate": "2026-04-05",
+    "startDate": "2026-04-06",
+    "endDate": "2026-04-12",
     "metrics": {
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 1
+        "hellotalk": 0
       },
-      "userSessions": 3,
-      "ctoMeetings": 1,
+      "userSessions": 2,
+      "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "running": 2,
+        "running": 1,
         "gym": 1
       },
-      "commits": 167
+      "commits": 227
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W14",
+      "startDate": "2026-03-30",
+      "endDate": "2026-04-05",
+      "metrics": {
+        "commits": 167,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 0,
+          "hellotalk": 1
+        },
+        "userSessions": 3,
+        "ctoMeetings": 1,
+        "blogPosts": 0,
+        "workouts": {
+          "running": 2,
+          "gym": 1
+        }
+      }
+    },
     {
       "week": "2026-W13",
       "startDate": "2026-03-23",
@@ -245,26 +265,6 @@
         "workouts": {
           "running": 7,
           "gym": 4
-        }
-      }
-    },
-    {
-      "week": "2026-W02",
-      "startDate": "2026-01-05",
-      "endDate": "2026-01-11",
-      "metrics": {
-        "commits": 26,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 0
-        },
-        "userSessions": 8,
-        "ctoMeetings": 1,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 14,
-          "gym": 7
         }
       }
     }
