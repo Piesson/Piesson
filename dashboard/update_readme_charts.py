@@ -6,7 +6,7 @@ Inserts cumulative progress charts before Tech Stack section
 
 import re
 from pathlib import Path
-from generate_progress_chart import load_weekly_data, generate_chart_url, generate_individual_chart_urls
+from generate_progress_chart import load_weekly_data, generate_chart_url, save_sparklines_svg
 
 def update_readme_with_charts():
     """Update README.md with progress charts"""
@@ -23,7 +23,7 @@ def update_readme_with_charts():
         return False
 
     combined_url = generate_chart_url(data)
-    individual_urls = generate_individual_chart_urls(data)
+    save_sparklines_svg(data)
 
     from datetime import datetime, timedelta, timezone
     KST = timezone(timedelta(hours=9))
@@ -39,18 +39,7 @@ def update_readme_with_charts():
 <summary><strong>More details</strong></summary>
 
 <p align="center">
-  <img src="{individual_urls['commits']}" alt="Commits Progress">
-  <img src="{individual_urls['user_talks']}" alt="User Talks Progress">
-</p>
-
-<p align="center">
-  <img src="{individual_urls['social_posts']}" alt="Social Posts Progress">
-  <img src="{individual_urls['coffee_chats']}" alt="Coffee Chats Progress">
-</p>
-
-<p align="center">
-  <img src="{individual_urls['workouts']}" alt="Workouts Progress">
-  <img src="{individual_urls['blog_posts']}" alt="Blog Posts Progress">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg" alt="Individual Metric Sparklines">
 </p>
 
 </details>

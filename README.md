@@ -23,30 +23,19 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:26,136,235,371,452,522,527,541,683,809,847,898|8,12,16,19,23,24,25,30,34,42,47,50|0,12,26,42,63,72,75,85,91,97,103,107|1,2,3,5,5,7,8,10,11,15,17,18|21,32,44,56,67,69,71,85,94,103,112,119|0,0,0,0,0,3,5,9,9,9,9,9&chs=900x450&chxt=x,y&chxl=0:|W02+(01/06/25)|W03+(01/13/25)|W04+(01/20/25)|W05+(01/27/25)|W06+(02/03/25)|W07+(02/10/25)|W08+(02/17/25)|W09+(02/24/25)|W10+(03/03/25)|W11+(03/10/25)|W12+(03/17/25)|W13+(03/24/25)&chds=a&chco=FF6384,36A2EB,FFCE56,4BC0C0,9966FF,FF9F40&chdl=Code+Commits|User+Talks|Social+Posts|Coffee+Chats|Workouts|Blog+Posts&chtt=Progress+Tracker&chts=000000,16&chls=3|3|3|3|3|3&chg=20,20,1,5&chm=N*f0*,000000,0,-1,11|N*f0*,000000,1,-1,11|N*f0*,000000,2,-1,11|N*f0*,000000,3,-1,11|N*f0*,000000,4,-1,11|N*f0*,000000,5,-1,11" alt="Consistent enough?">
+  <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22line%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22W02%22%2C%22W03%22%2C%22W04%22%2C%22W05%22%2C%22W06%22%2C%22W07%22%2C%22W08%22%2C%22W09%22%2C%22W10%22%2C%22W11%22%2C%22W12%22%2C%22W13%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Code%20Commits%22%2C%22data%22%3A%5B26%2C136%2C235%2C371%2C452%2C522%2C527%2C541%2C683%2C809%2C847%2C898%5D%2C%22borderColor%22%3A%22%23FF6384%22%2C%22backgroundColor%22%3A%22rgba%28255%2C99%2C132%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y1%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22User%20Talks%22%2C%22data%22%3A%5B8%2C12%2C16%2C19%2C23%2C24%2C25%2C30%2C34%2C42%2C47%2C50%5D%2C%22borderColor%22%3A%22%2336A2EB%22%2C%22backgroundColor%22%3A%22rgba%2854%2C162%2C235%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Social%20Posts%22%2C%22data%22%3A%5B0%2C12%2C26%2C42%2C63%2C72%2C75%2C85%2C91%2C97%2C103%2C107%5D%2C%22borderColor%22%3A%22%23E6B800%22%2C%22backgroundColor%22%3A%22rgba%28230%2C184%2C0%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Coffee%20Chats%22%2C%22data%22%3A%5B1%2C2%2C3%2C5%2C5%2C7%2C8%2C10%2C11%2C15%2C17%2C18%5D%2C%22borderColor%22%3A%22%234BC0C0%22%2C%22backgroundColor%22%3A%22rgba%2875%2C192%2C192%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Workouts%22%2C%22data%22%3A%5B21%2C32%2C44%2C56%2C67%2C69%2C71%2C85%2C94%2C103%2C112%2C119%5D%2C%22borderColor%22%3A%22%239966FF%22%2C%22backgroundColor%22%3A%22rgba%28153%2C102%2C255%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Blog%20Posts%22%2C%22data%22%3A%5B0%2C0%2C0%2C0%2C0%2C3%2C5%2C9%2C9%2C9%2C9%2C9%5D%2C%22borderColor%22%3A%22%23FF9F40%22%2C%22backgroundColor%22%3A%22rgba%28255%2C159%2C64%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%5D%7D%2C%22options%22%3A%7B%22responsive%22%3Afalse%2C%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Progress%20Tracker%22%2C%22fontSize%22%3A16%7D%2C%22legend%22%3A%7B%22position%22%3A%22right%22%2C%22labels%22%3A%7B%22fontSize%22%3A11%2C%22padding%22%3A12%7D%7D%2C%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22id%22%3A%22y1%22%2C%22position%22%3A%22left%22%2C%22scaleLabel%22%3A%7B%22display%22%3Atrue%2C%22labelString%22%3A%22Commits%22%2C%22fontStyle%22%3A%22bold%22%7D%2C%22ticks%22%3A%7B%22beginAtZero%22%3Atrue%7D%7D%2C%7B%22id%22%3A%22y2%22%2C%22position%22%3A%22right%22%2C%22scaleLabel%22%3A%7B%22display%22%3Atrue%2C%22labelString%22%3A%22Other%20Metrics%22%2C%22fontStyle%22%3A%22bold%22%7D%2C%22gridLines%22%3A%7B%22drawOnChartArea%22%3Afalse%7D%2C%22ticks%22%3A%7B%22beginAtZero%22%3Atrue%7D%7D%5D%7D%2C%22plugins%22%3A%7B%22datalabels%22%3A%7B%22display%22%3A%22auto%22%2C%22anchor%22%3A%22end%22%2C%22align%22%3A%22top%22%2C%22font%22%3A%7B%22size%22%3A9%7D%2C%22formatter%22%3A%22Math.round%22%7D%7D%7D%7D&w=900&h=450&bkg=white" alt="Consistent enough?">
 </p>
 
 <details>
 <summary><strong>More details</strong></summary>
 
 <p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:26,136,235,371,452,522,527,541,683,809,847,898&chs=380x200&chxt=x,y&chxl=0:|W02|W03|W04|W05|W06|W07|W08|W09|W10|W11|W12|W13&chds=a&chco=FF6384&chtt=Code+Commits&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Commits Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:8,12,16,19,23,24,25,30,34,42,47,50&chs=380x200&chxt=x,y&chxl=0:|W02|W03|W04|W05|W06|W07|W08|W09|W10|W11|W12|W13&chds=a&chco=36A2EB&chtt=User+Talks&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="User Talks Progress">
-</p>
-
-<p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,12,26,42,63,72,75,85,91,97,103,107&chs=380x200&chxt=x,y&chxl=0:|W02|W03|W04|W05|W06|W07|W08|W09|W10|W11|W12|W13&chds=a&chco=FFCE56&chtt=Social+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Social Posts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:1,2,3,5,5,7,8,10,11,15,17,18&chs=380x200&chxt=x,y&chxl=0:|W02|W03|W04|W05|W06|W07|W08|W09|W10|W11|W12|W13&chds=a&chco=4BC0C0&chtt=Coffee+Chats&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Coffee Chats Progress">
-</p>
-
-<p align="center">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:21,32,44,56,67,69,71,85,94,103,112,119&chs=380x200&chxt=x,y&chxl=0:|W02|W03|W04|W05|W06|W07|W08|W09|W10|W11|W12|W13&chds=a&chco=9966FF&chtt=Workouts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Workouts Progress">
-  <img src="https://image-charts.com/chart?cht=lc&chd=t:0,0,0,0,0,3,5,9,9,9,9,9&chs=380x200&chxt=x,y&chxl=0:|W02|W03|W04|W05|W06|W07|W08|W09|W10|W11|W12|W13&chds=a&chco=FF9F40&chtt=Blog+Posts&chts=000000,14&chls=3&chg=20,20,1,5&chf=bg,s,FFFFFF" alt="Blog Posts Progress">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg" alt="Individual Metric Sparklines">
 </p>
 
 </details>
 
-<div align="right"><sub>updated at 04/04/26</sub></div>
+<div align="right"><sub>updated at 04/08/26</sub></div>
 
 # Weekly History
 

@@ -65,7 +65,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dashboard/data.json dashboard/history/ README.md
+          git add dashboard/data.json dashboard/history/ dashboard/progress_sparklines.svg README.md
           if ! git diff --staged --quiet; then
             git commit -m "Weekly reset: save history and reset metrics" -m "Auto-generated weekly history SVGs and updated README"
             git pull --rebase
