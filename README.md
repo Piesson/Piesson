@@ -18,7 +18,7 @@
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
 </p>
 
-<div align="right"><sub>updated at 04/04/26</sub></div>
+<div align="right"><sub>updated at 04/08/26</sub></div>
 
 # Consistent enough?
 
@@ -41,6 +41,7 @@
 
 | Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |
 |------|--------|-----------|----------|---------|---------|------------|----------|
+| [**Week 14**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W14.svg) | 2026-03-30 - 2026-04-05 | 167 | 1 | 3 | 1 | 3 | 0 |
 | [**Week 13**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W13.svg) | 2026-03-23 - 2026-03-29 | 51 | 4 | 3 | 1 | 7 | 0 |
 | [**Week 12**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W12.svg) | 2026-03-16 - 2026-03-22 | 38 | 6 | 5 | 2 | 9 | 0 |
 | [**Week 11**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W11.svg) | 2026-03-09 - 2026-03-15 | 126 | 6 | 8 | 4 | 9 | 0 |
@@ -52,9 +53,8 @@
 | [**Week 05**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W05.svg) | 2026-01-26 - 2026-02-01 | 136 | 16 | 3 | 2 | 12 | 0 |
 | [**Week 04**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W04.svg) | 2026-01-19 - 2026-01-25 | 99 | 14 | 4 | 1 | 12 | 0 |
 | [**Week 03**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W03.svg) | 2026-01-12 - 2026-01-18 | 110 | 12 | 4 | 1 | 11 | 0 |
-| [**Week 02**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W02.svg) | 2026-01-05 - 2026-01-11 | 26 | 0 | 8 | 1 | 21 | 0 |
 
-<div align="right"><sub>updated at 04/04/26</sub></div>
+<div align="right"><sub>updated at 04/08/26</sub></div>
 
 # Tech Stack
 
