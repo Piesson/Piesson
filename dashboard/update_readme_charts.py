@@ -2,7 +2,7 @@
 """
 Update README.md with progress charts
 Inserts cumulative progress charts before Tech Stack section, and a
-weekly AI Tokens section between Consistent enough? and Weekly History.
+weekly Token Usage section between Consistent enough? and Weekly History.
 """
 
 import json
@@ -89,17 +89,25 @@ def update_readme_with_charts():
         readme_content,
         section_text=charts_section,
         existing_pattern=charts_pattern,
-        anchors=['# AI Tokens', '# Weekly History', '# Tech Stack'],
+        anchors=['# Token Usage', '# AI Tokens', '# Weekly History', '# Tech Stack'],
     )
     print(f"✅ Consistent enough? section: {charts_action}")
 
-    tokens_pattern = r'# AI Tokens\n\n.*?</p>\n\n<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n'
+    # Migration: strip the legacy '# AI Tokens' heading so the renamed
+    # '# Token Usage' section takes its place. Safe to run every time —
+    # the regex simply matches nothing once the section is renamed.
+    legacy_tokens_pattern = r'# AI Tokens\n\n.*?</p>\n\n<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n'
+    if re.search(legacy_tokens_pattern, readme_content, re.DOTALL):
+        readme_content = re.sub(legacy_tokens_pattern, '', readme_content, flags=re.DOTALL)
+        print("✅ Legacy AI Tokens section: removed (renamed to Token Usage)")
+
+    tokens_pattern = r'# Token Usage\n\n.*?</p>\n\n<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n\n'
 
     if tokens_url:
-        tokens_section = f"""# AI Tokens
+        tokens_section = f"""# Token Usage
 
 <p align="center">
-  <img src="{tokens_url}" alt="Weekly AI Tokens">
+  <img src="{tokens_url}" alt="Token Usage">
 </p>
 
 <div align="right"><sub>updated at {current_date}</sub></div>
@@ -111,14 +119,14 @@ def update_readme_with_charts():
             existing_pattern=tokens_pattern,
             anchors=['# Weekly History', '# Tech Stack'],
         )
-        print(f"✅ AI Tokens section: {tokens_action}")
+        print(f"✅ Token Usage section: {tokens_action}")
     else:
         # No tracked weeks yet — strip any stale section so the README stays clean.
         if re.search(tokens_pattern, readme_content, re.DOTALL):
             readme_content = re.sub(tokens_pattern, '', readme_content, flags=re.DOTALL)
-            print("✅ AI Tokens section: removed (no tracked weeks)")
+            print("✅ Token Usage section: removed (no tracked weeks)")
         else:
-            print("ℹ️  AI Tokens section skipped (no tracked weeks yet)")
+            print("ℹ️  Token Usage section skipped (no tracked weeks yet)")
 
     with open(readme_path, 'w') as f:
         f.write(readme_content)

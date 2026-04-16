@@ -506,13 +506,17 @@ def load_tokens_series(raw_data):
 
 
 def generate_tokens_chart_url(raw_data):
-    """Return a QuickChart URL for the weekly AI tokens chart, or None if
-    no week has a tokens record (forward-only pre-tracking state)."""
+    """Return a QuickChart URL for the weekly Token Usage chart, or None if
+    no week has a tokens record (forward-only pre-tracking state).
+
+    Chart intentionally carries no unit text (no 'B', no 'CC'/'CX' labels) —
+    the section heading supplies the context."""
     series = load_tokens_series(raw_data)
     if not series:
         return None
 
-    if all((v is None or v == 0) for v in series['total']):
+    if all((v is None or v == 0) for v in series['claude']) and \
+       all((v is None or v == 0) for v in series['codex']):
         return None
 
     config = {
@@ -521,18 +525,7 @@ def generate_tokens_chart_url(raw_data):
             "labels": series['weeks'],
             "datasets": [
                 {
-                    "label": "Total (B)",
-                    "data": series['total'],
-                    "borderColor": "#111827",
-                    "backgroundColor": "rgba(17,24,39,0.08)",
-                    "fill": False,
-                    "borderWidth": 3,
-                    "pointRadius": 3,
-                    "tension": 0.25,
-                    "spanGaps": False,
-                },
-                {
-                    "label": "Claude Code (CC, B)",
+                    "label": "Claude Code",
                     "data": series['claude'],
                     "borderColor": "#F59E0B",
                     "backgroundColor": "rgba(245,158,11,0.08)",
@@ -543,7 +536,7 @@ def generate_tokens_chart_url(raw_data):
                     "spanGaps": False,
                 },
                 {
-                    "label": "Codex (CX, B)",
+                    "label": "Codex",
                     "data": series['codex'],
                     "borderColor": "#10B981",
                     "backgroundColor": "rgba(16,185,129,0.08)",
@@ -559,7 +552,7 @@ def generate_tokens_chart_url(raw_data):
             "responsive": False,
             "title": {
                 "display": True,
-                "text": "AI Tokens (B per week)",
+                "text": "Token Usage",
                 "fontSize": 16,
             },
             "legend": {
@@ -571,7 +564,7 @@ def generate_tokens_chart_url(raw_data):
                     {
                         "scaleLabel": {
                             "display": True,
-                            "labelString": "Tokens (B)",
+                            "labelString": "Tokens",
                             "fontStyle": "bold",
                         },
                         "ticks": {"beginAtZero": True},
