@@ -104,10 +104,10 @@ def generate_dashboard_svg():
     workouts_progress = get_progress_bar(total_workouts, goals.get('weeklyWorkouts', 7))
     blog_progress = get_progress_bar(current['blogPosts'], goals.get('weeklyBlog', 1))
 
-    # AI token usage (Claude Code + Codex CLI, written by get_weekly_tokens.py)
+    # Token usage banner (Claude Code + Codex CLI combined total, written by get_weekly_tokens.py).
+    # Breakdown lives in the Weekly History table and the Token Usage chart, not here.
     tokens = current.get('tokens') or {'claude': 0, 'codex': 0, 'total': 0}
     tokens_total_str = fmt_b(tokens.get('total', 0))
-    tokens_breakdown_str = f"CC {fmt_b(tokens.get('claude', 0))}  ·  CX {fmt_b(tokens.get('codex', 0))}"
 
     svg_content = f'''<svg width="520" height="400" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -258,17 +258,15 @@ def generate_dashboard_svg():
         </text>
     </g>
 
-    <!-- AI Tokens banner (full-width, below 6-card grid) -->
+    <!-- Token Usage banner (full-width, below 6-card grid).
+         Number on top, label below — same visual order as the six card tiles. -->
     <g transform="translate(30, 315)">
         <rect width="460" height="70" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="230" y="20" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            🔥 AI TOKENS THIS WEEK
-        </text>
-        <text x="230" y="48" text-anchor="middle" fill="#000000" font-size="28" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
+        <text x="230" y="38" text-anchor="middle" fill="#000000" font-size="30" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
             {tokens_total_str}
         </text>
-        <text x="230" y="63" text-anchor="middle" fill="#6b7280" font-size="10" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {tokens_breakdown_str}
+        <text x="230" y="58" text-anchor="middle" fill="#1f2937" font-size="11" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+            Token Usage
         </text>
     </g>
 
