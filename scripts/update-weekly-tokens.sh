@@ -38,13 +38,19 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 cleanup() {
+    # Abort any pending merge first so stash pop can write a clean index.
+    if [ -f .git/MERGE_HEAD ]; then
+        echo "[$(ts)] cleanup: aborting pending merge" >&2
+        git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
+    fi
+
     if [ "${STASHED}" = "1" ]; then
         # Look up the stash by tag rather than index, since intermediate git
         # operations may have shifted indices.
         local stash_ref
         stash_ref=$(git stash list | grep -F "${STASH_TAG}" | head -1 | cut -d: -f1)
         if [ -n "${stash_ref}" ]; then
-            if ! git stash pop "${stash_ref}" >/dev/null; then
+            if ! git stash pop "${stash_ref}" >/dev/null 2>&1; then
                 echo "[$(ts)] WARNING: stash pop had conflicts; stash left at ${stash_ref}" >&2
             else
                 echo "[$(ts)] restored stashed state"
@@ -58,8 +64,37 @@ echo "[$(ts)] step 1: git pull --rebase origin main"
 git pull --rebase origin main
 
 echo "[$(ts)] step 2: git subtree pull apps/piesson <- piesson-upstream (pull-only)"
+# The upstream workflow continuously regenerates dashboard/data.json with
+# fresh commit counts and timestamps. That regeneration routinely conflicts
+# with our in-flight copy. Step 3 rewrites tokens anyway, so on a data.json
+# conflict we take upstream's version. Any *other* conflict is unexpected
+# and we bail rather than silently paper over something important.
+set +e
 git subtree pull --prefix=apps/piesson piesson-upstream main --squash \
     -m "merge: sync apps/piesson from upstream"
+pull_rc=$?
+set -e
+
+if [ "${pull_rc}" -ne 0 ]; then
+    if [ ! -f .git/MERGE_HEAD ]; then
+        echo "[$(ts)] subtree pull failed without merge state, aborting" >&2
+        exit "${pull_rc}"
+    fi
+
+    unresolved=$(git diff --name-only --diff-filter=U | sort)
+    expected="apps/piesson/dashboard/data.json"
+    if [ "${unresolved}" = "${expected}" ]; then
+        echo "[$(ts)] auto-resolving data.json conflict (take upstream)"
+        git checkout --theirs -- apps/piesson/dashboard/data.json
+        git add apps/piesson/dashboard/data.json
+        git commit --no-edit -q
+    else
+        echo "[$(ts)] unexpected conflicts, aborting merge:" >&2
+        echo "${unresolved}" >&2
+        git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
+        exit 1
+    fi
+fi
 
 echo "[$(ts)] step 3: run dashboard/get_weekly_tokens.py"
 cd "${VAULT}/apps/piesson"
@@ -77,5 +112,11 @@ fi
 
 echo "[$(ts)] step 5: subtree-deploy.sh (push)"
 bash scripts/subtree-deploy.sh apps/piesson piesson-upstream
+
+# Mark today as handled so the Stop-hook backstop knows not to re-fire.
+# Both triggers (LaunchAgent + Claude Code Stop) share this sentinel.
+CACHE_DIR="${HOME}/Library/Caches/piesson-tokens"
+mkdir -p "${CACHE_DIR}"
+date +%Y-%m-%d > "${CACHE_DIR}/last-run-date"
 
 echo "[$(ts)] update-weekly-tokens.sh done"
