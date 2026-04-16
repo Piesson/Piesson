@@ -8,6 +8,7 @@ Part B: Self-generated SVG sparklines (individual metric detail)
 
 import json
 import math
+from datetime import datetime
 from pathlib import Path
 from urllib.parse import quote
 
@@ -425,6 +426,175 @@ def save_sparklines_svg(data):
 
 
 # ---------------------------------------------------------------------------
+# Part C: AI Tokens weekly chart (non-cumulative, forward-only)
+# ---------------------------------------------------------------------------
+
+def _extract_week_tokens(entry):
+    """Return the tokens dict from a history or currentWeek entry, or None."""
+    metrics = entry.get('metrics') if isinstance(entry, dict) else None
+    if not isinstance(metrics, dict):
+        return None
+    tokens = metrics.get('tokens')
+    return tokens if isinstance(tokens, dict) else None
+
+
+def _round_b(value):
+    """Convert raw token count to billions, rounded to 2 decimals. Preserves
+    None so the chart renders a gap for weeks before forward-only cutover."""
+    if value is None:
+        return None
+    try:
+        return round(int(value) / 1_000_000_000, 2)
+    except (TypeError, ValueError):
+        return None
+
+
+def load_tokens_series(raw_data):
+    """Build a non-cumulative weekly tokens series (claude / codex / total).
+
+    Uses the 11 most recent history entries plus a synthetic point for the
+    current in-progress week so the combined chart shows 12 points like the
+    rest of the dashboard. Past weeks without a tokens field render as null
+    so chart.js draws a gap (consistent with forward-only policy).
+    """
+    if not isinstance(raw_data, dict):
+        return None
+
+    history = raw_data.get('weeklyHistory', []) or []
+    history_sorted = sorted(history, key=lambda x: x.get('week', ''))
+    completed = history_sorted[-11:]
+
+    weeks, claude, codex, total = [], [], [], []
+
+    for entry in completed:
+        week_id = entry.get('week', '')
+        if '-W' not in week_id:
+            continue
+        weeks.append(f"W{week_id.split('-W')[1]}")
+        tokens = _extract_week_tokens(entry)
+        if tokens is None:
+            claude.append(None)
+            codex.append(None)
+            total.append(None)
+        else:
+            claude.append(_round_b(tokens.get('claude')))
+            codex.append(_round_b(tokens.get('codex')))
+            total.append(_round_b(tokens.get('total')))
+
+    current = raw_data.get('currentWeek')
+    if isinstance(current, dict):
+        start = current.get('startDate', '')
+        try:
+            parsed = datetime.strptime(start, '%Y-%m-%d')
+            weeks.append(f"W{parsed.isocalendar()[1]:02d}")
+            tokens = _extract_week_tokens(current) or {}
+            claude.append(_round_b(tokens.get('claude')) or 0.0)
+            codex.append(_round_b(tokens.get('codex')) or 0.0)
+            total.append(_round_b(tokens.get('total')) or 0.0)
+        except ValueError:
+            pass
+
+    if not weeks:
+        return None
+
+    return {
+        'weeks': weeks,
+        'claude': claude,
+        'codex': codex,
+        'total': total,
+    }
+
+
+def generate_tokens_chart_url(raw_data):
+    """Return a QuickChart URL for the weekly AI tokens chart, or None if
+    no week has a tokens record (forward-only pre-tracking state)."""
+    series = load_tokens_series(raw_data)
+    if not series:
+        return None
+
+    if all((v is None or v == 0) for v in series['total']):
+        return None
+
+    config = {
+        "type": "line",
+        "data": {
+            "labels": series['weeks'],
+            "datasets": [
+                {
+                    "label": "Total (B)",
+                    "data": series['total'],
+                    "borderColor": "#111827",
+                    "backgroundColor": "rgba(17,24,39,0.08)",
+                    "fill": False,
+                    "borderWidth": 3,
+                    "pointRadius": 3,
+                    "tension": 0.25,
+                    "spanGaps": False,
+                },
+                {
+                    "label": "Claude Code (CC, B)",
+                    "data": series['claude'],
+                    "borderColor": "#F59E0B",
+                    "backgroundColor": "rgba(245,158,11,0.08)",
+                    "fill": False,
+                    "borderWidth": 2.5,
+                    "pointRadius": 3,
+                    "tension": 0.25,
+                    "spanGaps": False,
+                },
+                {
+                    "label": "Codex (CX, B)",
+                    "data": series['codex'],
+                    "borderColor": "#10B981",
+                    "backgroundColor": "rgba(16,185,129,0.08)",
+                    "fill": False,
+                    "borderWidth": 2.5,
+                    "pointRadius": 3,
+                    "tension": 0.25,
+                    "spanGaps": False,
+                },
+            ],
+        },
+        "options": {
+            "responsive": False,
+            "title": {
+                "display": True,
+                "text": "AI Tokens (B per week)",
+                "fontSize": 16,
+            },
+            "legend": {
+                "position": "right",
+                "labels": {"fontSize": 11, "padding": 12},
+            },
+            "scales": {
+                "yAxes": [
+                    {
+                        "scaleLabel": {
+                            "display": True,
+                            "labelString": "Tokens (B)",
+                            "fontStyle": "bold",
+                        },
+                        "ticks": {"beginAtZero": True},
+                    }
+                ]
+            },
+            "plugins": {
+                "datalabels": {
+                    "display": "auto",
+                    "anchor": "end",
+                    "align": "top",
+                    "font": {"size": 9},
+                    "formatter": "(v) => v == null ? '' : v.toFixed(1)",
+                }
+            },
+        },
+    }
+
+    config_json = json.dumps(config, separators=(',', ':'))
+    return f"https://quickchart.io/chart?c={quote(config_json)}&w=900&h=400&bkg=white"
+
+
+# ---------------------------------------------------------------------------
 # CLI entry point
 # ---------------------------------------------------------------------------
 
@@ -442,7 +612,24 @@ if __name__ == "__main__":
 
         svg_path = save_sparklines_svg(data)
         print(f"Sparklines SVG saved: {svg_path}")
-        print("\nDone!")
+
+    # Tokens chart is fed from raw data.json (needs currentWeek, not just
+    # the cumulative-friendly shape produced by load_weekly_data).
+    raw_path = Path('dashboard/data.json')
+    if raw_path.exists():
+        raw = json.loads(raw_path.read_text())
+        tokens_url = generate_tokens_chart_url(raw)
+        if tokens_url:
+            print("\nTokens Chart URL (QuickChart.io):")
+            print(tokens_url)
+            print(f"\nURL length: {len(tokens_url)} chars")
+        else:
+            print("\nTokens Chart: no tracked weeks yet, skipping")
     else:
+        print("\nTokens Chart: data.json missing, skipping")
+
+    if not data:
         print("Failed to generate charts")
         exit(1)
+
+    print("\nDone!")
