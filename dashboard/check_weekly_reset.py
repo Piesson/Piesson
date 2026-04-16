@@ -67,7 +67,8 @@ def save_to_history(data, current_week_info):
             "workouts": current['metrics'].get('workouts', {
                 'running': 0,
                 'gym': 0
-            })
+            }),
+            "tokens": current['metrics'].get('tokens')
         }
     }
 
@@ -106,6 +107,12 @@ def reset_current_week_metrics(data):
         'workouts': {
             'running': 0,
             'gym': 0
+        },
+        'tokens': {
+            'claude': 0,
+            'codex': 0,
+            'total': 0,
+            'updatedAt': None
         }
     }
     print("✅ All metrics reset to 0")
