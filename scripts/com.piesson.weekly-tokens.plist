@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Install with:
+    cp apps/piesson/scripts/com.piesson.weekly-tokens.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.piesson.weekly-tokens.plist
+
+  Fire once manually for smoke testing:
+    launchctl kickstart -k gui/$UID/com.piesson.weekly-tokens
+
+  Logs:
+    tail -f ~/Library/Logs/piesson-tokens.out.log
+    tail -f ~/Library/Logs/piesson-tokens.err.log
+
+  Fires daily at 00:05 local time (KST on the target machine). The 5-minute
+  offset from midnight is intentional: it gives the system scheduler a jitter
+  buffer and keeps the query range aligned with the labeled week in data.json.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.piesson.weekly-tokens</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/apple/Documents/Obsidian Vault/apps/piesson/scripts/update-weekly-tokens.sh</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>0</integer>
+    <key>Minute</key>
+    <integer>5</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/apple/Library/Logs/piesson-tokens.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/apple/Library/Logs/piesson-tokens.err.log</string>
+</dict>
+</plist>
