@@ -26,6 +26,34 @@ echo "[$(ts)] update-weekly-tokens.sh starting"
 
 cd "${VAULT}"
 
+# Vault is typically dirty from Obsidian edits. Stash those so pull/rebase
+# and subtree pull can run, then restore at the end.
+STASH_TAG="piesson-tokens-auto-stash-$(date +%s)"
+STASHED=0
+if [ -n "$(git status --porcelain)" ]; then
+    if git stash push --include-untracked -m "${STASH_TAG}" >/dev/null; then
+        STASHED=1
+        echo "[$(ts)] stashed dirty vault state: ${STASH_TAG}"
+    fi
+fi
+
+cleanup() {
+    if [ "${STASHED}" = "1" ]; then
+        # Look up the stash by tag rather than index, since intermediate git
+        # operations may have shifted indices.
+        local stash_ref
+        stash_ref=$(git stash list | grep -F "${STASH_TAG}" | head -1 | cut -d: -f1)
+        if [ -n "${stash_ref}" ]; then
+            if ! git stash pop "${stash_ref}" >/dev/null; then
+                echo "[$(ts)] WARNING: stash pop had conflicts; stash left at ${stash_ref}" >&2
+            else
+                echo "[$(ts)] restored stashed state"
+            fi
+        fi
+    fi
+}
+trap cleanup EXIT
+
 echo "[$(ts)] step 1: git pull --rebase origin main"
 git pull --rebase origin main
 
