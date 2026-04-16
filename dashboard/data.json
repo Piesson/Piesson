@@ -24,7 +24,13 @@
         "running": 1,
         "gym": 1
       },
-      "commits": 22
+      "commits": 22,
+      "tokens": {
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
+      }
     }
   },
   "weeklyHistory": [
