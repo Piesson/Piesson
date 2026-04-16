@@ -564,7 +564,7 @@ def generate_tokens_chart_url(raw_data):
                     {
                         "scaleLabel": {
                             "display": True,
-                            "labelString": "Tokens (B)",
+                            "labelString": "Tokens",
                             "fontStyle": "bold",
                         },
                         "ticks": {"beginAtZero": True},
