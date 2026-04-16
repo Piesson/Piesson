@@ -40,6 +40,16 @@ def get_progress_bar(current, goal):
     bar = "█" * filled + "░" * empty
     return bar, f"{percentage}%"
 
+def fmt_b(n):
+    """Format token count as B (billion) string. Uses 1 decimal at >=1B,
+    2 decimals for smaller values so Codex sub-billion totals stay readable."""
+    n = int(n or 0)
+    if n >= 1_000_000_000:
+        return f"{n / 1_000_000_000:.1f}B"
+    if n > 0:
+        return f"{n / 1_000_000_000:.2f}B"
+    return "0.0B"
+
 def generate_dashboard_svg():
     # Load data
     with open('dashboard/data.json', 'r') as f:
@@ -94,7 +104,12 @@ def generate_dashboard_svg():
     workouts_progress = get_progress_bar(total_workouts, goals.get('weeklyWorkouts', 7))
     blog_progress = get_progress_bar(current['blogPosts'], goals.get('weeklyBlog', 1))
 
-    svg_content = f'''<svg width="520" height="330" xmlns="http://www.w3.org/2000/svg">
+    # AI token usage (Claude Code + Codex CLI, written by get_weekly_tokens.py)
+    tokens = current.get('tokens') or {'claude': 0, 'codex': 0, 'total': 0}
+    tokens_total_str = fmt_b(tokens.get('total', 0))
+    tokens_breakdown_str = f"CC {fmt_b(tokens.get('claude', 0))}  ·  CX {fmt_b(tokens.get('codex', 0))}"
+
+    svg_content = f'''<svg width="520" height="400" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
@@ -110,7 +125,7 @@ def generate_dashboard_svg():
     </defs>
 
     <!-- Background -->
-    <rect width="520" height="330" fill="url(#bg)" rx="16" stroke="#e2e8f0" stroke-width="1"/>
+    <rect width="520" height="400" fill="url(#bg)" rx="16" stroke="#e2e8f0" stroke-width="1"/>
 
     <!-- Title -->
     <text x="260" y="35" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
@@ -240,6 +255,20 @@ def generate_dashboard_svg():
         </text>
         <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
             {blog_progress[1]} of goal
+        </text>
+    </g>
+
+    <!-- AI Tokens banner (full-width, below 6-card grid) -->
+    <g transform="translate(30, 315)">
+        <rect width="460" height="70" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
+        <text x="230" y="20" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
+            🔥 AI TOKENS THIS WEEK
+        </text>
+        <text x="230" y="48" text-anchor="middle" fill="#000000" font-size="28" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
+            {tokens_total_str}
+        </text>
+        <text x="230" y="63" text-anchor="middle" fill="#6b7280" font-size="10" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
+            {tokens_breakdown_str}
         </text>
     </g>
 
