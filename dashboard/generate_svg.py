@@ -266,7 +266,7 @@ def generate_dashboard_svg():
             {tokens_total_str}
         </text>
         <text x="230" y="58" text-anchor="middle" fill="#1f2937" font-size="11" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            Token Usage
+            🪙 Token Usage
         </text>
     </g>
 
