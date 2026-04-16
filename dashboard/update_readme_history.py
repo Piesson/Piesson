@@ -12,18 +12,89 @@ from datetime import datetime, timedelta, timezone
 
 KST = timezone(timedelta(hours=9))
 
-def generate_history_table(weekly_history):
-    """Generate Markdown table for weekly history"""
-    if not weekly_history:
+LIVE_DASHBOARD_URL = (
+    "https://raw.githubusercontent.com/Piesson/Piesson/main/"
+    "dashboard/weekly_dashboard.svg"
+)
+
+
+def _fmt_b_short(n):
+    """Compact B-unit formatter for inside-cell use (no trailing B)."""
+    n = int(n or 0)
+    if n >= 1_000_000_000:
+        return f"{n / 1_000_000_000:.1f}"
+    if n > 0:
+        return f"{n / 1_000_000_000:.2f}"
+    return "0.0"
+
+
+def _fmt_tokens_cell(tokens):
+    """Format tokens dict as `1.4B (CC 1.4 / CX 0.0)` or em dash if absent."""
+    if not isinstance(tokens, dict):
+        return "—"
+    total = int(tokens.get('total') or 0)
+    if total == 0 and (tokens.get('updatedAt') is None):
+        return "—"
+    claude = tokens.get('claude', 0)
+    codex = tokens.get('codex', 0)
+    total_s = _fmt_b_short(total)
+    return f"{total_s}B (CC {_fmt_b_short(claude)} / CX {_fmt_b_short(codex)})"
+
+
+def _synthesize_live_entry(current):
+    """Build a weekly_history-shaped dict from data.currentWeek so the same
+    rendering path produces a 'live' first row in the table."""
+    if not isinstance(current, dict):
+        return None
+    start = current.get('startDate') or ''
+    end = current.get('endDate') or ''
+    if not start:
+        return None
+    try:
+        week_num = datetime.strptime(start, '%Y-%m-%d').isocalendar()[1]
+        year = datetime.strptime(start, '%Y-%m-%d').year
+        week_id = f"{year}-W{week_num:02d}"
+    except ValueError:
+        return None
+    return {
+        'week': week_id,
+        'startDate': start,
+        'endDate': end,
+        'metrics': current.get('metrics', {}),
+        '_live': True,
+    }
+
+
+def _build_rows(weekly_history, live_entry):
+    """Yield history entries in render order with the live row first.
+    weeklyHistory is capped at 11 so the total stays at 12 rows when live
+    is present."""
+    if live_entry is not None:
+        yield live_entry
+        for entry in weekly_history[:11]:
+            yield entry
+    else:
+        for entry in weekly_history[:12]:
+            yield entry
+
+
+def generate_history_table(weekly_history, current_week=None):
+    """Generate Markdown table for weekly history.
+
+    If current_week is provided, a synthetic 'Week N (live)' row is prepended
+    and the cap on completed weeks becomes 11 so the table stays at 12 rows.
+    """
+    live_entry = _synthesize_live_entry(current_week) if current_week else None
+    if not weekly_history and live_entry is None:
         return ""
 
     lines = []
     lines.append("# Weekly History")
     lines.append("")
-    lines.append("| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts |")
-    lines.append("|------|--------|-----------|----------|---------|---------|------------|----------|")
+    lines.append("| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts | 🔥 Tokens |")
+    lines.append("|------|--------|-----------|----------|---------|---------|------------|----------|-----------|")
 
-    for entry in weekly_history[:12]:
+    for entry in _build_rows(weekly_history, live_entry):
         week_id = entry['week']
         week_num = week_id.split('-W')[1]
 
@@ -52,12 +123,17 @@ def generate_history_table(weekly_history):
         user_sessions = metrics.get('userSessions', 0)
         cto_meetings = metrics.get('ctoMeetings', 0)
         blog_posts = metrics.get('blogPosts', 0)
+        tokens_cell = _fmt_tokens_cell(metrics.get('tokens'))
 
-        svg_url = f"https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_{week_id}.svg"
+        if entry.get('_live'):
+            week_label = f"[**Week {week_num} (live)**]({LIVE_DASHBOARD_URL})"
+        else:
+            svg_url = f"https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_{week_id}.svg"
+            week_label = f"[**Week {week_num}**]({svg_url})"
 
         lines.append(
-            f"| [**Week {week_num}**]({svg_url}) | {period} | {commits} | {total_social} | "
-            f"{user_sessions} | {cto_meetings} | {total_workouts} | {blog_posts} |"
+            f"| {week_label} | {period} | {commits} | {total_social} | "
+            f"{user_sessions} | {cto_meetings} | {total_workouts} | {blog_posts} | {tokens_cell} |"
         )
 
     lines.append("")
@@ -175,15 +251,16 @@ def update_readme_with_history():
         data = json.load(f)
 
     weekly_history = data.get('weeklyHistory', [])
+    current_week = data.get('currentWeek')
 
-    if not weekly_history:
-        print("No weekly history to add")
+    if not weekly_history and not current_week:
+        print("No weekly history or current week to add")
         return False
 
     with open(readme_path, 'r') as f:
         readme_content = f.read()
 
-    history_table = generate_history_table(weekly_history)
+    history_table = generate_history_table(weekly_history, current_week=current_week)
     combined_url, individual_urls = generate_chart_urls(weekly_history)
 
     history_pattern = r'# Weekly History\n\n\|.*?\n\|.*?\n(?:\|.*?\n)*\n(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n)?\n?'
