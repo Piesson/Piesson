@@ -18,7 +18,7 @@
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
 </p>
 
-<div align="right"><sub>updated at 04/17/26</sub></div>
+<div align="right"><sub>updated at 04/18/26</sub></div>
 
 # Consistent enough?
 
@@ -35,21 +35,21 @@
 
 </details>
 
-<div align="right"><sub>updated at 04/17/26</sub></div>
+<div align="right"><sub>updated at 04/18/26</sub></div>
 
 # Token Usage
 
 <p align="center">
-  <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22line%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22W05%22%2C%22W06%22%2C%22W07%22%2C%22W08%22%2C%22W09%22%2C%22W10%22%2C%22W11%22%2C%22W12%22%2C%22W13%22%2C%22W14%22%2C%22W15%22%2C%22W16%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Claude%20Code%22%2C%22data%22%3A%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C1.63%5D%2C%22borderColor%22%3A%22%23F59E0B%22%2C%22backgroundColor%22%3A%22rgba%28245%2C158%2C11%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.25%2C%22spanGaps%22%3Afalse%7D%2C%7B%22label%22%3A%22Codex%22%2C%22data%22%3A%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C0.05%5D%2C%22borderColor%22%3A%22%2310B981%22%2C%22backgroundColor%22%3A%22rgba%2816%2C185%2C129%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.25%2C%22spanGaps%22%3Afalse%7D%5D%7D%2C%22options%22%3A%7B%22responsive%22%3Afalse%2C%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Token%20Usage%22%2C%22fontSize%22%3A16%7D%2C%22legend%22%3A%7B%22position%22%3A%22right%22%2C%22labels%22%3A%7B%22fontSize%22%3A11%2C%22padding%22%3A12%7D%7D%2C%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22scaleLabel%22%3A%7B%22display%22%3Atrue%2C%22labelString%22%3A%22Tokens%20%28B%29%22%2C%22fontStyle%22%3A%22bold%22%7D%2C%22ticks%22%3A%7B%22beginAtZero%22%3Atrue%7D%7D%5D%7D%2C%22plugins%22%3A%7B%22datalabels%22%3A%7B%22display%22%3A%22auto%22%2C%22anchor%22%3A%22end%22%2C%22align%22%3A%22top%22%2C%22font%22%3A%7B%22size%22%3A9%7D%2C%22formatter%22%3A%22%28v%29%20%3D%3E%20v%20%3D%3D%20null%20%3F%20%27%27%20%3A%20v.toFixed%281%29%22%7D%7D%7D%7D&w=900&h=400&bkg=white" alt="Token Usage">
+  <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22line%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22W05%22%2C%22W06%22%2C%22W07%22%2C%22W08%22%2C%22W09%22%2C%22W10%22%2C%22W11%22%2C%22W12%22%2C%22W13%22%2C%22W14%22%2C%22W15%22%2C%22W16%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Claude%20Code%22%2C%22data%22%3A%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C2.05%5D%2C%22borderColor%22%3A%22%23F59E0B%22%2C%22backgroundColor%22%3A%22rgba%28245%2C158%2C11%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.25%2C%22spanGaps%22%3Afalse%7D%2C%7B%22label%22%3A%22Codex%22%2C%22data%22%3A%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C0.08%5D%2C%22borderColor%22%3A%22%2310B981%22%2C%22backgroundColor%22%3A%22rgba%2816%2C185%2C129%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.25%2C%22spanGaps%22%3Afalse%7D%5D%7D%2C%22options%22%3A%7B%22responsive%22%3Afalse%2C%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Token%20Usage%22%2C%22fontSize%22%3A16%7D%2C%22legend%22%3A%7B%22position%22%3A%22right%22%2C%22labels%22%3A%7B%22fontSize%22%3A11%2C%22padding%22%3A12%7D%7D%2C%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22scaleLabel%22%3A%7B%22display%22%3Atrue%2C%22labelString%22%3A%22Tokens%20%28B%29%22%2C%22fontStyle%22%3A%22bold%22%7D%2C%22ticks%22%3A%7B%22beginAtZero%22%3Atrue%7D%7D%5D%7D%2C%22plugins%22%3A%7B%22datalabels%22%3A%7B%22display%22%3A%22auto%22%2C%22anchor%22%3A%22end%22%2C%22align%22%3A%22top%22%2C%22font%22%3A%7B%22size%22%3A9%7D%2C%22formatter%22%3A%22%28v%29%20%3D%3E%20v%20%3D%3D%20null%20%3F%20%27%27%20%3A%20v.toFixed%281%29%22%7D%7D%7D%7D&w=900&h=400&bkg=white" alt="Token Usage">
 </p>
 
-<div align="right"><sub>updated at 04/17/26</sub></div>
+<div align="right"><sub>updated at 04/18/26</sub></div>
 
 # Weekly History
 
 | Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts | 🔥 Tokens |
 |------|--------|-----------|----------|---------|---------|------------|----------|-----------|
-| [**Week 16 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-04-13 - 2026-04-19 | 546 | 1 | 3 | 2 | 4 | 0 | 1.7B (CC 1.6 / CX 0.05) |
+| [**Week 16 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-04-13 - 2026-04-19 | 618 | 1 | 3 | 2 | 4 | 0 | 2.1B (CC 2.1 / CX 0.08) |
 | [**Week 15**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W15.svg) | 2026-04-06 - 2026-04-12 | 272 | 0 | 2 | 0 | 2 | 0 | — |
 | [**Week 14**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W14.svg) | 2026-03-30 - 2026-04-05 | 167 | 1 | 3 | 1 | 3 | 0 | — |
 | [**Week 13**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W13.svg) | 2026-03-23 - 2026-03-29 | 51 | 4 | 3 | 1 | 7 | 0 | — |
@@ -62,7 +62,7 @@
 | [**Week 06**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W06.svg) | 2026-02-02 - 2026-02-08 | 81 | 21 | 4 | 0 | 11 | 0 | — |
 | [**Week 05**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W05.svg) | 2026-01-26 - 2026-02-01 | 136 | 16 | 3 | 2 | 12 | 0 | — |
 
-<div align="right"><sub>updated at 04/17/26</sub></div>
+<div align="right"><sub>updated at 04/18/26</sub></div>
 
 # Tech Stack
 
