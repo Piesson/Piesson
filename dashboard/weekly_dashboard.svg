@@ -30,10 +30,10 @@
     <g transform="translate(60, 85)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            618
+            644
         </text>
         <text x="60" y="48" text-anchor="middle" fill="#10b981" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            ▲ +127%
+            ▲ +136%
         </text>
         <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
             🚀 CODE COMMITS
@@ -152,7 +152,7 @@
     <g transform="translate(30, 315)">
         <rect width="460" height="70" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="230" y="38" text-anchor="middle" fill="#000000" font-size="30" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            2.1B
+            2.4B
         </text>
         <text x="230" y="58" text-anchor="middle" fill="#1f2937" font-size="11" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
             🪙 Token Usage
