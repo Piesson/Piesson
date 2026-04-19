@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-17",
+  "lastUpdated": "2026-04-19",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -15,16 +15,16 @@
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 1
+        "hellotalk": 3
       },
-      "userSessions": 3,
+      "userSessions": 4,
       "ctoMeetings": 2,
       "blogPosts": 0,
       "workouts": {
-        "running": 2,
-        "gym": 2
+        "running": 3,
+        "gym": 3
       },
-      "commits": 644,
+      "commits": 579,
       "tokens": {
         "claude": 2302136000,
         "codex": 89310905,
