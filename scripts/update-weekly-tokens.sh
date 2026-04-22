@@ -81,19 +81,37 @@ if [ "${pull_rc}" -ne 0 ]; then
         exit "${pull_rc}"
     fi
 
-    unresolved=$(git diff --name-only --diff-filter=U | sort)
-    expected="apps/piesson/dashboard/data.json"
-    if [ "${unresolved}" = "${expected}" ]; then
-        echo "[$(ts)] auto-resolving data.json conflict (take upstream)"
-        git checkout --theirs -- apps/piesson/dashboard/data.json
-        git add apps/piesson/dashboard/data.json
-        git commit --no-edit -q
-    else
-        echo "[$(ts)] unexpected conflicts, aborting merge:" >&2
-        echo "${unresolved}" >&2
+    # Auto-resolve conflicts on files that upstream regenerates on its own
+    # (Piesson's profile-summary-cards.yml + update_dashboard.yml rewrite these
+    # several times a day). Vault side never edits them intentionally; taking
+    # --theirs is the documented recovery path in apps/piesson/CLAUDE.md.
+    #
+    # Anything outside the whitelist is a real divergence we want a human to
+    # look at, so we abort instead of silently clobbering it.
+    unresolved=$(git diff --name-only --diff-filter=U)
+    whitelist_re='^apps/piesson/(dashboard/data\.json$|profile-summary-card-output/|README\.md$)'
+    unexpected=$(printf '%s\n' "${unresolved}" | grep -v -E "${whitelist_re}" || true)
+
+    if [ -n "${unexpected}" ]; then
+        echo "[$(ts)] unexpected conflicts outside upstream-regen whitelist, aborting merge:" >&2
+        printf '%s\n' "${unexpected}" >&2
         git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
         exit 1
     fi
+
+    echo "[$(ts)] auto-resolving upstream-regenerated conflicts (take --theirs):"
+    printf '%s\n' "${unresolved}" | sed 's/^/  /'
+    printf '%s\n' "${unresolved}" | while IFS= read -r conflict_file; do
+        [ -z "${conflict_file}" ] && continue
+        # checkout --theirs handles modify/modify and add/add; for delete cases
+        # fall through to git rm. Then stage whichever path git now sees.
+        if ! git checkout --theirs -- "${conflict_file}" 2>/dev/null; then
+            git rm -f --quiet -- "${conflict_file}" 2>/dev/null || true
+        fi
+        git add -- "${conflict_file}" 2>/dev/null || \
+            git rm -f --quiet -- "${conflict_file}" 2>/dev/null || true
+    done
+    git commit --no-edit -q
 fi
 
 echo "[$(ts)] step 3: run dashboard/get_weekly_tokens.py"
