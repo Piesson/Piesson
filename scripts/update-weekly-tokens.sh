@@ -89,7 +89,15 @@ if [ "${pull_rc}" -ne 0 ]; then
     # Anything outside the whitelist is a real divergence we want a human to
     # look at, so we abort instead of silently clobbering it.
     unresolved=$(git diff --name-only --diff-filter=U)
-    whitelist_re='^apps/piesson/(dashboard/data\.json$|profile-summary-card-output/|README\.md$)'
+    # Full list of upstream-authoritative paths per apps/piesson/CLAUDE.md
+    # "Files to NEVER Manually Edit":
+    #   - dashboard/data.json               (slack_response.yml, update_dashboard.yml)
+    #   - dashboard/weekly_dashboard.svg    (generate_svg.py)
+    #   - dashboard/progress_sparklines.svg (generate_progress_chart.py)
+    #   - dashboard/history/**              (generate_weekly_history.py on weekly reset)
+    #   - profile-summary-card-output/**    (vn7n24fzkq action + generate_profile_card.py)
+    #   - README.md                         (update_readme_*.py)
+    whitelist_re='^apps/piesson/(dashboard/(data\.json$|weekly_dashboard\.svg$|progress_sparklines\.svg$|history/)|profile-summary-card-output/|README\.md$)'
     unexpected=$(printf '%s\n' "${unresolved}" | grep -v -E "${whitelist_re}" || true)
 
     if [ -n "${unexpected}" ]; then
