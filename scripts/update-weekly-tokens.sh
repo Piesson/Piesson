@@ -45,8 +45,20 @@ STASH_MANIFEST="${TMPDIR:-/tmp}/${STASH_TAG}.manifest"
 STASHED=0
 if [ -n "$(git status --porcelain)" ]; then
     # Snapshot untracked paths BEFORE stash push so we can audit after pop.
-    # `-c core.quotepath=false` preserves UTF-8 filenames (e.g. Korean).
-    git -c core.quotepath=false status --porcelain \
+    #
+    # Why the `-z | tr` dance instead of plain `--porcelain`:
+    # Default porcelain output DOUBLE-QUOTES paths that contain spaces or
+    # non-ASCII chars (e.g. `"한국어 발표.pptx"` comes back with literal
+    # surrounding quotes). Our downstream `[ -e "$f" ]` check then fails
+    # against the real unquoted path on disk → false-positive "missing"
+    # alerts like the one we saw on 2026-04-24 01:13.
+    #
+    # `-z` both disables that quoting AND switches record separator to NUL.
+    # macOS (BSD) awk can't set RS to a NUL byte, so we convert NUL → LF via
+    # `tr` and then parse line-by-line. Filenames containing literal newlines
+    # (extremely rare) would be mis-split by this; acceptable trade-off.
+    git -c core.quotepath=false status --porcelain -z \
+        | tr '\0' '\n' \
         | awk '/^\?\? /{ sub(/^\?\? /, ""); print }' \
         > "${STASH_MANIFEST}"
     if git stash push --include-untracked -m "${STASH_TAG}" >/dev/null; then
@@ -72,6 +84,8 @@ verify_manifest_or_rescue() {
     local rescued=0
     local rescue_failed=0
     local f
+    # Manifest is LF-separated (writer above converts git's -z NUL stream via
+    # `tr '\0' '\n'` for BSD-awk compatibility). Plain `read` is fine.
     while IFS= read -r f; do
         [ -z "$f" ] && continue
         [ -e "$f" ] && continue
@@ -93,6 +107,11 @@ verify_manifest_or_rescue() {
             echo "[$(ts)]   RESCUE FAILED (stash ref not found): $f" >&2
         fi
     done < "${STASH_MANIFEST}"
+
+    # Always log the verify result when a manifest existed — previously we
+    # only logged on missing>0, which made clean runs look indistinguishable
+    # from "verify never ran" in the morning report.
+    echo "[$(ts)] manifest verify: missing=${missing_count} rescued=${rescued} failed=${rescue_failed}"
 
     if [ "${missing_count}" -gt 0 ]; then
         echo "[$(ts)] manifest verify: missing=${missing_count} rescued=${rescued} failed=${rescue_failed}" >&2
