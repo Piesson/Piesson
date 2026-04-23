@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-22",
+  "lastUpdated": "2026-04-23",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -15,22 +15,22 @@
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 6
+        "hellotalk": 8
       },
-      "userSessions": 3,
-      "ctoMeetings": 1,
+      "userSessions": 4,
+      "ctoMeetings": 2,
       "blogPosts": 0,
       "workouts": {
-        "running": 1,
+        "running": 2,
         "gym": 2
       },
       "tokens": {
-        "claude": 0,
-        "codex": 0,
-        "total": 0,
-        "updatedAt": null
+        "claude": 1513145662,
+        "codex": 27299484,
+        "total": 1540445146,
+        "updatedAt": "2026-04-23T01:26:30+09:00"
       },
-      "commits": 91
+      "commits": 133
     }
   },
   "weeklyHistory": [
