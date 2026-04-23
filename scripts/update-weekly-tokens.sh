@@ -28,14 +28,84 @@ cd "${VAULT}"
 
 # Vault is typically dirty from Obsidian edits. Stash those so pull/rebase
 # and subtree pull can run, then restore at the end.
+#
+# Historical incident (2026-04-17 → 2026-04-23): conflicts during subtree pull
+# left several untracked files (200-Daily/*.md and others) permanently trapped
+# inside stashes. The `git stash pop` branch logged "restored stashed state"
+# even when pop was incomplete, because we were suppressing its stderr.
+#
+# Hardened flow:
+#   (1) Record the list of untracked files in a manifest file BEFORE stashing.
+#   (2) After `git stash pop` in cleanup, re-read the manifest and verify that
+#       every listed path exists in the worktree.
+#   (3) If any are missing, force-rescue them via `git checkout <stash>^3 -- <path>`.
+#   (4) Only delete the manifest once every file is confirmed present.
 STASH_TAG="piesson-tokens-auto-stash-$(date +%s)"
+STASH_MANIFEST="${TMPDIR:-/tmp}/${STASH_TAG}.manifest"
 STASHED=0
 if [ -n "$(git status --porcelain)" ]; then
+    # Snapshot untracked paths BEFORE stash push so we can audit after pop.
+    # `-c core.quotepath=false` preserves UTF-8 filenames (e.g. Korean).
+    git -c core.quotepath=false status --porcelain \
+        | awk '/^\?\? /{ sub(/^\?\? /, ""); print }' \
+        > "${STASH_MANIFEST}"
     if git stash push --include-untracked -m "${STASH_TAG}" >/dev/null; then
         STASHED=1
-        echo "[$(ts)] stashed dirty vault state: ${STASH_TAG}"
+        untracked_count=$(wc -l < "${STASH_MANIFEST}" | tr -d ' ')
+        echo "[$(ts)] stashed dirty vault state: ${STASH_TAG} (untracked_manifest=${untracked_count})"
+    else
+        rm -f "${STASH_MANIFEST}"
     fi
 fi
+
+# Verify every path in the manifest exists in the worktree. Any that are
+# missing get rescued directly from the stash's untracked tree (the "^3"
+# parent exists because we stashed with --include-untracked). Returns 0 only
+# when every file in the manifest is confirmed present.
+verify_manifest_or_rescue() {
+    [ ! -f "${STASH_MANIFEST}" ] && return 0
+
+    local stash_ref=""
+    stash_ref=$(git stash list | grep -F "${STASH_TAG}" | awk -F: 'NR==1{print $1}')
+
+    local missing_count=0
+    local rescued=0
+    local rescue_failed=0
+    local f
+    while IFS= read -r f; do
+        [ -z "$f" ] && continue
+        [ -e "$f" ] && continue
+        missing_count=$((missing_count + 1))
+        if [ -n "$stash_ref" ]; then
+            mkdir -p "$(dirname "$f")" 2>/dev/null || true
+            if git -c core.quotepath=false checkout "${stash_ref}^3" -- "$f" 2>/dev/null; then
+                # File was originally untracked — remove from index to keep
+                # that status after rescue.
+                git reset --quiet HEAD -- "$f" 2>/dev/null || true
+                rescued=$((rescued + 1))
+                echo "[$(ts)]   RESCUE ok:     $f" >&2
+            else
+                rescue_failed=$((rescue_failed + 1))
+                echo "[$(ts)]   RESCUE FAILED: $f" >&2
+            fi
+        else
+            rescue_failed=$((rescue_failed + 1))
+            echo "[$(ts)]   RESCUE FAILED (stash ref not found): $f" >&2
+        fi
+    done < "${STASH_MANIFEST}"
+
+    if [ "${missing_count}" -gt 0 ]; then
+        echo "[$(ts)] manifest verify: missing=${missing_count} rescued=${rescued} failed=${rescue_failed}" >&2
+    fi
+
+    # Only drop the manifest when every listed path is present. Otherwise
+    # keep it so stash-audit.sh and future runs can see what's outstanding.
+    if [ "${rescue_failed}" -eq 0 ]; then
+        rm -f "${STASH_MANIFEST}"
+        return 0
+    fi
+    return 1
+}
 
 cleanup() {
     # Abort any pending merge first so stash pop can write a clean index.
@@ -48,14 +118,23 @@ cleanup() {
         # Look up the stash by tag rather than index, since intermediate git
         # operations may have shifted indices.
         local stash_ref
-        stash_ref=$(git stash list | grep -F "${STASH_TAG}" | head -1 | cut -d: -f1)
+        stash_ref=$(git stash list | grep -F "${STASH_TAG}" | awk -F: 'NR==1{print $1}')
         if [ -n "${stash_ref}" ]; then
-            if ! git stash pop "${stash_ref}" >/dev/null 2>&1; then
-                echo "[$(ts)] WARNING: stash pop had conflicts; stash left at ${stash_ref}" >&2
+            # Capture pop output so we can surface real errors (the previous
+            # `>/dev/null 2>&1` is what masked the 2026-04-23 incident).
+            local pop_log
+            pop_log=$(git stash pop "${stash_ref}" 2>&1) || true
+            if git stash list | grep -qF "${STASH_TAG}"; then
+                echo "[$(ts)] WARNING: stash pop did not complete; stash kept at ${stash_ref}" >&2
+                echo "${pop_log}" | sed 's/^/[pop] /' >&2
             else
-                echo "[$(ts)] restored stashed state"
+                echo "[$(ts)] stash popped"
             fi
         fi
+
+        # Manifest verification runs whether or not pop appeared to succeed —
+        # belt-and-suspenders against any code path that silently drops files.
+        verify_manifest_or_rescue || true
     fi
 }
 trap cleanup EXIT
