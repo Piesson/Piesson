@@ -16,7 +16,8 @@ set -euo pipefail
 # be reachable via this explicit PATH.
 export PATH="/opt/homebrew/bin:/Users/apple/.nvm/versions/node/v22.18.0/bin:/usr/local/bin:/usr/bin:/bin"
 
-VAULT="/Users/apple/Documents/Obsidian Vault"
+USER_VAULT="/Users/apple/Documents/Obsidian Vault"
+CRON_VAULT="${HOME}/Documents/Obsidian-Vault-cron"
 LOG_DIR="${HOME}/Library/Logs"
 mkdir -p "${LOG_DIR}"
 
@@ -24,15 +25,57 @@ ts() { date '+%Y-%m-%dT%H:%M:%S%z'; }
 
 echo "[$(ts)] update-weekly-tokens.sh starting"
 
+# ── Cron worktree isolation ────────────────────────────────────────────────
+# This script's automatic commits used to land on the user's currently
+# checked-out branch in the main vault, polluting feature branches with
+# chore() noise and triggering merge conflicts on subsequent `git pull`.
+# We now route ALL git work through a dedicated worktree pinned to main.
+# The user's main vault is never touched by this cron.
+ensure_cron_worktree() {
+    # Create the worktree on first run.
+    if [ ! -e "${CRON_VAULT}/.git" ]; then
+        if ! git -C "${USER_VAULT}" worktree list --porcelain \
+                | grep -q "^worktree ${CRON_VAULT}$"; then
+            git -C "${USER_VAULT}" worktree add "${CRON_VAULT}" main >&2 || return 1
+        fi
+    fi
+    # Explicit dirty guard. `git pull --ff-only` rejects divergent history but
+    # silently passes uncommitted changes that don't conflict with incoming —
+    # so an interrupted prior run could survive without this check. We require
+    # a clean worktree to make the "abort rather than paper over it" promise
+    # hold up under all dirty cases, not just the conflicting subset.
+    if [ -n "$(cd "${CRON_VAULT}" && git status --porcelain)" ]; then
+        echo "ERROR: cron worktree at ${CRON_VAULT} is dirty — refusing to proceed" >&2
+        return 1
+    fi
+    # Pin to main + fast-forward to origin.
+    ( cd "${CRON_VAULT}" \
+      && git checkout main >/dev/null 2>&1 \
+      && git fetch origin main >/dev/null 2>&1 \
+      && git pull --ff-only origin main ) >&2 || return 1
+}
+
+if ! ensure_cron_worktree; then
+    echo "[$(ts)] ERROR: cron worktree setup failed at ${CRON_VAULT}" >&2
+    exit 1
+fi
+
+# All subsequent git/python work runs in the cron worktree, NOT the user's vault.
+VAULT="${CRON_VAULT}"
 cd "${VAULT}"
 
-# Vault is typically dirty from Obsidian edits. Stash those so pull/rebase
-# and subtree pull can run, then restore at the end.
+# NOTE: After the cron-worktree migration above, this stash block is largely
+# defensive — the cron worktree should always be clean (ensure_cron_worktree
+# enforces that). The logic is retained because (a) the subtree pull below
+# can leave the working tree mid-merge if interrupted, and (b) keeping the
+# manifest-based audit means any future regression that reintroduces dirty
+# state still gets caught by the verify_manifest_or_rescue path.
 #
-# Historical incident (2026-04-17 → 2026-04-23): conflicts during subtree pull
-# left several untracked files (200-Daily/*.md and others) permanently trapped
-# inside stashes. The `git stash pop` branch logged "restored stashed state"
-# even when pop was incomplete, because we were suppressing its stderr.
+# Historical incident (2026-04-17 → 2026-04-23, ran in the USER vault before
+# this migration): conflicts during subtree pull left several untracked files
+# (200-Daily/*.md and others) permanently trapped inside stashes. The
+# `git stash pop` branch logged "restored stashed state" even when pop was
+# incomplete, because we were suppressing its stderr.
 #
 # Hardened flow:
 #   (1) Record the list of untracked files in a manifest file BEFORE stashing.
