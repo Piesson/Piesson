@@ -105,27 +105,26 @@ Piesson/
 ### Technical Details
 
 #### GraphQL API Integration (`graphql_stats.py`)
-- **Multi-year fetching**: Loops through 2020-2025 (6 years)
-  - **Start year**: `max(2020, current_year - 5)` → Always 2020 as of 2025
-  - **Loop**: `for year in range(2020, 2026)` → 6 separate queries
-  - 2020: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
-  - 2021: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
-  - 2022: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
-  - 2023: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
-  - 2024: Jan 1 00:00:00 → Dec 31 23:59:59 UTC
-  - 2025: Jan 1 00:00:00 → Dec 31 23:59:59 UTC (current year)
-- **Query per year**: `contributionsCollection(from: DateTime!, to: DateTime!)`
-  - Each query fetches one full year of contributions
-  - Example: `from: "2020-01-01T00:00:00Z", to: "2020-12-31T23:59:59Z"`
+- **Single-request fetching with disk cache**: 1 GraphQL request total per call.
+  - Past years (2020 .. current_year-1): served from `dashboard/.stats_cache.json`
+    once they have `computed_in_year > year` (i.e., recomputed AFTER the year ended).
+  - Current year: queried fresh on every call (incomplete / changing).
+  - Combined into a single GraphQL request using yearly aliases (y2020..yYYYY).
+  - Effect: profile-summary-cards.yml (hourly) now uses ~1 query/hour instead of 7.
+  - **Year-window**: fixed floor at 2020 (no rolling window). Earlier `current_year - 5`
+    formula caused 2020 to silently drop off Jan 1 2026; that bug is now gone.
 - **Data retrieved and aggregated**:
   - `totalCommitContributions` → all_stats['commits']
   - `totalPullRequestReviewContributions` → all_stats['code_reviews']
   - `totalPullRequestContributions` → all_stats['pull_requests']
   - `totalIssueContributions` → all_stats['issues']
-- **Accumulation logic**: `all_stats[key] += contributions[key]` (6 years summed)
-  - Example: commits_2020 + commits_2021 + ... + commits_2025 = total_commits
+- **Cache invalidation**: when a year ends, its existing entry has
+  `computed_in_year == year`, which is NOT authoritative, so it is re-queried
+  exactly once in the new calendar year and re-cached with the new year stamp.
 - **Requires**: `SUMMARY_CARDS_TOKEN` (GitHub PAT with repo scope) for private repos
-- **Fallback**: Returns None if token missing or API fails
+- **Failure handling**: any GraphQL failure (rate-limit / network / auth) returns
+  `None`. Callers MUST treat `None` as "unknown — keep showing previous value".
+  Never silently substitute 0.
 
 #### Pie Chart Generation (`generate_profile_card.py`)
 - **Pie chart dimensions**: 144×144px (viewBox="0 0 144 144")
@@ -745,13 +744,18 @@ git pull --rebase
 - **Reason**: Allows flexible week boundaries and late updates
 - **Reset method**: Manually edit `data.json` or script to reset on Monday
 
-### Issue: Commits count is 0 in dashboard
-- **Cause**: GitHub API call failed or token missing
-- **Solution**:
-  - Check `SUMMARY_CARDS_TOKEN` secret is set
-  - Verify token has `repo` scope for private repositories
-  - Check GitHub Actions logs for API errors
-  - Run `python3 dashboard/get_weekly_commits.py` locally to test
+### Issue: Commits count shows "(cached — API unavailable)" or stays the same across runs
+- **Cause**: GitHub GraphQL API was temporarily unavailable (rate-limit, network).
+- **What happens now (post-2026-05 fix)**:
+  - `get_weekly_commits()` returns `None` (NOT 0) on any API failure.
+  - `generate_svg.py` keeps the existing `data.json` commits value.
+  - `generate_slack_message.py` displays `<value> builds (cached — API unavailable)`.
+- **Self-healing**: next cron run with a fresh rate-limit window will refresh.
+- **If it persists for hours**: check `gh run list --repo Piesson/Piesson` for
+  failing runs and inspect logs for `RATE_LIMIT` or `AUTH` errors.
+- **Cache file**: `dashboard/.stats_cache.json` persists past-year stats across
+  runs to reduce hourly API load. Stored at version 1; corrupt or stale cache
+  is gracefully treated as empty (no crash).
 
 ## 🎨 Layout Specifications
 
@@ -845,6 +849,10 @@ gh workflow run slack_response.yml -f metrics="1 0 0 2 0 0 1 1"
 ### Python Packages
 - `requests` - HTTP requests for GraphQL and Slack webhooks
 - Standard library: `json`, `datetime`, `subprocess`, `re`, `math`
+- Internal helpers: `_graphql_client.py` (retry + classified errors),
+  `_yearly_cache.py` (past-year disk cache).
+- Tests: `tests/` directory, run with `python3 -m unittest discover tests`.
+  No external test deps.
 
 ### APIs
 - **GitHub GraphQL API**: `https://api.github.com/graphql`

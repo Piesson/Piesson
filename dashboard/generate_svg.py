@@ -1,6 +1,7 @@
 import json
 import datetime
 import os
+import sys
 from pathlib import Path
 from get_weekly_commits import get_weekly_commits
 
@@ -55,9 +56,20 @@ def generate_dashboard_svg():
     with open('dashboard/data.json', 'r') as f:
         data = json.load(f)
 
-    # Auto-update commits from GitHub GraphQL API (all repos)
-    current_commits = get_weekly_commits()
-    data['currentWeek']['metrics']['commits'] = current_commits
+    # Auto-update commits from GitHub GraphQL API (all repos).
+    # If the API returns None (rate-limit, network, auth, schema drift, etc.)
+    # KEEP the value already in data.json. NEVER overwrite with 0 — that
+    # would turn a transient blip into permanent data corruption committed
+    # to git (May 1 2026 incident: 166 -> 0).
+    fresh = get_weekly_commits()
+    if fresh is not None:
+        data['currentWeek']['metrics']['commits'] = fresh
+    else:
+        prev = data['currentWeek']['metrics'].get('commits', 0)
+        print(
+            f"[generate_svg] commits API failed; keeping previous value {prev}",
+            file=sys.stderr,
+        )
 
     # Save updated data back
     with open('dashboard/data.json', 'w') as f:

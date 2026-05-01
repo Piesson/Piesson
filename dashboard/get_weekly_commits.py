@@ -1,50 +1,49 @@
 #!/usr/bin/env python3
-"""
-Get weekly commit count from GitHub GraphQL API
-Counts all commits across all repositories (including private) for current week
+"""Get weekly commit count for current KST week from GitHub GraphQL API.
+
+Returns:
+    int  - actual commit count (including 0 if user really had 0 commits)
+    None - API call failed for any reason. Callers MUST treat None as
+           "unknown - keep showing previous value", never as zero.
 """
 
+from __future__ import annotations
 import os
-import requests
+import sys
 from datetime import datetime, timedelta, timezone
+from typing import Optional
 
-# KST = UTC + 9 hours
+from _graphql_client import post_graphql, ErrorKind
+
 KST = timezone(timedelta(hours=9))
+GRAPHQL_URL = "https://api.github.com/graphql"
 
-def get_weekly_commits_graphql(username, token):
-    """
-    Get commit count for current week using GitHub GraphQL API
-    This includes ALL repositories (private + public)
-    """
-    import sys
-    if not token:
-        print("Warning: No GITHUB_TOKEN provided, cannot fetch weekly commits", file=sys.stderr)
-        return 0
 
-    # Calculate current week's Monday and Sunday in KST
-    today = datetime.now(KST)
-    monday = today - timedelta(days=today.weekday())
+def _week_window_utc(now_kst: datetime):
+    monday = now_kst - timedelta(days=now_kst.weekday())
     sunday = monday + timedelta(days=6)
-
-    # Convert to UTC for GitHub API (GitHub uses UTC timestamps)
     monday_utc = monday.astimezone(timezone.utc)
     sunday_utc = sunday.replace(hour=23, minute=59, second=59).astimezone(timezone.utc)
+    return (
+        monday_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        sunday_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
+    )
 
-    # Format as ISO 8601 strings
-    from_date = monday_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
-    to_date = sunday_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
 
-    print(f"Fetching commits for week: {monday.strftime('%Y-%m-%d')} to {sunday.strftime('%Y-%m-%d')} (KST)", file=sys.stderr)
-    print(f"GitHub API query: {from_date} to {to_date} (UTC)", file=sys.stderr)
+def get_weekly_commits() -> Optional[int]:
+    username = os.getenv("GITHUB_USERNAME", os.getenv("USERNAME", "Piesson"))
+    token = os.getenv("GITHUB_TOKEN", os.getenv("SUMMARY_CARDS_TOKEN", ""))
+    if not token:
+        print("[weekly-commits] no token in env; returning None (NOT 0)", file=sys.stderr)
+        return None
 
-    # GraphQL endpoint
-    graphql_url = "https://api.github.com/graphql"
+    from_iso, to_iso = _week_window_utc(datetime.now(KST))
+    print(f"[weekly-commits] querying {from_iso} -> {to_iso}", file=sys.stderr)
+
     headers = {
-        'Authorization': f'Bearer {token}',
-        'Content-Type': 'application/json'
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
     }
-
-    # GraphQL query for current week's contributions
     query = """
     query($username: String!, $from: DateTime!, $to: DateTime!) {
         user(login: $username) {
@@ -54,55 +53,27 @@ def get_weekly_commits_graphql(username, token):
         }
     }
     """
+    variables = {"username": username, "from": from_iso, "to": to_iso}
+    body = {"query": query, "variables": variables}
 
-    variables = {
-        "username": username,
-        "from": from_date,
-        "to": to_date
-    }
+    data, err = post_graphql(GRAPHQL_URL, headers, body)
+    if err is not None:
+        print(f"[weekly-commits] API failed ({err.value}); returning None (NOT 0)", file=sys.stderr)
+        return None
 
     try:
-        response = requests.post(
-            graphql_url,
-            headers=headers,
-            json={"query": query, "variables": variables}
-        )
+        n = int(data["data"]["user"]["contributionsCollection"]["totalCommitContributions"])
+    except (KeyError, TypeError, ValueError):
+        print("[weekly-commits] unexpected response shape; returning None", file=sys.stderr)
+        return None
 
-        if response.status_code != 200:
-            print(f"GraphQL API failed: {response.status_code}", file=sys.stderr)
-            print(f"Response: {response.text}", file=sys.stderr)
-            return 0
+    print(f"[weekly-commits] got {n}", file=sys.stderr)
+    return n
 
-        data = response.json()
-
-        if 'errors' in data:
-            print(f"GraphQL errors: {data['errors']}", file=sys.stderr)
-            return 0
-
-        commits = data['data']['user']['contributionsCollection']['totalCommitContributions']
-        print(f"✅ Weekly commits (all repos): {commits}", file=sys.stderr)
-        return commits
-
-    except Exception as e:
-        print(f"Error fetching weekly commits: {e}", file=sys.stderr)
-        return 0
-
-def get_weekly_commits():
-    """
-    Main function to get weekly commits
-    Uses environment variables for username and token
-    """
-    username = os.getenv('GITHUB_USERNAME', os.getenv('USERNAME', 'Piesson'))
-    token = os.getenv('GITHUB_TOKEN', os.getenv('SUMMARY_CARDS_TOKEN', ''))
-
-    if not token:
-        import sys
-        print("⚠️ No GitHub token found. Set GITHUB_TOKEN or SUMMARY_CARDS_TOKEN environment variable.", file=sys.stderr)
-        print("Falling back to 0 commits", file=sys.stderr)
-        return 0
-
-    return get_weekly_commits_graphql(username, token)
 
 if __name__ == "__main__":
-    commits = get_weekly_commits()
-    print(f"\nWeekly commits: {commits}")
+    v = get_weekly_commits()
+    if v is None:
+        print("None")
+        sys.exit(2)
+    print(v)

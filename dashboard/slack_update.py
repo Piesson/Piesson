@@ -5,9 +5,12 @@ Usage: echo "Instagram: 3, TikTok: 2" | python3 slack_update.py
 """
 
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone, timedelta
+
+import requests
 
 # KST = UTC + 9 hours
 KST = timezone(timedelta(hours=9))
@@ -125,40 +128,52 @@ def update_data(metrics):
     return new_totals
 
 def send_confirmation_message(webhook_url, result):
-    """Send confirmation message to Slack"""
-    import requests
-    from get_weekly_commits import get_weekly_commits
+    """Send confirmation message to Slack.
 
+    Reads commits from data.json (last known good value) instead of
+    calling the GraphQL API again. The dashboard refresh job will
+    update commits separately via generate_svg.py.
+    """
     added = result['added']
     totals = result['totals']
 
     total_social = totals['instagram'] + totals['tiktok'] + totals['hellotalk']
     total_workouts = totals['running'] + totals['gym']
 
-    # Get current commit count
-    commits = get_weekly_commits()
+    # Read commits from data.json — never call the API here.
+    try:
+        with open('dashboard/data.json', 'r') as f:
+            data = json.load(f)
+        commits = data['currentWeek']['metrics'].get('commits', 0)
+    except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+        # Should not happen — update_data() just wrote this file.
+        # If it does, log loudly and fall back to 0 so the slack
+        # confirmation still ships rather than the workflow crashing.
+        print(f"[slack_update] data.json read failed in confirmation: {e}",
+              file=sys.stderr)
+        commits = 0
 
     confirmation = {
         "username": "GrindBot",
         "icon_emoji": ":white_check_mark:",
-        "text": f"""✅ Well done! Progress updated successfully!
+        "text": f"""Well done! Progress updated successfully!
 
-🔄 ADDED TODAY:
-├─ 📱 Social: +{added['instagram'] + added['tiktok'] + added['hellotalk']} (IG: +{added['instagram']}, TT: +{added['tiktok']}, HT: +{added['hellotalk']})
-├─ 💬 User Talks: +{added['usertalks']}
-├─ ☕ Coffee Chats: +{added['coffeechats']}
-├─ 🏃 Workouts: +{added['running'] + added['gym']} (Run: +{added['running']}, Gym: +{added['gym']})
-└─ 📝 Blog Posts: +{added['blogposts']}
+ADDED TODAY:
+- Social: +{added['instagram'] + added['tiktok'] + added['hellotalk']} (IG: +{added['instagram']}, TT: +{added['tiktok']}, HT: +{added['hellotalk']})
+- User Talks: +{added['usertalks']}
+- Coffee Chats: +{added['coffeechats']}
+- Workouts: +{added['running'] + added['gym']} (Run: +{added['running']}, Gym: +{added['gym']})
+- Blog Posts: +{added['blogposts']}
 
-📊 NEW TOTALS:
-├─ 🚀 Code Commits: {commits} builds
-├─ 📱 Social Posts: {total_social} total
-├─ 💬 User Talks: {totals['usertalks']} sessions
-├─ ☕ Coffee Chats: {totals['coffeechats']} meetings
-├─ 🏃 Workouts: {total_workouts} sessions
-└─ 📝 Blog Posts: {totals['blogposts']} articles
+NEW TOTALS:
+- Code Commits: {commits} builds
+- Social Posts: {total_social} total
+- User Talks: {totals['usertalks']} sessions
+- Coffee Chats: {totals['coffeechats']} meetings
+- Workouts: {total_workouts} sessions
+- Blog Posts: {totals['blogposts']} articles
 
-Keep building! 🚀"""
+Keep building!"""
     }
 
     try:
@@ -171,8 +186,6 @@ Keep building! 🚀"""
         print(f"Error sending confirmation: {e}")
 
 if __name__ == "__main__":
-    import os
-
     # Read from stdin or argument
     text = sys.stdin.read() if not sys.stdin.isatty() else ' '.join(sys.argv[1:])
 
