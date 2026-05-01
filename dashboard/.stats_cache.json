@@ -1,1 +1,47 @@
-{"version": 1, "years": {}}
+{
+  "version": 1,
+  "years": {
+    "2020": {
+      "code_reviews": 0,
+      "commits": 0,
+      "computed_in_year": 2026,
+      "issues": 0,
+      "pull_requests": 0
+    },
+    "2021": {
+      "code_reviews": 0,
+      "commits": 0,
+      "computed_in_year": 2026,
+      "issues": 0,
+      "pull_requests": 0
+    },
+    "2022": {
+      "code_reviews": 0,
+      "commits": 0,
+      "computed_in_year": 2026,
+      "issues": 0,
+      "pull_requests": 0
+    },
+    "2023": {
+      "code_reviews": 0,
+      "commits": 0,
+      "computed_in_year": 2026,
+      "issues": 0,
+      "pull_requests": 0
+    },
+    "2024": {
+      "code_reviews": 0,
+      "commits": 128,
+      "computed_in_year": 2026,
+      "issues": 1,
+      "pull_requests": 0
+    },
+    "2025": {
+      "code_reviews": 0,
+      "commits": 2007,
+      "computed_in_year": 2026,
+      "issues": 59,
+      "pull_requests": 11
+    }
+  }
+}
