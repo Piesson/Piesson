@@ -9,31 +9,56 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-04-27",
-    "endDate": "2026-05-03",
+    "startDate": "2026-05-04",
+    "endDate": "2026-05-10",
     "metrics": {
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 10
+        "hellotalk": 0
       },
-      "userSessions": 3,
-      "ctoMeetings": 3,
+      "userSessions": 0,
+      "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "running": 3,
-        "gym": 4
+        "running": 0,
+        "gym": 0
       },
       "tokens": {
-        "claude": 228479750,
+        "claude": 0,
         "codex": 0,
-        "total": 228479750,
-        "updatedAt": "2026-04-28T00:06:59+09:00"
-      },
-      "commits": 27
+        "total": 0,
+        "updatedAt": null
+      }
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W18",
+      "startDate": "2026-04-27",
+      "endDate": "2026-05-03",
+      "metrics": {
+        "commits": 27,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 0,
+          "hellotalk": 10
+        },
+        "userSessions": 3,
+        "ctoMeetings": 3,
+        "blogPosts": 0,
+        "workouts": {
+          "running": 3,
+          "gym": 4
+        },
+        "tokens": {
+          "claude": 228479750,
+          "codex": 0,
+          "total": 228479750,
+          "updatedAt": "2026-04-28T00:06:59+09:00"
+        }
+      }
+    },
     {
       "week": "2026-W17",
       "startDate": "2026-04-20",
@@ -263,26 +288,6 @@
         "workouts": {
           "running": 1,
           "gym": 1
-        }
-      }
-    },
-    {
-      "week": "2026-W06",
-      "startDate": "2026-02-02",
-      "endDate": "2026-02-08",
-      "metrics": {
-        "commits": 81,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 2,
-          "hellotalk": 19
-        },
-        "userSessions": 4,
-        "ctoMeetings": 0,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 6,
-          "gym": 5
         }
       }
     }
