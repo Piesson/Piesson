@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-01",
+  "lastUpdated": "2026-05-03",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -15,9 +15,9 @@
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 8
+        "hellotalk": 10
       },
-      "userSessions": 2,
+      "userSessions": 3,
       "ctoMeetings": 3,
       "blogPosts": 0,
       "workouts": {
@@ -30,7 +30,7 @@
         "total": 228479750,
         "updatedAt": "2026-04-28T00:06:59+09:00"
       },
-      "commits": 25
+      "commits": 27
     }
   },
   "weeklyHistory": [
