@@ -32,11 +32,16 @@ echo "[$(ts)] update-weekly-tokens.sh starting"
 # We now route ALL git work through a dedicated worktree pinned to main.
 # The user's main vault is never touched by this cron.
 ensure_cron_worktree() {
-    # Create the worktree on first run.
+    # Use chore/cron-data branch (not main) so primary vault can occupy main.
+    # Daily PR LaunchAgent (separate routine) merges chore/cron-data → main.
     if [ ! -e "${CRON_VAULT}/.git" ]; then
         if ! git -C "${USER_VAULT}" worktree list --porcelain \
                 | grep -q "^worktree ${CRON_VAULT}$"; then
-            git -C "${USER_VAULT}" worktree add "${CRON_VAULT}" main >&2 || return 1
+            if git -C "${USER_VAULT}" rev-parse --verify chore/cron-data >/dev/null 2>&1; then
+                git -C "${USER_VAULT}" worktree add "${CRON_VAULT}" chore/cron-data >&2 || return 1
+            else
+                git -C "${USER_VAULT}" worktree add -b chore/cron-data "${CRON_VAULT}" origin/main >&2 || return 1
+            fi
         fi
     fi
     # Explicit dirty guard. `git pull --ff-only` rejects divergent history but
@@ -48,9 +53,9 @@ ensure_cron_worktree() {
         echo "ERROR: cron worktree at ${CRON_VAULT} is dirty — refusing to proceed" >&2
         return 1
     fi
-    # Pin to main + fast-forward to origin.
+    # Pin to chore/cron-data + ff-only pull from origin/main.
     ( cd "${CRON_VAULT}" \
-      && git checkout main >/dev/null 2>&1 \
+      && git checkout chore/cron-data >/dev/null 2>&1 \
       && git fetch origin main >/dev/null 2>&1 \
       && git pull --ff-only origin main ) >&2 || return 1
 }
