@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-10",
+  "lastUpdated": "2026-05-12",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -15,14 +15,14 @@
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 0
+        "hellotalk": 4
       },
-      "userSessions": 0,
+      "userSessions": 1,
       "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "running": 0,
-        "gym": 0
+        "running": 2,
+        "gym": 2
       },
       "tokens": {
         "claude": 33981768,
@@ -30,7 +30,7 @@
         "total": 33981768,
         "updatedAt": "2026-05-11T11:34:20+09:00"
       },
-      "commits": 22
+      "commits": 23
     }
   },
   "weeklyHistory": [
