@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-04",
+  "lastUpdated": "2026-05-10",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -9,31 +9,56 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-05-04",
-    "endDate": "2026-05-10",
+    "startDate": "2026-05-11",
+    "endDate": "2026-05-17",
     "metrics": {
       "socialContent": {
         "instagram": 0,
         "tiktok": 0,
-        "hellotalk": 2
+        "hellotalk": 0
       },
-      "userSessions": 2,
+      "userSessions": 0,
       "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "running": 1,
-        "gym": 1
+        "running": 0,
+        "gym": 0
       },
       "tokens": {
-        "claude": 804497540,
-        "codex": 22658397,
-        "total": 827155937,
-        "updatedAt": "2026-05-06T00:05:20+09:00"
-      },
-      "commits": 35
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
+      }
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W19",
+      "startDate": "2026-05-04",
+      "endDate": "2026-05-10",
+      "metrics": {
+        "commits": 61,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 0,
+          "hellotalk": 10
+        },
+        "userSessions": 4,
+        "ctoMeetings": 2,
+        "blogPosts": 0,
+        "workouts": {
+          "running": 4,
+          "gym": 4
+        },
+        "tokens": {
+          "claude": 804497540,
+          "codex": 22658397,
+          "total": 827155937,
+          "updatedAt": "2026-05-06T00:05:20+09:00"
+        }
+      }
+    },
     {
       "week": "2026-W18",
       "startDate": "2026-04-27",
@@ -266,26 +291,6 @@
         "userSessions": 1,
         "ctoMeetings": 1,
         "blogPosts": 2,
-        "workouts": {
-          "running": 1,
-          "gym": 1
-        }
-      }
-    },
-    {
-      "week": "2026-W07",
-      "startDate": "2026-02-09",
-      "endDate": "2026-02-15",
-      "metrics": {
-        "commits": 70,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 9
-        },
-        "userSessions": 1,
-        "ctoMeetings": 2,
-        "blogPosts": 3,
         "workouts": {
           "running": 1,
           "gym": 1
