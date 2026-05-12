@@ -25,6 +25,33 @@ ts() { date '+%Y-%m-%dT%H:%M:%S%z'; }
 
 echo "[$(ts)] update-weekly-tokens.sh starting"
 
+# ── Atomic mutex ───────────────────────────────────────────────────────────
+# Wrapper has two entry points (LaunchAgent at 00:05 KST + Claude Code Stop
+# hook on any session end). Both can fire within seconds. Without
+# serialization they race on the same worktree. `mkdir` is atomic on any
+# POSIX filesystem; stale locks (>30 min — wrapper never takes that long)
+# are stolen. flock is not used because macOS doesn't ship it by default.
+LOCK_DIR="${HOME}/Library/Caches/piesson-tokens/.wrapper.lock"
+mkdir -p "$(dirname "${LOCK_DIR}")"
+if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
+    if find "${LOCK_DIR}" -maxdepth 0 -mmin +30 2>/dev/null | grep -q .; then
+        echo "[$(ts)] stealing stale lock at ${LOCK_DIR}" >&2
+        rmdir "${LOCK_DIR}" 2>/dev/null
+        mkdir "${LOCK_DIR}" 2>/dev/null || {
+            echo "[$(ts)] could not acquire lock after stale-steal, exit" >&2
+            exit 0
+        }
+    else
+        echo "[$(ts)] another wrapper holds the lock, exit" >&2
+        exit 0
+    fi
+fi
+release_lock() { rmdir "${LOCK_DIR}" 2>/dev/null || true; }
+# Early EXIT trap so the lock releases even if we exit before cleanup() is
+# wired up (e.g., ensure_cron_worktree fails). The final trap below composes
+# release_lock with cleanup.
+trap release_lock EXIT
+
 # ── Cron worktree isolation ────────────────────────────────────────────────
 # This script's automatic commits used to land on the user's currently
 # checked-out branch in the main vault, polluting feature branches with
@@ -53,11 +80,32 @@ ensure_cron_worktree() {
         echo "ERROR: cron worktree at ${CRON_VAULT} is dirty — refusing to proceed" >&2
         return 1
     fi
-    # Pin to chore/cron-data + ff-only pull from origin/main.
-    ( cd "${CRON_VAULT}" \
-      && git checkout chore/cron-data >/dev/null 2>&1 \
-      && git fetch origin main >/dev/null 2>&1 \
-      && git pull --ff-only origin main ) >&2 || return 1
+    # Catch up cron-data to origin/main. Three cases:
+    #  (a) origin/main has new commits only → ff-merge.
+    #  (b) cron-data ahead+behind but tree(HEAD) == tree(origin/main):
+    #      post-squash-merge state (daily-pr-merge auto-merged yesterday's
+    #      PR — SHAs differ but content is identical). reset --hard is safe
+    #      and matches the recovery path PR #150 added to daily-pr-merge.sh.
+    #  (c) Real divergence (trees differ) → bail; manual intervention.
+    if ! (cd "${CRON_VAULT}" \
+            && git checkout chore/cron-data >/dev/null 2>&1 \
+            && git fetch origin main >/dev/null 2>&1); then
+        echo "[$(ts)] failed to checkout chore/cron-data or fetch origin/main" >&2
+        return 1
+    fi
+    if (cd "${CRON_VAULT}" && git pull --ff-only origin main) >/dev/null 2>&1; then
+        return 0
+    fi
+    local head_tree main_tree
+    head_tree=$(cd "${CRON_VAULT}" && git rev-parse "HEAD^{tree}")
+    main_tree=$(cd "${CRON_VAULT}" && git rev-parse "origin/main^{tree}")
+    if [ "${head_tree}" = "${main_tree}" ]; then
+        echo "[$(ts)] cron-data tree==origin/main (post-squash); resetting" >&2
+        (cd "${CRON_VAULT}" && git reset --hard origin/main) >/dev/null 2>&1 || return 1
+        return 0
+    fi
+    echo "[$(ts)] ERROR: cron-data diverged from origin/main and trees differ — manual intervention" >&2
+    return 1
 }
 
 if ! ensure_cron_worktree; then
@@ -176,7 +224,11 @@ verify_manifest_or_rescue() {
 
 cleanup() {
     # Abort any pending merge first so stash pop can write a clean index.
-    if [ -f .git/MERGE_HEAD ]; then
+    # In a worktree, `.git` is a FILE (gitdir pointer), not a directory, so
+    # `[ -f .git/MERGE_HEAD ]` is ALWAYS false even when MERGE_HEAD exists
+    # — leaving conflict markers in the working tree across runs.
+    # `git rev-parse --git-path` resolves the actual location reliably.
+    if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
         echo "[$(ts)] cleanup: aborting pending merge" >&2
         git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
     fi
@@ -204,7 +256,9 @@ cleanup() {
         verify_manifest_or_rescue || true
     fi
 }
-trap cleanup EXIT
+# Compose cleanup + release_lock into the final EXIT trap (overrides the
+# early lock-only trap registered above).
+trap 'cleanup; release_lock' EXIT
 
 echo "[$(ts)] step 1: git pull --rebase origin main"
 git pull --rebase origin main
@@ -222,7 +276,10 @@ pull_rc=$?
 set -e
 
 if [ "${pull_rc}" -ne 0 ]; then
-    if [ ! -f .git/MERGE_HEAD ]; then
+    # Worktree-safe MERGE_HEAD check (same fix as in cleanup()): the path
+    # `.git/MERGE_HEAD` doesn't resolve in a worktree because `.git` is a
+    # gitdir-pointer FILE there, not a directory. Use git plumbing instead.
+    if [ ! -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
         echo "[$(ts)] subtree pull failed without merge state, aborting" >&2
         exit "${pull_rc}"
     fi
