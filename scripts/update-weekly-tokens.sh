@@ -10,6 +10,50 @@
 #   4. commit only dashboard/data.json (never sweeps other dirty files)
 #   5. subtree-deploy.sh to push vault -> Piesson/Piesson
 
+# ── Self-update preamble ──────────────────────────────────────────────────
+# Closes the propagation gap from PR merges to LaunchAgent. The vault main
+# working tree (where this file lives on disk) doesn't auto-pull from
+# origin/main, so a PR that fixes the wrapper itself never reaches
+# LaunchAgent without a manual `git pull`. Without this preamble, every
+# PR-merge-driven wrapper fix takes effect only on the user's next manual
+# pull, which can be days. We close that gap by fetching origin/main here
+# (read-only on the working tree) and re-execing the origin version when
+# it's newer than what's on disk.
+#
+# Safety gates (ALL must hold to re-exec):
+#   (a) Not already self-updated in this exec chain (env-var guard)
+#   (b) Local working-tree blob == local HEAD's blob (no uncommitted edits)
+#   (c) Local HEAD is ancestor of origin/main (no unpushed local commits)
+#   (d) origin/main's blob for this file differs from local HEAD's blob
+#
+# Best-effort: any failure here is non-fatal — fall through to the local
+# (possibly stale) version. Verified against 8 scenarios in
+# /tmp/piesson-fixes-test/test_self_update_preamble.sh.
+{
+    if [ -z "${PIESSON_CRON_SELF_UPDATED:-}" ]; then
+        USER_VAULT="/Users/apple/Documents/Obsidian Vault"
+        TARGET_REL="apps/piesson/scripts/update-weekly-tokens.sh"
+
+        if git -C "${USER_VAULT}" fetch origin main --quiet 2>/dev/null; then
+            LOCAL_HEAD_BLOB=$(git -C "${USER_VAULT}" rev-parse "HEAD:${TARGET_REL}" 2>/dev/null || true)
+            LOCAL_FILE_BLOB=$(git hash-object "${BASH_SOURCE[0]}" 2>/dev/null || true)
+            ORIGIN_BLOB=$(git -C "${USER_VAULT}" rev-parse "origin/main:${TARGET_REL}" 2>/dev/null || true)
+
+            if [ -n "${LOCAL_FILE_BLOB}" ] && [ "${LOCAL_FILE_BLOB}" = "${LOCAL_HEAD_BLOB}" ] && \
+               [ -n "${ORIGIN_BLOB}" ] && [ "${ORIGIN_BLOB}" != "${LOCAL_HEAD_BLOB}" ] && \
+               git -C "${USER_VAULT}" merge-base --is-ancestor HEAD origin/main 2>/dev/null; then
+                FRESH=$(mktemp -t piesson-cron-self-update 2>/dev/null || true)
+                if [ -n "${FRESH}" ] && \
+                   git -C "${USER_VAULT}" show "origin/main:${TARGET_REL}" > "${FRESH}" 2>/dev/null; then
+                    export PIESSON_CRON_SELF_UPDATED=1
+                    exec /bin/bash "${FRESH}" "$@"
+                fi
+                [ -n "${FRESH}" ] && rm -f "${FRESH}"
+            fi
+        fi
+    fi
+} 2>/dev/null || true
+
 set -euo pipefail
 
 # LaunchAgent does not load shell rc files, so every binary we call must
