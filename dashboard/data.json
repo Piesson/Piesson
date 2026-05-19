@@ -14,14 +14,14 @@
     "metrics": {
       "socialContent": {
         "instagram": 0,
-        "tiktok": 4,
-        "hellotalk": 0
+        "tiktok": 5,
+        "hellotalk": 1
       },
-      "userSessions": 0,
-      "ctoMeetings": 0,
+      "userSessions": 1,
+      "ctoMeetings": 1,
       "blogPosts": 0,
       "workouts": {
-        "running": 1,
+        "running": 2,
         "gym": 1
       },
       "tokens": {
@@ -30,7 +30,7 @@
         "total": 0,
         "updatedAt": null
       },
-      "commits": 19
+      "commits": 55
     }
   },
   "weeklyHistory": [
