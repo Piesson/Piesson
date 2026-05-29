@@ -124,32 +124,38 @@ ensure_cron_worktree() {
         echo "ERROR: cron worktree at ${CRON_VAULT} is dirty — refusing to proceed" >&2
         return 1
     fi
-    # Catch up cron-data to origin/main. Three cases:
-    #  (a) origin/main has new commits only → ff-merge.
-    #  (b) cron-data ahead+behind but tree(HEAD) == tree(origin/main):
-    #      post-squash-merge state (daily-pr-merge auto-merged yesterday's
-    #      PR — SHAs differ but content is identical). reset --hard is safe
-    #      and matches the recovery path PR #150 added to daily-pr-merge.sh.
-    #  (c) Real divergence (trees differ) → bail; manual intervention.
+    # Hard reset chore/cron-data to origin/main as ground truth. This makes
+    # the wrapper immune to any prior state on chore/cron-data — whether from
+    # external user pushes (manual backfill commits), prior wrapper runs that
+    # did not propagate to vault origin, or daily-pr-merge brokenness.
+    #
+    # Why this is safe:
+    #  - Token data flows through Piesson/Piesson upstream (subtree pull/push),
+    #    NOT through vault origin/chore/cron-data. The wrapper's local commit
+    #    is just a tracking record for daily-pr-merge.
+    #  - get_weekly_tokens.py re-derives currentWeek.tokens from ccusage CLI
+    #    every run, so today's data is always rebuilt fresh.
+    #  - Even if today's local commit never reaches origin/chore/cron-data
+    #    (daily-pr-merge broken), the data is already in upstream from
+    #    step 5's subtree-deploy, and tomorrow's subtree pull brings it back.
+    #
+    # CONTRACT: Manual backfill of historical weeks must go through a PR to
+    # vault main + subtree-deploy to Piesson/Piesson upstream. DO NOT push
+    # directly to chore/cron-data — those commits will be discarded here.
+    # (Incident 2026-05-11→05-28: user manually pushed W19 backfill commits
+    # to origin/chore/cron-data, which created the divergence that the
+    # previous abort-on-diverge guard then refused to resolve for 8 days.)
     if ! (cd "${CRON_VAULT}" \
             && git checkout chore/cron-data >/dev/null 2>&1 \
             && git fetch origin main >/dev/null 2>&1); then
         echo "[$(ts)] failed to checkout chore/cron-data or fetch origin/main" >&2
         return 1
     fi
-    if (cd "${CRON_VAULT}" && git pull --ff-only origin main) >/dev/null 2>&1; then
-        return 0
+    if ! (cd "${CRON_VAULT}" && git reset --hard origin/main) >/dev/null 2>&1; then
+        echo "[$(ts)] ERROR: failed to reset chore/cron-data to origin/main" >&2
+        return 1
     fi
-    local head_tree main_tree
-    head_tree=$(cd "${CRON_VAULT}" && git rev-parse "HEAD^{tree}")
-    main_tree=$(cd "${CRON_VAULT}" && git rev-parse "origin/main^{tree}")
-    if [ "${head_tree}" = "${main_tree}" ]; then
-        echo "[$(ts)] cron-data tree==origin/main (post-squash); resetting" >&2
-        (cd "${CRON_VAULT}" && git reset --hard origin/main) >/dev/null 2>&1 || return 1
-        return 0
-    fi
-    echo "[$(ts)] ERROR: cron-data diverged from origin/main and trees differ — manual intervention" >&2
-    return 1
+    return 0
 }
 
 if ! ensure_cron_worktree; then
