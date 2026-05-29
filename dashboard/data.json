@@ -25,12 +25,12 @@
         "gym": 2
       },
       "tokens": {
-        "claude": 268698139,
+        "claude": 381116612,
         "codex": 0,
-        "total": 268698139,
-        "updatedAt": "2026-05-28T12:00:00+09:00"
+        "total": 381116612,
+        "updatedAt": "2026-05-29T10:20:31+09:00"
       },
-      "commits": 7
+      "commits": 38
     }
   },
   "weeklyHistory": [
@@ -131,10 +131,10 @@
           "gym": 4
         },
         "tokens": {
-          "claude": 228479750,
+          "claude": 1023063819,
           "codex": 0,
-          "total": 228479750,
-          "updatedAt": "2026-04-28T00:06:59+09:00"
+          "total": 1023063819,
+          "updatedAt": "2026-05-29T10:20:35+09:00"
         }
       }
     },
@@ -157,10 +157,10 @@
           "gym": 3
         },
         "tokens": {
-          "claude": 2035527328,
+          "claude": 1138679417,
           "codex": 53932836,
-          "total": 2089460164,
-          "updatedAt": "2026-04-26T00:05:36+09:00"
+          "total": 1192612253,
+          "updatedAt": "2026-05-29T10:20:39+09:00"
         }
       }
     },
@@ -207,6 +207,12 @@
         "workouts": {
           "running": 1,
           "gym": 1
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": "2026-05-29T10:20:43+09:00"
         }
       }
     },
@@ -227,6 +233,12 @@
         "workouts": {
           "running": 2,
           "gym": 1
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": "2026-05-29T10:20:47+09:00"
         }
       }
     },
@@ -247,6 +259,12 @@
         "workouts": {
           "running": 3,
           "gym": 4
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": "2026-05-29T10:20:50+09:00"
         }
       }
     },
@@ -267,6 +285,12 @@
         "workouts": {
           "running": 5,
           "gym": 4
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": "2026-05-29T10:20:53+09:00"
         }
       }
     },
@@ -287,6 +311,12 @@
         "workouts": {
           "running": 5,
           "gym": 4
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": "2026-05-29T10:20:57+09:00"
         }
       }
     },
@@ -307,6 +337,12 @@
         "workouts": {
           "running": 5,
           "gym": 4
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": "2026-05-29T10:21:00+09:00"
         }
       }
     }
