@@ -15,14 +15,14 @@
       "socialContent": {
         "instagram": 0,
         "tiktok": 6,
-        "hellotalk": 6
+        "hellotalk": 8
       },
-      "userSessions": 3,
-      "ctoMeetings": 2,
+      "userSessions": 4,
+      "ctoMeetings": 3,
       "blogPosts": 0,
       "workouts": {
-        "running": 3,
-        "gym": 2
+        "running": 4,
+        "gym": 3
       },
       "tokens": {
         "claude": 0,
@@ -30,7 +30,7 @@
         "total": 0,
         "updatedAt": null
       },
-      "commits": 11
+      "commits": 1
     }
   },
   "weeklyHistory": [
