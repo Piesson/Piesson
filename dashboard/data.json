@@ -9,31 +9,56 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-06-01",
-    "endDate": "2026-06-07",
+    "startDate": "2026-06-08",
+    "endDate": "2026-06-14",
     "metrics": {
       "socialContent": {
         "instagram": 0,
-        "tiktok": 6,
-        "hellotalk": 8
+        "tiktok": 0,
+        "hellotalk": 0
       },
-      "userSessions": 4,
-      "ctoMeetings": 3,
+      "userSessions": 0,
+      "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "running": 4,
-        "gym": 3
+        "running": 0,
+        "gym": 0
       },
       "tokens": {
         "claude": 0,
         "codex": 0,
         "total": 0,
         "updatedAt": null
-      },
-      "commits": 1
+      }
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W23",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-07",
+      "metrics": {
+        "commits": 1,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 6,
+          "hellotalk": 8
+        },
+        "userSessions": 4,
+        "ctoMeetings": 3,
+        "blogPosts": 0,
+        "workouts": {
+          "running": 4,
+          "gym": 3
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": null
+        }
+      }
+    },
     {
       "week": "2026-W22",
       "startDate": "2026-05-25",
@@ -317,32 +342,6 @@
           "codex": 0,
           "total": 0,
           "updatedAt": "2026-05-29T10:20:53+09:00"
-        }
-      }
-    },
-    {
-      "week": "2026-W11",
-      "startDate": "2026-03-09",
-      "endDate": "2026-03-15",
-      "metrics": {
-        "commits": 126,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 6
-        },
-        "userSessions": 8,
-        "ctoMeetings": 4,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 5,
-          "gym": 4
-        },
-        "tokens": {
-          "claude": 0,
-          "codex": 0,
-          "total": 0,
-          "updatedAt": "2026-05-29T10:20:57+09:00"
         }
       }
     }
