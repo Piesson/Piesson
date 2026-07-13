@@ -566,7 +566,7 @@ async function handleRequest(request) {
 │ GitHub Actions │  │ GitHub Actions  │  │ GitHub Actions │
 │ Workflow 1     │  │ Workflow 2      │  │ Workflow 3     │
 │ Profile Card   │  │ Dashboard       │  │ Slack Input    │
-│ (Daily 7AM)    │  │ (Schedule/Push) │  │ (Manual)       │
+│ (Every 6h)     │  │ (Schedule/Push) │  │ (Manual)       │
 └────────────────┘  └─────────────────┘  └────────────────┘
                                                   ▲
                                                   │
@@ -585,10 +585,10 @@ async function handleRequest(request) {
 
 ## 데이터 흐름 (Data Flow)
 
-### Flow 1: Profile Card 업데이트 (매일 자동)
+### Flow 1: Profile Card 업데이트 (6시간마다 자동)
 
 ```
-[Schedule: Daily 7AM KST]
+[Schedule: 6시간마다 · 00/06/12/18 KST]
          ↓
 [profile-summary-cards.yml 실행]
          ↓
