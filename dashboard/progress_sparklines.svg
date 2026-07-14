@@ -29,7 +29,7 @@
     <!-- Final value badge -->
     <text x="224" y="22" fill="#FF6384" font-size="12" font-weight="700"
           font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        494
+        1,033
     </text>
 
     <!-- Grid lines -->
@@ -44,15 +44,15 @@
     <text x="26" y="159" fill="#9ca3af" font-size="8"
           font-family="Monaco, monospace" text-anchor="end">0</text>
     <text x="26" y="104.5" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">247</text>
+          font-family="Monaco, monospace" text-anchor="end">516</text>
     <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">494</text>
+          font-family="Monaco, monospace" text-anchor="end">1033</text>
 
     <!-- Area fill -->
-    <polygon points="30.0,113.2 47.8,107.2 65.6,93.7 83.5,75.6 101.3,56.0 119.1,47.1 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#FF6384" opacity="0.08" />
+    <polygon points="30.0,134.6 47.8,130.3 65.6,123.2 83.5,113.7 101.3,104.3 119.1,95.8 136.9,93.5 154.7,88.8 172.5,88.8 190.4,88.8 208.2,79.9 226.0,46.9 226.0,156 30.0,156" fill="#FF6384" opacity="0.08" />
 
     <!-- Sparkline -->
-    <polyline points="30.0,113.2 47.8,107.2 65.6,93.7 83.5,75.6 101.3,56.0 119.1,47.1 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9" fill="none" stroke="#FF6384"
+    <polyline points="30.0,134.6 47.8,130.3 65.6,123.2 83.5,113.7 101.3,104.3 119.1,95.8 136.9,93.5 154.7,88.8 172.5,88.8 190.4,88.8 208.2,79.9 226.0,46.9" fill="none" stroke="#FF6384"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 
     <!-- Last point dot -->
