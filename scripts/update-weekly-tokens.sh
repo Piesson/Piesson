@@ -115,14 +115,16 @@ ensure_cron_worktree() {
             fi
         fi
     fi
-    # Explicit dirty guard. `git pull --ff-only` rejects divergent history but
-    # silently passes uncommitted changes that don't conflict with incoming —
-    # so an interrupted prior run could survive without this check. We require
-    # a clean worktree to make the "abort rather than paper over it" promise
-    # hold up under all dirty cases, not just the conflicting subset.
-    if [ -n "$(cd "${CRON_VAULT}" && git status --porcelain)" ]; then
-        echo "ERROR: cron worktree at ${CRON_VAULT} is dirty — refusing to proceed" >&2
-        return 1
+    # Self-heal FIRST, verify AFTER. The previous order — a dirty guard that
+    # refused to proceed BEFORE the hard reset below — meant one leftover
+    # conflict permanently blocked every subsequent run, because the code
+    # that could clean it up was unreachable. That is exactly the
+    # 2026-05-30 → 2026-07-13 45-day outage ("cron worktree is dirty —
+    # refusing to proceed" every night). Any pre-existing state here is
+    # disposable by contract (see below), so heal unconditionally.
+    if [ -f "$(cd "${CRON_VAULT}" && git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
+        echo "[$(ts)] healing: aborting pending merge in cron worktree" >&2
+        (cd "${CRON_VAULT}" && { git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true; })
     fi
     # Hard reset chore/cron-data to origin/main as ground truth. This makes
     # the wrapper immune to any prior state on chore/cron-data — whether from
@@ -146,13 +148,23 @@ ensure_cron_worktree() {
     # to origin/chore/cron-data, which created the divergence that the
     # previous abort-on-diverge guard then refused to resolve for 8 days.)
     if ! (cd "${CRON_VAULT}" \
-            && git checkout chore/cron-data >/dev/null 2>&1 \
+            && git checkout -f chore/cron-data >/dev/null 2>&1 \
             && git fetch origin main >/dev/null 2>&1); then
         echo "[$(ts)] failed to checkout chore/cron-data or fetch origin/main" >&2
         return 1
     fi
     if ! (cd "${CRON_VAULT}" && git reset --hard origin/main) >/dev/null 2>&1; then
         echo "[$(ts)] ERROR: failed to reset chore/cron-data to origin/main" >&2
+        return 1
+    fi
+    # Untracked leftovers (e.g. files a conflicted subtree pull dropped in
+    # the tree) survive reset --hard; sweep them too.
+    (cd "${CRON_VAULT}" && git clean -fd) >/dev/null 2>&1 || true
+    # Post-heal verification: if the tree is STILL dirty after abort + reset
+    # + clean, something is genuinely wrong (permissions, disk) — bail loudly
+    # rather than paper over it.
+    if [ -n "$(cd "${CRON_VAULT}" && git status --porcelain)" ]; then
+        echo "ERROR: cron worktree at ${CRON_VAULT} is dirty even after reset — refusing to proceed" >&2
         return 1
     fi
     return 0

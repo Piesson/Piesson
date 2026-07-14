@@ -25,11 +25,12 @@
         "gym": 0
       },
       "tokens": {
-        "claude": 0,
+        "claude": 804111512,
         "codex": 0,
-        "total": 0,
-        "updatedAt": null
-      }
+        "total": 804111512,
+        "updatedAt": "2026-07-14T00:03:45+09:00"
+      },
+      "commits": 54
     }
   },
   "weeklyHistory": [
@@ -41,21 +42,21 @@
         "commits": 0,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 0
+          "tiktok": 3,
+          "hellotalk": 8
         },
-        "userSessions": 0,
-        "ctoMeetings": 0,
+        "userSessions": 3,
+        "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "running": 0,
-          "gym": 0
+          "running": 4,
+          "gym": 3
         },
         "tokens": {
-          "claude": 0,
+          "claude": 5246465623,
           "codex": 0,
-          "total": 0,
-          "updatedAt": null
+          "total": 5246465623,
+          "updatedAt": "2026-07-14T00:03:58+09:00"
         }
       }
     },
@@ -67,21 +68,21 @@
         "commits": 0,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 0
+          "tiktok": 3,
+          "hellotalk": 8
         },
-        "userSessions": 0,
-        "ctoMeetings": 0,
+        "userSessions": 3,
+        "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "running": 0,
-          "gym": 0
+          "running": 4,
+          "gym": 3
         },
         "tokens": {
-          "claude": 0,
+          "claude": 1755114138,
           "codex": 0,
-          "total": 0,
-          "updatedAt": null
+          "total": 1755114138,
+          "updatedAt": "2026-07-14T00:04:05+09:00"
         }
       }
     },
@@ -93,21 +94,21 @@
         "commits": 0,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 0
+          "tiktok": 3,
+          "hellotalk": 8
         },
-        "userSessions": 0,
-        "ctoMeetings": 0,
+        "userSessions": 3,
+        "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "running": 0,
-          "gym": 0
+          "running": 4,
+          "gym": 3
         },
         "tokens": {
           "claude": 0,
           "codex": 0,
           "total": 0,
-          "updatedAt": null
+          "updatedAt": "2026-07-14T00:04:12+09:00"
         }
       }
     },
@@ -119,21 +120,21 @@
         "commits": 0,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 0
+          "tiktok": 3,
+          "hellotalk": 8
         },
-        "userSessions": 0,
-        "ctoMeetings": 0,
+        "userSessions": 3,
+        "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "running": 0,
-          "gym": 0
+          "running": 4,
+          "gym": 3
         },
         "tokens": {
           "claude": 0,
           "codex": 0,
           "total": 0,
-          "updatedAt": null
+          "updatedAt": "2026-07-14T00:04:19+09:00"
         }
       }
     },
@@ -145,21 +146,21 @@
         "commits": 0,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
-          "hellotalk": 0
+          "tiktok": 3,
+          "hellotalk": 8
         },
-        "userSessions": 0,
-        "ctoMeetings": 0,
+        "userSessions": 3,
+        "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "running": 0,
-          "gym": 0
+          "running": 4,
+          "gym": 3
         },
         "tokens": {
-          "claude": 0,
+          "claude": 577204643,
           "codex": 0,
-          "total": 0,
-          "updatedAt": null
+          "total": 577204643,
+          "updatedAt": "2026-07-14T00:04:25+09:00"
         }
       }
     },
@@ -182,10 +183,10 @@
           "gym": 3
         },
         "tokens": {
-          "claude": 0,
+          "claude": 18017229,
           "codex": 0,
-          "total": 0,
-          "updatedAt": null
+          "total": 18017229,
+          "updatedAt": "2026-07-14T00:04:32+09:00"
         }
       }
     },
@@ -211,7 +212,7 @@
           "claude": 442985037,
           "codex": 0,
           "total": 442985037,
-          "updatedAt": "2026-05-30T00:05:27+09:00"
+          "updatedAt": "2026-07-14T23:00:31+09:00"
         }
       }
     },

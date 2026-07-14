@@ -9,6 +9,8 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from get_weekly_commits import get_commits_for_range
+
 # KST = UTC + 9 hours
 KST = timezone(timedelta(hours=9))
 
@@ -142,6 +144,22 @@ def check_and_reset_weekly_data():
     if stored_start_date != current_week['monday']:
         print(f"\n🔄 NEW WEEK DETECTED: {current_week['week_id']}")
         print(f"   Period: {current_week['monday_display']} - {current_week['sunday_display']}")
+
+        # Step 0: Confirm the closing week's commits from the API before
+        # snapshotting. The stored value is whatever the last data.json push
+        # happened to write — 0 when no push ran all week (W24–W28 incident),
+        # or the NEW week's near-zero count when a Monday-midnight token push
+        # ran generate_svg.py before this reset. On API failure keep the
+        # stored value (same None contract as generate_svg.py).
+        stored_start = data['currentWeek'].get('startDate')
+        stored_end = data['currentWeek'].get('endDate')
+        if stored_start and stored_end:
+            confirmed = get_commits_for_range(stored_start, stored_end)
+            if confirmed is not None:
+                data['currentWeek']['metrics']['commits'] = confirmed
+                print(f"\n🔎 Closing-week commits confirmed from API: {confirmed}")
+            else:
+                print("\n🔎 Commits API unavailable — keeping stored value")
 
         # Step 1: Save last week's data to history
         print("\n📚 Step 1: Saving last week to history...")

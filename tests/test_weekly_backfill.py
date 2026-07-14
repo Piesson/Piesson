@@ -160,6 +160,47 @@ class TestBackfill(unittest.TestCase):
             # updatedAt is rewritten to "now"
             self.assertTrue(new_tokens["updatedAt"].startswith("20"))
 
+    def test_lower_requery_never_lowers_recorded_value(self):
+        """Regression (2026-07-14): local usage logs are pruned after ~30
+        days, so re-querying an old week under-counts. W22 was overwritten
+        442,985,037 → 83,765,464 from a 4-day log remnant. A backfill must
+        never LOWER a live-recorded value."""
+        with patch.object(gwt, "fetch_claude", return_value=(83_765_464, True)), \
+             patch.object(gwt, "fetch_codex", return_value=(0, True)):
+            data = self._mk_data([
+                make_entry(
+                    "2026-W22", "2026-05-25", "2026-05-31",
+                    tokens={
+                        "claude": 442_985_037, "codex": 0, "total": 442_985_037,
+                        "updatedAt": "2026-05-30T00:05:27+09:00",  # stale
+                    },
+                ),
+            ])
+            gwt.backfill_weekly_history(data)
+            new_tokens = data["weeklyHistory"][0]["metrics"]["tokens"]
+            self.assertEqual(new_tokens["claude"], 442_985_037)
+            self.assertEqual(new_tokens["total"], 442_985_037)
+
+    def test_higher_requery_still_updates(self):
+        """The guard only blocks decreases — a higher re-query (more complete
+        local logs) must still win."""
+        with patch.object(gwt, "fetch_claude", return_value=(600_000_000, True)), \
+             patch.object(gwt, "fetch_codex", return_value=(1_000, True)):
+            data = self._mk_data([
+                make_entry(
+                    "2026-W24", "2026-06-08", "2026-06-14",
+                    tokens={
+                        "claude": 577_204_643, "codex": 0, "total": 577_204_643,
+                        "updatedAt": "2026-06-10T00:05:00+09:00",  # stale
+                    },
+                ),
+            ])
+            n = gwt.backfill_weekly_history(data)
+            self.assertEqual(n, 1)
+            new_tokens = data["weeklyHistory"][0]["metrics"]["tokens"]
+            self.assertEqual(new_tokens["claude"], 600_000_000)
+            self.assertEqual(new_tokens["codex"], 1_000)
+
     def test_zero_query_preserves_nonzero(self):
         """Defensive: if ccusage returns 0 for an entry that had non-zero,
         KEEP the existing value. Could be transient ccusage breakage."""

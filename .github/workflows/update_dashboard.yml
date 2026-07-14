@@ -38,6 +38,11 @@ jobs:
 
       - name: Check weekly reset
         id: check_weekly
+        env:
+          # check_weekly_reset.py confirms the closing week's commits from
+          # the GraphQL API at snapshot time (no token → keeps stored value)
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
         run: |
           set +e
           python3 dashboard/check_weekly_reset.py

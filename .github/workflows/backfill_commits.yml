@@ -1,0 +1,57 @@
+name: Backfill History Commits
+
+# Manual repair tool: re-confirms every weeklyHistory commit count from the
+# GitHub GraphQL API and force-regenerates the history SVGs + README so the
+# corrected numbers actually render. Needed because weekly resets snapshot
+# whatever stale value data.json held (see backfill_commits.py docstring).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Backfill weeklyHistory commits from GraphQL
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+        run: python3 dashboard/backfill_commits.py
+
+      - name: Regenerate history SVGs (force)
+        run: python3 dashboard/generate_weekly_history.py --force
+
+      - name: Update README
+        run: |
+          python3 dashboard/update_readme_history.py
+          python3 dashboard/update_readme_charts.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add dashboard/data.json dashboard/history/ dashboard/progress_sparklines.svg README.md
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: backfill weekly history commits from GraphQL"
+            git pull --rebase
+            git push
+          else
+            echo "No changes to commit"
+          fi

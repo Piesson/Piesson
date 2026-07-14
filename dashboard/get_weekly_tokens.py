@@ -106,9 +106,15 @@ def fetch_claude(start_iso, end_iso):
 
 
 def fetch_codex(start_iso, end_iso):
-    base = ['npx', '-y', '@ccusage/codex@latest', 'daily', '--json']
+    # @ccusage/codex was retired upstream — the standalone CLI now exits 1
+    # with "use npx ccusage instead", which silently zeroed codex counts
+    # from 2026-06 onward. Codex usage ships as a subcommand of the main
+    # ccusage CLI now.
+    start = start_iso.replace('-', '')
+    end = end_iso.replace('-', '')
+    base = ['npx', '-y', 'ccusage@latest', 'codex', 'daily', '--json']
     date_args = [
-        '--since', start_iso, '--until', end_iso,
+        '--since', start, '--until', end,
         '--timezone', 'Asia/Seoul',
     ]
     return fetch_source(
@@ -221,6 +227,19 @@ def backfill_weekly_history(data):
             log(f"[backfill] {week_label} re-query returned 0/0 but existing "
                 f"non-zero — preserving")
             continue
+
+        # Local usage logs are pruned after ~30 days, so a re-query of an old
+        # week can only ever under-count — never let a backfill LOWER a value
+        # that was recorded live. (2026-07-14 incident: W22 was overwritten
+        # 442,985,037 → 83,765,464 from a 4-day log remnant.)
+        if claude_ok and new_claude < existing_claude:
+            log(f"[backfill] {week_label} claude re-query {new_claude:,} < "
+                f"existing {existing_claude:,} — preserving existing")
+            new_claude = existing_claude
+        if codex_ok and new_codex < existing_codex:
+            log(f"[backfill] {week_label} codex re-query {new_codex:,} < "
+                f"existing {existing_codex:,} — preserving existing")
+            new_codex = existing_codex
 
         metrics = entry.setdefault('metrics', {})
         metrics['tokens'] = {

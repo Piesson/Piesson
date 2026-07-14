@@ -5,6 +5,7 @@ Creates: dashboard/history/weekly_history_2025-W43.svg
 """
 
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
 
@@ -172,8 +173,13 @@ def generate_history_svg(week_entry):
 
     return svg_content
 
-def generate_all_history_svgs():
-    """Generate SVGs for all weeks in history"""
+def generate_all_history_svgs(force=False):
+    """Generate SVGs for all weeks in history.
+
+    force=True regenerates existing files too — needed after a data
+    backfill, because the skip-if-exists default would leave the SVGs
+    showing the stale pre-backfill numbers forever.
+    """
     data_file = Path('dashboard/data.json')
 
     if not data_file.exists():
@@ -203,8 +209,8 @@ def generate_all_history_svgs():
         week_id = entry['week']
         output_file = history_dir / f"weekly_history_{week_id}.svg"
 
-        # Check if file already exists (skip regeneration)
-        if output_file.exists():
+        # Check if file already exists (skip regeneration unless forced)
+        if output_file.exists() and not force:
             print(f"  ⏭️  Skipped {week_id} (already exists)")
             skipped_count += 1
             continue
@@ -222,4 +228,4 @@ def generate_all_history_svgs():
     print(f"\n✅ Completed: {generated_count} generated, {skipped_count} skipped")
 
 if __name__ == "__main__":
-    generate_all_history_svgs()
+    generate_all_history_svgs(force='--force' in sys.argv[1:])
