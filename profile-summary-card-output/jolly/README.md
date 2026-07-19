@@ -42,3 +42,13 @@
 ```
 
     
+
+---
+
+![](./3-stats.svg)
+
+```
+![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/jolly/3-stats.svg)
+```
+
+    

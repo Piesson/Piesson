@@ -42,3 +42,13 @@
 ```
 
     
+
+---
+
+![](./3-stats.svg)
+
+```
+![](https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/discord_old_blurple/3-stats.svg)
+```
+
+    
