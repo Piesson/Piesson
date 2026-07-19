@@ -52,6 +52,11 @@ def _post_once(url, headers, body):
 
     if r.status_code == 429:
         return None, ErrorKind.RATE_LIMIT
+    if r.status_code == 403 and r.headers.get("x-ratelimit-remaining") == "0":
+        # Primary rate limit exhaustion is a 403, not a 429 — without this
+        # check it was logged as "auth" and sent us chasing token expiry
+        # (2026-07-19 incident).
+        return None, ErrorKind.RATE_LIMIT
     if r.status_code in (401, 403):
         return None, ErrorKind.AUTH
     if r.status_code >= 500:

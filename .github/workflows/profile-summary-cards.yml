@@ -15,17 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Step 1: Generate original profile summary cards (verified solution with accurate data)
-      - name: Generate GitHub Profile Summary Cards
-        uses: vn7n24fzkq/github-profile-summary-cards@release
-        env:
-          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
-          COMMIT_MESSAGE: ''
-        with:
-          USERNAME: ${{ github.repository_owner }}
-          UTC_OFFSET: 9
-
-      # Step 2: Generate our custom 4-quadrant profile card
+      # Step 1: Generate our custom 4-quadrant profile card FIRST.
+      # The vn7n24fzkq action below fires enough GraphQL queries to exhaust
+      # the token's hourly quota; when the custom card ran after it, its
+      # queries hit 403 rate-limit every run (2026-07-18 incident: card
+      # dropped 6,913 → 253). Running first guarantees a fresh quota.
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -42,6 +36,16 @@ jobs:
           USERNAME: ${{ github.repository_owner }}
         run: |
           python dashboard/generate_profile_card.py
+
+      # Step 2: Generate original profile summary cards (verified solution with accurate data)
+      - name: Generate GitHub Profile Summary Cards
+        uses: vn7n24fzkq/github-profile-summary-cards@release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
+          COMMIT_MESSAGE: ''
+        with:
+          USERNAME: ${{ github.repository_owner }}
+          UTC_OFFSET: 9
 
       # Step 3: Commit both cards
       - name: Commit and push if changed

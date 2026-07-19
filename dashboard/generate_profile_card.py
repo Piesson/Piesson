@@ -78,69 +78,19 @@ def get_github_data(username, token):
     }
 
 def get_github_activity_stats(username, token):
-    """Fetch GitHub activity statistics from API - Try GraphQL first, then REST API"""
-    # Try GraphQL first for accurate totals (includes private repos)
+    """Fetch GitHub activity statistics via GraphQL. Returns None on failure.
+
+    The old REST-sampling fallback (per-repo commits capped at 100) and the
+    dummy-stats fallback are gone: when the vn7n24fzkq action ahead of us
+    exhausted the hourly GraphQL quota, the fallback quietly rendered a
+    public-sample total (2026-07-18 incident: card showed 253 instead of
+    6,913). Same contract as get_weekly_commits: None means "unknown — keep
+    showing the previous card", never a substitute number.
+    """
     graphql_result = get_github_activity_stats_graphql(username, token)
     if graphql_result:
         return graphql_result
-
-    # Fallback to REST API
-    print("Using REST API fallback...")
-    headers = {
-        'Accept': 'application/vnd.github.v3+json'
-    }
-
-    # Add authorization header only if token is provided
-    if token:
-        headers['Authorization'] = f'token {token}'
-
-    try:
-        # Get user repositories
-        repos_response = requests.get(f'https://api.github.com/users/{username}/repos?per_page=100', headers=headers)
-        if repos_response.status_code != 200:
-            print(f"Failed to get repos for activity: {repos_response.status_code}")
-            raise Exception(f"GitHub API error: {repos_response.status_code}")
-        repos = repos_response.json()
-
-        # Count commits across all repos
-        total_commits = 0
-        for repo in repos:
-            if not repo.get('fork', True):  # Skip forked repos
-                # Get commits count (limited by API, but gives us a sample)
-                commits_response = requests.get(f'https://api.github.com/repos/{username}/{repo["name"]}/commits?author={username}&per_page=100', headers=headers)
-                if commits_response.status_code == 200:
-                    total_commits += len(commits_response.json())
-
-        # Get pull requests (created by user)
-        prs_response = requests.get(f'https://api.github.com/search/issues?q=author:{username}+type:pr', headers=headers)
-        pull_requests = prs_response.json().get('total_count', 0) if prs_response.status_code == 200 else 0
-
-        # Get issues (created by user)
-        issues_response = requests.get(f'https://api.github.com/search/issues?q=author:{username}+type:issue', headers=headers)
-        issues = issues_response.json().get('total_count', 0) if issues_response.status_code == 200 else 0
-
-        # Code reviews (approximate from PR comments - GitHub API limitation)
-        # This is an approximation since GitHub doesn't have a direct code review count API
-        code_reviews = max(1, total_commits // 10)  # Rough estimate: 1 review per 10 commits
-
-        stats = {
-            'commits': total_commits,
-            'code_reviews': code_reviews,
-            'pull_requests': pull_requests,
-            'issues': issues
-        }
-
-        return stats
-
-    except Exception as e:
-        print(f"Error fetching GitHub activity: {e}")
-        # Return default values if API fails
-        return {
-            'commits': 156,
-            'code_reviews': 23,
-            'pull_requests': 12,
-            'issues': 8
-        }
+    return None
 
 def generate_four_quadrant_stats_from_data(stats):
     """Generate 4-quadrant statistics data from already-fetched stats"""
@@ -233,6 +183,9 @@ def generate_profile_card():
 
     # Get activity stats ONCE (used by both pie chart and total commits)
     activity_stats = get_github_activity_stats(username, token)
+    if activity_stats is None:
+        print("[profile-card] stats unavailable (GraphQL failed) — keeping previous card")
+        return
 
     # Generate 4-quadrant stats from the same data
     quadrant_data = generate_four_quadrant_stats_from_data(activity_stats)
