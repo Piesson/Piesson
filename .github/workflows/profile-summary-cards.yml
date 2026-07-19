@@ -37,6 +37,14 @@ jobs:
         run: |
           python dashboard/generate_profile_card.py
 
+      # The vn7n24fzkq action writes its own standard card to the SAME path
+      # (default/0-profile-details.svg). Save ours now and restore it after
+      # the action, so the custom 4-quadrant card is what gets committed.
+      # On a rate-limited run the script above kept the previous custom card,
+      # so this save/restore also protects that keep-previous behavior.
+      - name: Save custom card before summary-cards action
+        run: cp profile-summary-card-output/default/0-profile-details.svg /tmp/custom-card.svg
+
       # Step 2: Generate original profile summary cards (verified solution with accurate data)
       - name: Generate GitHub Profile Summary Cards
         uses: vn7n24fzkq/github-profile-summary-cards@release
@@ -46,6 +54,9 @@ jobs:
         with:
           USERNAME: ${{ github.repository_owner }}
           UTC_OFFSET: 9
+
+      - name: Restore custom card over the action's standard card
+        run: cp /tmp/custom-card.svg profile-summary-card-output/default/0-profile-details.svg
 
       # Step 3: Commit both cards
       - name: Commit and push if changed
