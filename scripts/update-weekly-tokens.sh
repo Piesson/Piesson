@@ -60,6 +60,13 @@ set -euo pipefail
 # be reachable via this explicit PATH.
 export PATH="/opt/homebrew/bin:/Users/apple/.nvm/versions/node/v22.18.0/bin:/usr/local/bin:/usr/bin:/bin"
 
+# The Stop-hook entry point inherits the Claude session's env. cmux.app
+# injects NODE_OPTIONS=--require=$TMPDIR/cmux-.../restore-node-options.cjs
+# there, and macOS temp cleanup deletes that file while cmux stays open —
+# then EVERY node process (ccusage, npx) dies with MODULE_NOT_FOUND and the
+# token update silently skips a day (observed 2026-07-20). Sanitize.
+unset NODE_OPTIONS
+
 USER_VAULT="/Users/apple/Documents/Obsidian Vault"
 CRON_VAULT="${HOME}/Documents/Obsidian-Vault-cron"
 LOG_DIR="${HOME}/Library/Logs"
