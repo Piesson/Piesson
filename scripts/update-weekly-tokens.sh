@@ -31,7 +31,7 @@
 # /tmp/piesson-fixes-test/test_self_update_preamble.sh.
 {
     if [ -z "${PIESSON_CRON_SELF_UPDATED:-}" ]; then
-        USER_VAULT="/Users/apple/Documents/Obsidian Vault"
+        USER_VAULT="${PIESSON_USER_VAULT:-/Users/apple/Documents/Obsidian Vault}"
         TARGET_REL="apps/piesson/scripts/update-weekly-tokens.sh"
 
         if git -C "${USER_VAULT}" fetch origin main --quiet 2>/dev/null; then
@@ -57,8 +57,9 @@
 set -euo pipefail
 
 # LaunchAgent does not load shell rc files, so every binary we call must
-# be reachable via this explicit PATH.
-export PATH="/opt/homebrew/bin:/Users/apple/.nvm/versions/node/v22.18.0/bin:/usr/local/bin:/usr/bin:/bin"
+# be reachable via this explicit PATH. PIESSON_PATH_PREFIX is a test seam —
+# the harness prepends a shim dir (fake ccusage/npx); unset in production.
+export PATH="${PIESSON_PATH_PREFIX:+${PIESSON_PATH_PREFIX}:}/opt/homebrew/bin:/Users/apple/.nvm/versions/node/v22.18.0/bin:/usr/local/bin:/usr/bin:/bin"
 
 # The Stop-hook entry point inherits the Claude session's env. cmux.app
 # injects NODE_OPTIONS=--require=$TMPDIR/cmux-.../restore-node-options.cjs
@@ -67,9 +68,12 @@ export PATH="/opt/homebrew/bin:/Users/apple/.nvm/versions/node/v22.18.0/bin:/usr
 # token update silently skips a day (observed 2026-07-20). Sanitize.
 unset NODE_OPTIONS
 
-USER_VAULT="/Users/apple/Documents/Obsidian Vault"
-CRON_VAULT="${HOME}/Documents/Obsidian-Vault-cron"
-LOG_DIR="${HOME}/Library/Logs"
+# PIESSON_* env vars are test seams (fixture vault/worktree/cache paths);
+# unset in production, so defaults below are the real locations.
+USER_VAULT="${PIESSON_USER_VAULT:-/Users/apple/Documents/Obsidian Vault}"
+CRON_VAULT="${PIESSON_CRON_VAULT:-${HOME}/Documents/Obsidian-Vault-cron}"
+LOG_DIR="${PIESSON_LOG_DIR:-${HOME}/Library/Logs}"
+CACHE_ROOT="${PIESSON_CACHE_DIR:-${HOME}/Library/Caches/piesson-tokens}"
 mkdir -p "${LOG_DIR}"
 
 ts() { date '+%Y-%m-%dT%H:%M:%S%z'; }
@@ -82,7 +86,7 @@ echo "[$(ts)] update-weekly-tokens.sh starting"
 # serialization they race on the same worktree. `mkdir` is atomic on any
 # POSIX filesystem; stale locks (>30 min — wrapper never takes that long)
 # are stolen. flock is not used because macOS doesn't ship it by default.
-LOCK_DIR="${HOME}/Library/Caches/piesson-tokens/.wrapper.lock"
+LOCK_DIR="${CACHE_ROOT}/.wrapper.lock"
 mkdir -p "$(dirname "${LOCK_DIR}")"
 if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
     if find "${LOCK_DIR}" -maxdepth 0 -mmin +30 2>/dev/null | grep -q .; then
@@ -413,8 +417,7 @@ bash scripts/subtree-deploy.sh apps/piesson piesson-upstream
 
 # Mark today as handled so the Stop-hook backstop knows not to re-fire.
 # Both triggers (LaunchAgent + Claude Code Stop) share this sentinel.
-CACHE_DIR="${HOME}/Library/Caches/piesson-tokens"
-mkdir -p "${CACHE_DIR}"
-date +%Y-%m-%d > "${CACHE_DIR}/last-run-date"
+mkdir -p "${CACHE_ROOT}"
+date +%Y-%m-%d > "${CACHE_ROOT}/last-run-date"
 
 echo "[$(ts)] update-weekly-tokens.sh done"
