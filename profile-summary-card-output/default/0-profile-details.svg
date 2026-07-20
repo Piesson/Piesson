@@ -18,7 +18,7 @@
     <g transform="translate(15, 55)">
         <!-- Pie Chart -->
         <g transform="translate(20, 20)">
-            <svg width="144" height="144" viewBox="0 0 144 144"><path d="M 72,72 L 72.0,18.0 A 54,54 0 1,1 44.095864294753596,25.768417607189853 Z" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/><text x="82.13785800566971" y="108.41515941276214" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">91%</text><path d="M 72,72 L 44.095864294753596,25.768417607189853 A 54,54 0 0,1 68.86308051773341,18.09119055143421 Z" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/><text x="60.80827770196063" y="35.89480159307295" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">8%</text><path d="M 72,72 L 68.86308051773341,18.09119055143421 A 54,54 0 0,1 71.99999999999994,18.0 Z" fill="#ef4444" stroke="#ffffff" stroke-width="2"/><text x="70.90161436850502" y="34.21596171655913" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">1%</text></svg>
+            <svg width="144" height="144" viewBox="0 0 144 144"><path d="M 72,72 L 72.0,18.0 A 54,54 0 1,1 43.97564301581434,25.84119352038092 Z" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/><text x="82.18523393323096" y="108.40193689524446" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">91%</text><path d="M 72,72 L 43.97564301581434,25.84119352038092 A 54,54 0 0,1 68.87668610985135,18.090400573333838 Z" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/><text x="60.76586035581844" y="35.9079772462802" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">8%</text><path d="M 72,72 L 68.87668610985135,18.090400573333838 A 54,54 0 0,1 71.99999999999999,18.0 Z" fill="#ef4444" stroke="#ffffff" stroke-width="2"/><text x="70.90638234048332" y="34.21582341224315" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">1%</text></svg>
         </g>
 
         <!-- Legend -->
@@ -27,7 +27,7 @@
             <g transform="translate(0, 0)">
                 <rect x="0" y="0" width="12" height="12" fill="#3b82f6"/>
                 <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                    Commits: 6913 (91%)
+                    Commits: 6940 (91%)
                 </text>
             </g>
             <!-- Code Reviews -->
@@ -41,7 +41,7 @@
             <g transform="translate(0, 40)">
                 <rect x="0" y="0" width="12" height="12" fill="#f59e0b"/>
                 <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                    PRs: 584 (8%)
+                    PRs: 590 (8%)
                 </text>
             </g>
             <!-- Issues -->
@@ -62,7 +62,7 @@
         <!-- Total Commits -->
         <g transform="translate(0, 0)">
             <text x="0" y="20" fill="#111827" font-size="24" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-                6,913
+                6,940
             </text>
             <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
                 Total Commits

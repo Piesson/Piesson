@@ -29,7 +29,7 @@
     <!-- Final value badge -->
     <text x="224" y="22" fill="#FF6384" font-size="12" font-weight="700"
           font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        1,033
+        999
     </text>
 
     <!-- Grid lines -->
@@ -44,15 +44,15 @@
     <text x="26" y="159" fill="#9ca3af" font-size="8"
           font-family="Monaco, monospace" text-anchor="end">0</text>
     <text x="26" y="104.5" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">516</text>
+          font-family="Monaco, monospace" text-anchor="end">499</text>
     <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">1033</text>
+          font-family="Monaco, monospace" text-anchor="end">999</text>
 
     <!-- Area fill -->
-    <polygon points="30.0,134.6 47.8,130.3 65.6,123.2 83.5,113.7 101.3,104.3 119.1,95.8 136.9,93.5 154.7,88.8 172.5,88.8 190.4,88.8 208.2,79.9 226.0,46.9 226.0,156 30.0,156" fill="#FF6384" opacity="0.08" />
+    <polygon points="30.0,151.6 47.8,144.2 65.6,134.4 83.5,124.7 101.3,115.9 119.1,113.5 136.9,108.7 154.7,108.7 172.5,108.7 190.4,99.4 208.2,65.4 226.0,46.9 226.0,156 30.0,156" fill="#FF6384" opacity="0.08" />
 
     <!-- Sparkline -->
-    <polyline points="30.0,134.6 47.8,130.3 65.6,123.2 83.5,113.7 101.3,104.3 119.1,95.8 136.9,93.5 154.7,88.8 172.5,88.8 190.4,88.8 208.2,79.9 226.0,46.9" fill="none" stroke="#FF6384"
+    <polyline points="30.0,151.6 47.8,144.2 65.6,134.4 83.5,124.7 101.3,115.9 119.1,113.5 136.9,108.7 154.7,108.7 172.5,108.7 190.4,99.4 208.2,65.4 226.0,46.9" fill="none" stroke="#FF6384"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 
     <!-- Last point dot -->
@@ -60,9 +60,9 @@
 
     <!-- X-axis labels -->
     <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W17</text>
+          font-family="system-ui, -apple-system, sans-serif">W18</text>
     <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W28</text>
+          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W29</text>
     </g>
   <g transform="translate(282,20)">
     <rect width="236" height="192" fill="url(#cardBg)" rx="12"
@@ -77,7 +77,7 @@
     <!-- Final value badge -->
     <text x="224" y="22" fill="#36A2EB" font-size="12" font-weight="700"
           font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        36
+        31
     </text>
 
     <!-- Grid lines -->
@@ -91,16 +91,16 @@
     <!-- Y-axis ticks -->
     <text x="26" y="159" fill="#9ca3af" font-size="8"
           font-family="Monaco, monospace" text-anchor="end">0</text>
-    <text x="26" y="104.5" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">18</text>
+    <text x="26" y="106.2" fill="#9ca3af" font-size="8"
+          font-family="Monaco, monospace" text-anchor="end">15</text>
     <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">36</text>
+          font-family="Monaco, monospace" text-anchor="end">31</text>
 
     <!-- Area fill -->
-    <polygon points="30.0,140.8 47.8,131.8 65.6,119.6 83.5,113.6 101.3,107.5 119.1,104.5 136.9,92.4 154.7,83.3 172.5,74.2 190.4,65.1 208.2,56.0 226.0,46.9 226.0,156 30.0,156" fill="#36A2EB" opacity="0.08" />
+    <polygon points="30.0,145.4 47.8,131.4 65.6,124.3 83.5,117.3 101.3,113.8 119.1,99.7 136.9,89.1 154.7,78.6 172.5,68.0 190.4,57.5 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#36A2EB" opacity="0.08" />
 
     <!-- Sparkline -->
-    <polyline points="30.0,140.8 47.8,131.8 65.6,119.6 83.5,113.6 101.3,107.5 119.1,104.5 136.9,92.4 154.7,83.3 172.5,74.2 190.4,65.1 208.2,56.0 226.0,46.9" fill="none" stroke="#36A2EB"
+    <polyline points="30.0,145.4 47.8,131.4 65.6,124.3 83.5,117.3 101.3,113.8 119.1,99.7 136.9,89.1 154.7,78.6 172.5,68.0 190.4,57.5 208.2,46.9 226.0,46.9" fill="none" stroke="#36A2EB"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 
     <!-- Last point dot -->
@@ -108,9 +108,9 @@
 
     <!-- X-axis labels -->
     <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W17</text>
+          font-family="system-ui, -apple-system, sans-serif">W18</text>
     <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W28</text>
+          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W29</text>
     </g>
   <g transform="translate(534,20)">
     <rect width="236" height="192" fill="url(#cardBg)" rx="12"
@@ -125,7 +125,7 @@
     <!-- Final value badge -->
     <text x="224" y="22" fill="#E6B800" font-size="12" font-weight="700"
           font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        131
+        121
     </text>
 
     <!-- Grid lines -->
@@ -140,15 +140,15 @@
     <text x="26" y="159" fill="#9ca3af" font-size="8"
           font-family="Monaco, monospace" text-anchor="end">0</text>
     <text x="26" y="104.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">65</text>
+          font-family="Monaco, monospace" text-anchor="end">60</text>
     <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">131</text>
+          font-family="Monaco, monospace" text-anchor="end">121</text>
 
     <!-- Area fill -->
-    <polygon points="30.0,147.7 47.8,139.3 65.6,131.0 83.5,124.4 101.3,113.5 119.1,104.4 136.9,92.7 154.7,83.6 172.5,74.4 190.4,65.2 208.2,56.1 226.0,46.9 226.0,156 30.0,156" fill="#E6B800" opacity="0.08" />
+    <polygon points="30.0,147.0 47.8,138.0 65.6,130.8 83.5,119.0 101.3,109.1 119.1,96.5 136.9,86.6 154.7,76.7 172.5,66.7 190.4,56.8 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#E6B800" opacity="0.08" />
 
     <!-- Sparkline -->
-    <polyline points="30.0,147.7 47.8,139.3 65.6,131.0 83.5,124.4 101.3,113.5 119.1,104.4 136.9,92.7 154.7,83.6 172.5,74.4 190.4,65.2 208.2,56.1 226.0,46.9" fill="none" stroke="#E6B800"
+    <polyline points="30.0,147.0 47.8,138.0 65.6,130.8 83.5,119.0 101.3,109.1 119.1,96.5 136.9,86.6 154.7,76.7 172.5,66.7 190.4,56.8 208.2,46.9 226.0,46.9" fill="none" stroke="#E6B800"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 
     <!-- Last point dot -->
@@ -156,9 +156,9 @@
 
     <!-- X-axis labels -->
     <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W17</text>
+          font-family="system-ui, -apple-system, sans-serif">W18</text>
     <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W28</text>
+          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W29</text>
     </g>
   <g transform="translate(30,228)">
     <rect width="236" height="192" fill="url(#cardBg)" rx="12"
@@ -173,55 +173,7 @@
     <!-- Final value badge -->
     <text x="224" y="22" fill="#4BC0C0" font-size="12" font-weight="700"
           font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        27
-    </text>
-
-    <!-- Grid lines -->
-    <line x1="30" y1="36" x2="226" y2="36"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="96.0" x2="226" y2="96.0"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="156" x2="226" y2="156"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-
-    <!-- Y-axis ticks -->
-    <text x="26" y="159" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">0</text>
-    <text x="26" y="106.5" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">13</text>
-    <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">27</text>
-
-    <!-- Area fill -->
-    <polygon points="30.0,143.9 47.8,131.8 65.6,123.7 83.5,115.6 101.3,103.5 119.1,99.4 136.9,87.3 154.7,79.2 172.5,71.2 190.4,63.1 208.2,55.0 226.0,46.9 226.0,156 30.0,156" fill="#4BC0C0" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="30.0,143.9 47.8,131.8 65.6,123.7 83.5,115.6 101.3,103.5 119.1,99.4 136.9,87.3 154.7,79.2 172.5,71.2 190.4,63.1 208.2,55.0 226.0,46.9" fill="none" stroke="#4BC0C0"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    <circle cx="226.0" cy="46.9" r="3.5" fill="#4BC0C0" />
-
-    <!-- X-axis labels -->
-    <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W17</text>
-    <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W28</text>
-    </g>
-  <g transform="translate(282,228)">
-    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        🏃 Workouts
-    </text>
-
-    <!-- Final value badge -->
-    <text x="224" y="22" fill="#9966FF" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        84
+        24
     </text>
 
     <!-- Grid lines -->
@@ -236,15 +188,63 @@
     <text x="26" y="159" fill="#9ca3af" font-size="8"
           font-family="Monaco, monospace" text-anchor="end">0</text>
     <text x="26" y="104.5" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">42</text>
+          font-family="Monaco, monospace" text-anchor="end">12</text>
     <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">84</text>
+          font-family="Monaco, monospace" text-anchor="end">24</text>
 
     <!-- Area fill -->
-    <polygon points="30.0,149.5 47.8,140.4 65.6,130.0 83.5,115.7 101.3,106.6 119.1,101.5 136.9,92.4 154.7,83.3 172.5,74.2 190.4,65.1 208.2,56.0 226.0,46.9 226.0,156 30.0,156" fill="#9966FF" opacity="0.08" />
+    <polygon points="30.0,142.4 47.8,133.3 65.6,124.2 83.5,110.5 101.3,106.0 119.1,92.4 136.9,83.3 154.7,74.2 172.5,65.1 190.4,56.0 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#4BC0C0" opacity="0.08" />
 
     <!-- Sparkline -->
-    <polyline points="30.0,149.5 47.8,140.4 65.6,130.0 83.5,115.7 101.3,106.6 119.1,101.5 136.9,92.4 154.7,83.3 172.5,74.2 190.4,65.1 208.2,56.0 226.0,46.9" fill="none" stroke="#9966FF"
+    <polyline points="30.0,142.4 47.8,133.3 65.6,124.2 83.5,110.5 101.3,106.0 119.1,92.4 136.9,83.3 154.7,74.2 172.5,65.1 190.4,56.0 208.2,46.9 226.0,46.9" fill="none" stroke="#4BC0C0"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Last point dot -->
+    <circle cx="226.0" cy="46.9" r="3.5" fill="#4BC0C0" />
+
+    <!-- X-axis labels -->
+    <text x="30" y="170" fill="#9ca3af" font-size="8"
+          font-family="system-ui, -apple-system, sans-serif">W18</text>
+    <text x="226" y="170" fill="#9ca3af" font-size="8"
+          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W29</text>
+    </g>
+  <g transform="translate(282,228)">
+    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
+          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
+
+    <!-- Title -->
+    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
+          font-family="system-ui, -apple-system, sans-serif">
+        🏃 Workouts
+    </text>
+
+    <!-- Final value badge -->
+    <text x="224" y="22" fill="#9966FF" font-size="12" font-weight="700"
+          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
+        79
+    </text>
+
+    <!-- Grid lines -->
+    <line x1="30" y1="36" x2="226" y2="36"
+          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
+    <line x1="30" y1="96.0" x2="226" y2="96.0"
+          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
+    <line x1="30" y1="156" x2="226" y2="156"
+          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
+
+    <!-- Y-axis ticks -->
+    <text x="26" y="159" fill="#9ca3af" font-size="8"
+          font-family="Monaco, monospace" text-anchor="end">0</text>
+    <text x="26" y="105.1" fill="#9ca3af" font-size="8"
+          font-family="Monaco, monospace" text-anchor="end">39</text>
+    <text x="26" y="49.9" fill="#9ca3af" font-size="8"
+          font-family="Monaco, monospace" text-anchor="end">79</text>
+
+    <!-- Area fill -->
+    <polygon points="30.0,146.3 47.8,135.3 65.6,120.1 83.5,110.4 101.3,104.9 119.1,95.2 136.9,85.6 154.7,75.9 172.5,66.2 190.4,56.6 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#9966FF" opacity="0.08" />
+
+    <!-- Sparkline -->
+    <polyline points="30.0,146.3 47.8,135.3 65.6,120.1 83.5,110.4 101.3,104.9 119.1,95.2 136.9,85.6 154.7,75.9 172.5,66.2 190.4,56.6 208.2,46.9 226.0,46.9" fill="none" stroke="#9966FF"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 
     <!-- Last point dot -->
@@ -252,9 +252,9 @@
 
     <!-- X-axis labels -->
     <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W17</text>
+          font-family="system-ui, -apple-system, sans-serif">W18</text>
     <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W28</text>
+          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W29</text>
     </g>
   <g transform="translate(534,228)">
     <rect width="236" height="192" fill="url(#cardBg)" rx="12"
@@ -296,8 +296,8 @@
 
     <!-- X-axis labels -->
     <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W17</text>
+          font-family="system-ui, -apple-system, sans-serif">W18</text>
     <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W28</text>
+          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W29</text>
     </g>
 </svg>
