@@ -25,10 +25,10 @@
         "gym": 0
       },
       "tokens": {
-        "claude": 0,
+        "claude": 164927425,
         "codex": 0,
-        "total": 0,
-        "updatedAt": null
+        "total": 164927425,
+        "updatedAt": "2026-07-20T12:55:57+09:00"
       }
     }
   },
@@ -52,10 +52,10 @@
           "gym": 0
         },
         "tokens": {
-          "claude": 2592567608,
+          "claude": 2826717906,
           "codex": 0,
-          "total": 2592567608,
-          "updatedAt": "2026-07-19T17:28:54+09:00"
+          "total": 2826717906,
+          "updatedAt": "2026-07-20T12:56:04+09:00"
         }
       }
     },
