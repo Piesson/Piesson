@@ -25,12 +25,12 @@
         "gym": 10
       },
       "tokens": {
-        "claude": 164927425,
-        "codex": 0,
-        "total": 164927425,
-        "updatedAt": "2026-07-20T12:55:57+09:00"
+        "claude": 1165133877,
+        "codex": 8624328,
+        "total": 1173758205,
+        "updatedAt": "2026-07-22T13:33:46+09:00"
       },
-      "commits": 91
+      "commits": 100
     }
   },
   "weeklyHistory": [
