@@ -133,10 +133,47 @@ ensure_cron_worktree() {
     # 2026-05-30 → 2026-07-13 45-day outage ("cron worktree is dirty —
     # refusing to proceed" every night). Any pre-existing state here is
     # disposable by contract (see below), so heal unconditionally.
-    if [ -f "$(cd "${CRON_VAULT}" && git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
-        echo "[$(ts)] healing: aborting pending merge in cron worktree" >&2
-        (cd "${CRON_VAULT}" && { git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true; })
-    fi
+    # Heal every kind of interrupted-operation debris, not only merges.
+    # 2026-07-22 hardening: a stale index.lock (killed process) or leftover
+    # rebase/cherry-pick/revert state makes `git checkout -f` fail every
+    # night — same failure family as the 45-day outage, different artifact.
+    (
+        cd "${CRON_VAULT}" || exit 0
+        # Stale index.lock from a killed git process blocks ALL further git
+        # commands. This worktree is disposable by contract, so removing a
+        # lock older than 5 minutes is safe (no live git run takes that long
+        # here without also holding the wrapper mutex).
+        IDX_LOCK="$(git rev-parse --git-path index.lock 2>/dev/null)"
+        if [ -n "${IDX_LOCK}" ] && [ -f "${IDX_LOCK}" ] \
+           && find "${IDX_LOCK}" -mmin +5 2>/dev/null | grep -q .; then
+            echo "[$(ts)] healing: removing stale index.lock" >&2
+            rm -f "${IDX_LOCK}"
+        fi
+        if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
+            echo "[$(ts)] healing: aborting pending merge" >&2
+            git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
+        fi
+        if [ -d "$(git rev-parse --git-path rebase-merge 2>/dev/null)" ] \
+           || [ -d "$(git rev-parse --git-path rebase-apply 2>/dev/null)" ]; then
+            echo "[$(ts)] healing: aborting interrupted rebase" >&2
+            git rebase --abort 2>/dev/null || {
+                rm -rf "$(git rev-parse --git-path rebase-merge)" \
+                       "$(git rev-parse --git-path rebase-apply)" 2>/dev/null
+            }
+        fi
+        if [ -f "$(git rev-parse --git-path CHERRY_PICK_HEAD 2>/dev/null)" ] \
+           || [ -d "$(git rev-parse --git-path sequencer 2>/dev/null)" ]; then
+            echo "[$(ts)] healing: aborting interrupted cherry-pick/sequencer" >&2
+            git cherry-pick --abort 2>/dev/null \
+                || rm -rf "$(git rev-parse --git-path sequencer)" \
+                          "$(git rev-parse --git-path CHERRY_PICK_HEAD)" 2>/dev/null
+        fi
+        if [ -f "$(git rev-parse --git-path REVERT_HEAD 2>/dev/null)" ]; then
+            echo "[$(ts)] healing: aborting interrupted revert" >&2
+            git revert --abort 2>/dev/null \
+                || rm -f "$(git rev-parse --git-path REVERT_HEAD)" 2>/dev/null
+        fi
+    )
     # Hard reset chore/cron-data to origin/main as ground truth. This makes
     # the wrapper immune to any prior state on chore/cron-data — whether from
     # external user pushes (manual backfill commits), prior wrapper runs that
