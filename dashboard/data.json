@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-22",
+  "lastUpdated": "2026-07-23",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -13,15 +13,15 @@
     "endDate": "2026-07-26",
     "metrics": {
       "socialContent": {
-        "instagram": 0,
-        "tiktok": 0,
+        "instagram": 1,
+        "tiktok": 1,
         "hellotalk": 0
       },
-      "userSessions": 11,
+      "userSessions": 12,
       "ctoMeetings": 6,
       "blogPosts": 0,
       "workouts": {
-        "running": 11,
+        "running": 12,
         "gym": 10
       },
       "tokens": {
@@ -30,7 +30,7 @@
         "total": 1808762094,
         "updatedAt": "2026-07-23T00:05:21+09:00"
       },
-      "commits": 134
+      "commits": 155
     }
   },
   "weeklyHistory": [
