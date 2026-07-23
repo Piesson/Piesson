@@ -49,7 +49,7 @@
 
 | Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts | 🔥 Tokens |
 |------|--------|-----------|----------|---------|---------|------------|----------|-----------|
-| [**Week 30 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-07-20 - 2026-07-26 | 134 | 0 | 11 | 6 | 21 | 0 | 1.8B (CC 1.8 / CX 0.02) |
+| [**Week 30 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-07-20 - 2026-07-26 | 155 | 2 | 12 | 6 | 22 | 0 | 1.8B (CC 1.8 / CX 0.02) |
 | [**Week 29**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W29.svg) | 2026-07-13 - 2026-07-19 | 169 | 0 | 0 | 0 | 0 | 0 | 2.8B (CC 2.8 / CX 0.0) |
 | [**Week 28**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W28.svg) | 2026-07-06 - 2026-07-12 | 312 | 11 | 3 | 2 | 7 | 0 | 5.2B (CC 5.2 / CX 0.0) |
 | [**Week 27**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W27.svg) | 2026-06-29 - 2026-07-05 | 85 | 11 | 3 | 2 | 7 | 0 | 1.8B (CC 1.8 / CX 0.0) |
