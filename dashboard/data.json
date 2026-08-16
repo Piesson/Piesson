@@ -9,8 +9,8 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-08-10",
-    "endDate": "2026-08-16",
+    "startDate": "2026-08-17",
+    "endDate": "2026-08-23",
     "metrics": {
       "socialContent": {
         "instagram": 0,
@@ -25,15 +25,40 @@
         "gym": 0
       },
       "tokens": {
-        "claude": 3725651818,
-        "codex": 763673279,
-        "total": 4489325097,
-        "updatedAt": "2026-08-16T00:05:27+09:00"
-      },
-      "commits": 99
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
+      }
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W33",
+      "startDate": "2026-08-10",
+      "endDate": "2026-08-16",
+      "metrics": {
+        "commits": 99,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 0,
+          "hellotalk": 0
+        },
+        "userSessions": 0,
+        "ctoMeetings": 0,
+        "blogPosts": 0,
+        "workouts": {
+          "running": 0,
+          "gym": 0
+        },
+        "tokens": {
+          "claude": 3725651818,
+          "codex": 763673279,
+          "total": 4489325097,
+          "updatedAt": "2026-08-16T00:05:27+09:00"
+        }
+      }
+    },
     {
       "week": "2026-W32",
       "startDate": "2026-08-03",
@@ -317,32 +342,6 @@
           "codex": 0,
           "total": 442985037,
           "updatedAt": "2026-07-14T23:00:31+09:00"
-        }
-      }
-    },
-    {
-      "week": "2026-W21",
-      "startDate": "2026-05-18",
-      "endDate": "2026-05-24",
-      "metrics": {
-        "commits": 89,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 8,
-          "hellotalk": 5
-        },
-        "userSessions": 2,
-        "ctoMeetings": 3,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 4,
-          "gym": 3
-        },
-        "tokens": {
-          "claude": 1466490345,
-          "codex": 19282643,
-          "total": 1485772988,
-          "updatedAt": "2026-05-28T12:00:00+09:00"
         }
       }
     }
