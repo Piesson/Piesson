@@ -18,7 +18,7 @@
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
 </p>
 
-<div align="right"><sub>updated at 08/16/26</sub></div>
+<div align="right"><sub>updated at 08/17/26</sub></div>
 
 # Consistent enough?
 
@@ -49,7 +49,7 @@
 
 | Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts | 🔥 Tokens |
 |------|--------|-----------|----------|---------|---------|------------|----------|-----------|
-| [**Week 34 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-08-17 - 2026-08-23 | 0 | 0 | 0 | 0 | 0 | 0 | — |
+| [**Week 34 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-08-17 - 2026-08-23 | 2 | 0 | 0 | 0 | 0 | 0 | 0.01B (CC 0.00 / CX 0.00) |
 | [**Week 33**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W33.svg) | 2026-08-10 - 2026-08-16 | 99 | 0 | 0 | 0 | 0 | 0 | 4.5B (CC 3.7 / CX 0.76) |
 | [**Week 32**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W32.svg) | 2026-08-03 - 2026-08-09 | 147 | 6 | 1 | 1 | 1 | 0 | 4.7B (CC 4.4 / CX 0.22) |
 | [**Week 31**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W31.svg) | 2026-07-27 - 2026-08-02 | 166 | 0 | 0 | 1 | 1 | 0 | 3.9B (CC 3.6 / CX 0.29) |
