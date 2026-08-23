@@ -9,8 +9,8 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-08-17",
-    "endDate": "2026-08-23",
+    "startDate": "2026-08-24",
+    "endDate": "2026-08-30",
     "metrics": {
       "socialContent": {
         "instagram": 0,
@@ -25,15 +25,40 @@
         "gym": 0
       },
       "tokens": {
-        "claude": 1748853917,
-        "codex": 999022556,
-        "total": 2747876473,
-        "updatedAt": "2026-08-24T00:05:23+09:00"
-      },
-      "commits": 17
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
+      }
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W34",
+      "startDate": "2026-08-17",
+      "endDate": "2026-08-23",
+      "metrics": {
+        "commits": 126,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 0,
+          "hellotalk": 0
+        },
+        "userSessions": 0,
+        "ctoMeetings": 0,
+        "blogPosts": 0,
+        "workouts": {
+          "running": 0,
+          "gym": 0
+        },
+        "tokens": {
+          "claude": 1748853917,
+          "codex": 999022556,
+          "total": 2747876473,
+          "updatedAt": "2026-08-24T00:05:23+09:00"
+        }
+      }
+    },
     {
       "week": "2026-W33",
       "startDate": "2026-08-10",
@@ -317,32 +342,6 @@
           "codex": 0,
           "total": 18017229,
           "updatedAt": "2026-07-14T00:04:32+09:00"
-        }
-      }
-    },
-    {
-      "week": "2026-W22",
-      "startDate": "2026-05-25",
-      "endDate": "2026-05-31",
-      "metrics": {
-        "commits": 80,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 3,
-          "hellotalk": 8
-        },
-        "userSessions": 1,
-        "ctoMeetings": 1,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 2,
-          "gym": 2
-        },
-        "tokens": {
-          "claude": 442985037,
-          "codex": 0,
-          "total": 442985037,
-          "updatedAt": "2026-07-14T23:00:31+09:00"
         }
       }
     }
