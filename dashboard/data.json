@@ -25,10 +25,10 @@
         "gym": 0
       },
       "tokens": {
-        "claude": 0,
-        "codex": 0,
-        "total": 0,
-        "updatedAt": null
+        "claude": 564672692,
+        "codex": 232710809,
+        "total": 797383501,
+        "updatedAt": "2026-08-25T00:05:24+09:00"
       }
     }
   },
