@@ -22,13 +22,13 @@
 #
 # Safety gates (ALL must hold to re-exec):
 #   (a) Not already self-updated in this exec chain (env-var guard)
-#   (b) Local working-tree blob == local HEAD's blob (no uncommitted edits)
+#   (b) Wrapper and companion files have no uncommitted local edits
 #   (c) Local HEAD is ancestor of origin/main (no unpushed local commits)
-#   (d) origin/main's blob for this file differs from local HEAD's blob
+#   (d) origin/main changed the wrapper or one of its companion scripts
 #
 # Best-effort: any failure here is non-fatal — fall through to the local
-# (possibly stale) version. Verified against 8 scenarios in
-# /tmp/piesson-fixes-test/test_self_update_preamble.sh.
+# (possibly stale) version. Companion loading and dependency-only updates are
+# covered by the in-repository wrapper harness.
 {
     if [ -z "${PIESSON_CRON_SELF_UPDATED:-}" ]; then
         USER_VAULT="${PIESSON_USER_VAULT:-/Users/apple/Documents/Obsidian Vault}"
@@ -38,21 +38,38 @@
             LOCAL_HEAD_BLOB=$(git -C "${USER_VAULT}" rev-parse "HEAD:${TARGET_REL}" 2>/dev/null || true)
             LOCAL_FILE_BLOB=$(git hash-object "${BASH_SOURCE[0]}" 2>/dev/null || true)
             ORIGIN_BLOB=$(git -C "${USER_VAULT}" rev-parse "origin/main:${TARGET_REL}" 2>/dev/null || true)
+            DEPENDENCIES_CLEAN=1
+            DEPENDENCIES_CHANGED=0
+            for dependency in scripts/automation-cron-common.sh scripts/subtree-deploy.sh; do
+                head_dep=$(git -C "${USER_VAULT}" rev-parse --verify --quiet "HEAD:${dependency}" 2>/dev/null || true)
+                file_dep=$(git hash-object "${USER_VAULT}/${dependency}" 2>/dev/null || true)
+                remote_dep=$(git -C "${USER_VAULT}" rev-parse --verify --quiet "origin/main:${dependency}" 2>/dev/null || true)
+                [ "$head_dep" = "$file_dep" ] || DEPENDENCIES_CLEAN=0
+                [ "$head_dep" = "$remote_dep" ] || DEPENDENCIES_CHANGED=1
+            done
 
             if [ -n "${LOCAL_FILE_BLOB}" ] && [ "${LOCAL_FILE_BLOB}" = "${LOCAL_HEAD_BLOB}" ] && \
-               [ -n "${ORIGIN_BLOB}" ] && [ "${ORIGIN_BLOB}" != "${LOCAL_HEAD_BLOB}" ] && \
+               [ "$DEPENDENCIES_CLEAN" = 1 ] && [ -n "${ORIGIN_BLOB}" ] && \
+               { [ "${ORIGIN_BLOB}" != "${LOCAL_HEAD_BLOB}" ] || [ "$DEPENDENCIES_CHANGED" = 1 ]; } && \
                git -C "${USER_VAULT}" merge-base --is-ancestor HEAD origin/main 2>/dev/null; then
-                FRESH=$(mktemp -t piesson-cron-self-update 2>/dev/null || true)
+                FRESH=$(mktemp "${TMPDIR:-/tmp}/piesson-cron-self-update.XXXXXX" 2>/dev/null || true)
                 if [ -n "${FRESH}" ] && \
                    git -C "${USER_VAULT}" show "origin/main:${TARGET_REL}" > "${FRESH}" 2>/dev/null; then
                     export PIESSON_CRON_SELF_UPDATED=1
-                    exec /bin/bash "${FRESH}" "$@"
+                    # Keep the creator alive to own cleanup on child success
+                    # and failure. Never delete a path supplied by an env var.
+                    trap 'rm -f -- "$FRESH"' EXIT
+                    if /bin/bash "${FRESH}" "$@"; then
+                        exit 0
+                    else
+                        exit $?
+                    fi
                 fi
                 [ -n "${FRESH}" ] && rm -f "${FRESH}"
             fi
         fi
     fi
-} 2>/dev/null || true
+} || true
 
 set -euo pipefail
 
@@ -78,300 +95,67 @@ mkdir -p "${LOG_DIR}"
 
 ts() { date '+%Y-%m-%dT%H:%M:%S%z'; }
 
-echo "[$(ts)] update-weekly-tokens.sh starting"
-
-# ── Atomic mutex ───────────────────────────────────────────────────────────
-# Wrapper has two entry points (LaunchAgent at 00:05 KST + Claude Code Stop
-# hook on any session end). Both can fire within seconds. Without
-# serialization they race on the same worktree. `mkdir` is atomic on any
-# POSIX filesystem; stale locks (>30 min — wrapper never takes that long)
-# are stolen. flock is not used because macOS doesn't ship it by default.
-LOCK_DIR="${CACHE_ROOT}/.wrapper.lock"
-mkdir -p "$(dirname "${LOCK_DIR}")"
-if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
-    if find "${LOCK_DIR}" -maxdepth 0 -mmin +30 2>/dev/null | grep -q .; then
-        echo "[$(ts)] stealing stale lock at ${LOCK_DIR}" >&2
-        rmdir "${LOCK_DIR}" 2>/dev/null
-        mkdir "${LOCK_DIR}" 2>/dev/null || {
-            echo "[$(ts)] could not acquire lock after stale-steal, exit" >&2
-            exit 0
-        }
-    else
-        echo "[$(ts)] another wrapper holds the lock, exit" >&2
-        exit 0
+# The legacy bootstrap downloads only this file. Resolve its companions from
+# the SAME verified revision, not from a potentially older canonical checkout.
+COMMON_SCRIPT="${USER_VAULT}/scripts/automation-cron-common.sh"
+DEPLOY_SCRIPT="${USER_VAULT}/scripts/subtree-deploy.sh"
+DEPENDENCY_DIR=""
+cleanup_dependencies() {
+    if [ -n "$DEPENDENCY_DIR" ]; then
+        rm -f "$DEPENDENCY_DIR/common.sh" "$DEPENDENCY_DIR/deploy.sh"
+        rmdir "$DEPENDENCY_DIR"
     fi
-fi
-release_lock() { rmdir "${LOCK_DIR}" 2>/dev/null || true; }
-# Early EXIT trap so the lock releases even if we exit before cleanup() is
-# wired up (e.g., ensure_cron_worktree fails). The final trap below composes
-# release_lock with cleanup.
-trap release_lock EXIT
-
-# ── Cron worktree isolation ────────────────────────────────────────────────
-# This script's automatic commits used to land on the user's currently
-# checked-out branch in the main vault, polluting feature branches with
-# chore() noise and triggering merge conflicts on subsequent `git pull`.
-# We now route ALL git work through a dedicated worktree pinned to main.
-# The user's main vault is never touched by this cron.
-ensure_cron_worktree() {
-    # Use chore/cron-data branch (not main) so primary vault can occupy main.
-    # Daily PR LaunchAgent (separate routine) merges chore/cron-data → main.
-    if [ ! -e "${CRON_VAULT}/.git" ]; then
-        if ! git -C "${USER_VAULT}" worktree list --porcelain \
-                | grep -q "^worktree ${CRON_VAULT}$"; then
-            if git -C "${USER_VAULT}" rev-parse --verify chore/cron-data >/dev/null 2>&1; then
-                git -C "${USER_VAULT}" worktree add "${CRON_VAULT}" chore/cron-data >&2 || return 1
-            else
-                git -C "${USER_VAULT}" worktree add -b chore/cron-data "${CRON_VAULT}" origin/main >&2 || return 1
-            fi
-        fi
-    fi
-    # Self-heal FIRST, verify AFTER. The previous order — a dirty guard that
-    # refused to proceed BEFORE the hard reset below — meant one leftover
-    # conflict permanently blocked every subsequent run, because the code
-    # that could clean it up was unreachable. That is exactly the
-    # 2026-05-30 → 2026-07-13 45-day outage ("cron worktree is dirty —
-    # refusing to proceed" every night). Any pre-existing state here is
-    # disposable by contract (see below), so heal unconditionally.
-    # Heal every kind of interrupted-operation debris, not only merges.
-    # 2026-07-22 hardening: a stale index.lock (killed process) or leftover
-    # rebase/cherry-pick/revert state makes `git checkout -f` fail every
-    # night — same failure family as the 45-day outage, different artifact.
-    (
-        cd "${CRON_VAULT}" || exit 0
-        # Stale index.lock from a killed git process blocks ALL further git
-        # commands. This worktree is disposable by contract, so removing a
-        # lock older than 5 minutes is safe (no live git run takes that long
-        # here without also holding the wrapper mutex).
-        IDX_LOCK="$(git rev-parse --git-path index.lock 2>/dev/null)"
-        if [ -n "${IDX_LOCK}" ] && [ -f "${IDX_LOCK}" ] \
-           && find "${IDX_LOCK}" -mmin +5 2>/dev/null | grep -q .; then
-            echo "[$(ts)] healing: removing stale index.lock" >&2
-            rm -f "${IDX_LOCK}"
-        fi
-        if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
-            echo "[$(ts)] healing: aborting pending merge" >&2
-            git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
-        fi
-        if [ -d "$(git rev-parse --git-path rebase-merge 2>/dev/null)" ] \
-           || [ -d "$(git rev-parse --git-path rebase-apply 2>/dev/null)" ]; then
-            echo "[$(ts)] healing: aborting interrupted rebase" >&2
-            git rebase --abort 2>/dev/null || {
-                rm -rf "$(git rev-parse --git-path rebase-merge)" \
-                       "$(git rev-parse --git-path rebase-apply)" 2>/dev/null
-            }
-        fi
-        if [ -f "$(git rev-parse --git-path CHERRY_PICK_HEAD 2>/dev/null)" ] \
-           || [ -d "$(git rev-parse --git-path sequencer 2>/dev/null)" ]; then
-            echo "[$(ts)] healing: aborting interrupted cherry-pick/sequencer" >&2
-            git cherry-pick --abort 2>/dev/null \
-                || rm -rf "$(git rev-parse --git-path sequencer)" \
-                          "$(git rev-parse --git-path CHERRY_PICK_HEAD)" 2>/dev/null
-        fi
-        if [ -f "$(git rev-parse --git-path REVERT_HEAD 2>/dev/null)" ]; then
-            echo "[$(ts)] healing: aborting interrupted revert" >&2
-            git revert --abort 2>/dev/null \
-                || rm -f "$(git rev-parse --git-path REVERT_HEAD)" 2>/dev/null
-        fi
-    )
-    # Hard reset chore/cron-data to origin/main as ground truth. This makes
-    # the wrapper immune to any prior state on chore/cron-data — whether from
-    # external user pushes (manual backfill commits), prior wrapper runs that
-    # did not propagate to vault origin, or daily-pr-merge brokenness.
-    #
-    # Why this is safe:
-    #  - Token data flows through Piesson/Piesson upstream (subtree pull/push),
-    #    NOT through vault origin/chore/cron-data. The wrapper's local commit
-    #    is just a tracking record for daily-pr-merge.
-    #  - get_weekly_tokens.py re-derives currentWeek.tokens from ccusage CLI
-    #    every run, so today's data is always rebuilt fresh.
-    #  - Even if today's local commit never reaches origin/chore/cron-data
-    #    (daily-pr-merge broken), the data is already in upstream from
-    #    step 5's subtree-deploy, and tomorrow's subtree pull brings it back.
-    #
-    # CONTRACT: Manual backfill of historical weeks must go through a PR to
-    # vault main + subtree-deploy to Piesson/Piesson upstream. DO NOT push
-    # directly to chore/cron-data — those commits will be discarded here.
-    # (Incident 2026-05-11→05-28: user manually pushed W19 backfill commits
-    # to origin/chore/cron-data, which created the divergence that the
-    # previous abort-on-diverge guard then refused to resolve for 8 days.)
-    if ! (cd "${CRON_VAULT}" \
-            && git checkout -f chore/cron-data >/dev/null 2>&1 \
-            && git fetch origin main >/dev/null 2>&1); then
-        echo "[$(ts)] failed to checkout chore/cron-data or fetch origin/main" >&2
-        return 1
-    fi
-    if ! (cd "${CRON_VAULT}" && git reset --hard origin/main) >/dev/null 2>&1; then
-        echo "[$(ts)] ERROR: failed to reset chore/cron-data to origin/main" >&2
-        return 1
-    fi
-    # Untracked leftovers (e.g. files a conflicted subtree pull dropped in
-    # the tree) survive reset --hard; sweep them too.
-    (cd "${CRON_VAULT}" && git clean -fd) >/dev/null 2>&1 || true
-    # Post-heal verification: if the tree is STILL dirty after abort + reset
-    # + clean, something is genuinely wrong (permissions, disk) — bail loudly
-    # rather than paper over it.
-    if [ -n "$(cd "${CRON_VAULT}" && git status --porcelain)" ]; then
-        echo "ERROR: cron worktree at ${CRON_VAULT} is dirty even after reset — refusing to proceed" >&2
-        return 1
-    fi
-    return 0
 }
-
-if ! ensure_cron_worktree; then
-    echo "[$(ts)] ERROR: cron worktree setup failed at ${CRON_VAULT}" >&2
-    exit 1
+trap cleanup_dependencies EXIT
+if [ "${PIESSON_CRON_SELF_UPDATED:-0}" = 1 ] && \
+   [ "${BASH_SOURCE[0]}" != "${USER_VAULT}/apps/piesson/scripts/update-weekly-tokens.sh" ]; then
+    RELEASE_REV=$(git -C "$USER_VAULT" rev-parse origin/main)
+    EXPECTED_BLOB=$(git -C "$USER_VAULT" rev-parse "${RELEASE_REV}:apps/piesson/scripts/update-weekly-tokens.sh")
+    [ "$(git hash-object "${BASH_SOURCE[0]}")" = "$EXPECTED_BLOB" ] || { echo 'ERROR: self-update revision changed; retry without mixing versions' >&2; exit 1; }
+    DEPENDENCY_DIR=$(mktemp -d "${TMPDIR:-/tmp}/piesson-cron-dependencies.XXXXXX")
+    git -C "$USER_VAULT" show "${RELEASE_REV}:scripts/automation-cron-common.sh" > "$DEPENDENCY_DIR/common.sh"
+    git -C "$USER_VAULT" show "${RELEASE_REV}:scripts/subtree-deploy.sh" > "$DEPENDENCY_DIR/deploy.sh"
+    COMMON_SCRIPT="$DEPENDENCY_DIR/common.sh"
+    DEPLOY_SCRIPT="$DEPENDENCY_DIR/deploy.sh"
 fi
 
-# All subsequent git/python work runs in the cron worktree, NOT the user's vault.
+# All writers, including the daily PR adapter, share this mutex. Never steal
+# an old lock: a slow or suspended process may still own it.
+source "$COMMON_SCRIPT"
+RUN_START=""
+finish_wrapper() {
+    local rc=$1
+    cleanup_dependencies || rc=1
+    # Close diagnostics before unlocking so a following health check sees
+    # the whole run, never a later invocation's preflight failure.
+    if [ -n "$RUN_START" ]; then
+        echo "[$(ts)] update-weekly-tokens.sh finished (exit $rc)" >&2
+    fi
+    automation_cron_finish "$rc"
+    return "$rc"
+}
+trap 'rc=$?; finish_wrapper "$rc"; exit "$rc"' EXIT
+automation_cron_lock
+
+RUN_START="[$(ts)] update-weekly-tokens.sh starting"
+echo "$RUN_START"
+# The health report correlates diagnostics to this exact run, not a stale
+# error-log tail. Keep raw stderr local; the report exports fixed categories.
+echo "$RUN_START" >&2
+automation_cron_prepare
 VAULT="${CRON_VAULT}"
 cd "${VAULT}"
 
-# NOTE: After the cron-worktree migration above, this stash block is largely
-# defensive — the cron worktree should always be clean (ensure_cron_worktree
-# enforces that). The logic is retained because (a) the subtree pull below
-# can leave the working tree mid-merge if interrupted, and (b) keeping the
-# manifest-based audit means any future regression that reintroduces dirty
-# state still gets caught by the verify_manifest_or_rescue path.
-#
-# Historical incident (2026-04-17 → 2026-04-23, ran in the USER vault before
-# this migration): conflicts during subtree pull left several untracked files
-# (200-Daily/*.md and others) permanently trapped inside stashes. The
-# `git stash pop` branch logged "restored stashed state" even when pop was
-# incomplete, because we were suppressing its stderr.
-#
-# Hardened flow:
-#   (1) Record the list of untracked files in a manifest file BEFORE stashing.
-#   (2) After `git stash pop` in cleanup, re-read the manifest and verify that
-#       every listed path exists in the worktree.
-#   (3) If any are missing, force-rescue them via `git checkout <stash>^3 -- <path>`.
-#   (4) Only delete the manifest once every file is confirmed present.
-STASH_TAG="piesson-tokens-auto-stash-$(date +%s)"
-STASH_MANIFEST="${TMPDIR:-/tmp}/${STASH_TAG}.manifest"
-STASHED=0
-if [ -n "$(git status --porcelain)" ]; then
-    # Snapshot untracked paths BEFORE stash push so we can audit after pop.
-    #
-    # Why the `-z | tr` dance instead of plain `--porcelain`:
-    # Default porcelain output DOUBLE-QUOTES paths that contain spaces or
-    # non-ASCII chars (e.g. `"한국어 발표.pptx"` comes back with literal
-    # surrounding quotes). Our downstream `[ -e "$f" ]` check then fails
-    # against the real unquoted path on disk → false-positive "missing"
-    # alerts like the one we saw on 2026-04-24 01:13.
-    #
-    # `-z` both disables that quoting AND switches record separator to NUL.
-    # macOS (BSD) awk can't set RS to a NUL byte, so we convert NUL → LF via
-    # `tr` and then parse line-by-line. Filenames containing literal newlines
-    # (extremely rare) would be mis-split by this; acceptable trade-off.
-    git -c core.quotepath=false status --porcelain -z \
-        | tr '\0' '\n' \
-        | awk '/^\?\? /{ sub(/^\?\? /, ""); print }' \
-        > "${STASH_MANIFEST}"
-    if git stash push --include-untracked -m "${STASH_TAG}" >/dev/null; then
-        STASHED=1
-        untracked_count=$(wc -l < "${STASH_MANIFEST}" | tr -d ' ')
-        echo "[$(ts)] stashed dirty vault state: ${STASH_TAG} (untracked_manifest=${untracked_count})"
-    else
-        rm -f "${STASH_MANIFEST}"
-    fi
-fi
-
-# Verify every path in the manifest exists in the worktree. Any that are
-# missing get rescued directly from the stash's untracked tree (the "^3"
-# parent exists because we stashed with --include-untracked). Returns 0 only
-# when every file in the manifest is confirmed present.
-verify_manifest_or_rescue() {
-    [ ! -f "${STASH_MANIFEST}" ] && return 0
-
-    local stash_ref=""
-    stash_ref=$(git stash list | grep -F "${STASH_TAG}" | awk -F: 'NR==1{print $1}')
-
-    local missing_count=0
-    local rescued=0
-    local rescue_failed=0
-    local f
-    # Manifest is LF-separated (writer above converts git's -z NUL stream via
-    # `tr '\0' '\n'` for BSD-awk compatibility). Plain `read` is fine.
-    while IFS= read -r f; do
-        [ -z "$f" ] && continue
-        [ -e "$f" ] && continue
-        missing_count=$((missing_count + 1))
-        if [ -n "$stash_ref" ]; then
-            mkdir -p "$(dirname "$f")" 2>/dev/null || true
-            if git -c core.quotepath=false checkout "${stash_ref}^3" -- "$f" 2>/dev/null; then
-                # File was originally untracked — remove from index to keep
-                # that status after rescue.
-                git reset --quiet HEAD -- "$f" 2>/dev/null || true
-                rescued=$((rescued + 1))
-                echo "[$(ts)]   RESCUE ok:     $f" >&2
-            else
-                rescue_failed=$((rescue_failed + 1))
-                echo "[$(ts)]   RESCUE FAILED: $f" >&2
-            fi
-        else
-            rescue_failed=$((rescue_failed + 1))
-            echo "[$(ts)]   RESCUE FAILED (stash ref not found): $f" >&2
-        fi
-    done < "${STASH_MANIFEST}"
-
-    # Always log the verify result when a manifest existed — previously we
-    # only logged on missing>0, which made clean runs look indistinguishable
-    # from "verify never ran" in the morning report.
-    echo "[$(ts)] manifest verify: missing=${missing_count} rescued=${rescued} failed=${rescue_failed}"
-
-    if [ "${missing_count}" -gt 0 ]; then
-        echo "[$(ts)] manifest verify: missing=${missing_count} rescued=${rescued} failed=${rescue_failed}" >&2
-    fi
-
-    # Only drop the manifest when every listed path is present. Otherwise
-    # keep it so stash-audit.sh and future runs can see what's outstanding.
-    if [ "${rescue_failed}" -eq 0 ]; then
-        rm -f "${STASH_MANIFEST}"
-        return 0
-    fi
-    return 1
-}
-
 cleanup() {
-    # Abort any pending merge first so stash pop can write a clean index.
-    # In a worktree, `.git` is a FILE (gitdir pointer), not a directory, so
-    # `[ -f .git/MERGE_HEAD ]` is ALWAYS false even when MERGE_HEAD exists
-    # — leaving conflict markers in the working tree across runs.
-    # `git rev-parse --git-path` resolves the actual location reliably.
-    if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
-        echo "[$(ts)] cleanup: aborting pending merge" >&2
-        git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
-    fi
-
-    if [ "${STASHED}" = "1" ]; then
-        # Look up the stash by tag rather than index, since intermediate git
-        # operations may have shifted indices.
-        local stash_ref
-        stash_ref=$(git stash list | grep -F "${STASH_TAG}" | awk -F: 'NR==1{print $1}')
-        if [ -n "${stash_ref}" ]; then
-            # Capture pop output so we can surface real errors (the previous
-            # `>/dev/null 2>&1` is what masked the 2026-04-23 incident).
-            local pop_log
-            pop_log=$(git stash pop "${stash_ref}" 2>&1) || true
-            if git stash list | grep -qF "${STASH_TAG}"; then
-                echo "[$(ts)] WARNING: stash pop did not complete; stash kept at ${stash_ref}" >&2
-                echo "${pop_log}" | sed 's/^/[pop] /' >&2
-            else
-                echo "[$(ts)] stash popped"
-            fi
-        fi
-
-        # Manifest verification runs whether or not pop appeared to succeed —
-        # belt-and-suspenders against any code path that silently drops files.
-        verify_manifest_or_rescue || true
+    # Preflight proved there was no operation before this run. Abort only a
+    # merge started by this locked run; never discard unrelated dirty files.
+    if [ -f "$(git rev-parse --git-path MERGE_HEAD)" ]; then
+        git merge --abort || return 1
     fi
 }
-# Compose cleanup + release_lock into the final EXIT trap (overrides the
-# early lock-only trap registered above).
-trap 'cleanup; release_lock' EXIT
+trap 'rc=$?; cleanup || rc=1; finish_wrapper "$rc"; exit "$rc"' EXIT
 
-echo "[$(ts)] step 1: git pull --rebase origin main"
-git pull --rebase origin main
+echo "[$(ts)] step 1: merged origin/main without replaying subtree history"
 
 echo "[$(ts)] step 2: git subtree pull apps/piesson <- piesson-upstream (pull-only)"
 # The upstream workflow continuously regenerates dashboard/data.json with
@@ -416,7 +200,7 @@ if [ "${pull_rc}" -ne 0 ]; then
     if [ -n "${unexpected}" ]; then
         echo "[$(ts)] unexpected conflicts outside upstream-regen whitelist, aborting merge:" >&2
         printf '%s\n' "${unexpected}" >&2
-        git merge --abort 2>/dev/null || git reset --merge 2>/dev/null || true
+        git merge --abort
         exit 1
     fi
 
@@ -450,7 +234,7 @@ else
 fi
 
 echo "[$(ts)] step 5: subtree-deploy.sh (push)"
-bash scripts/subtree-deploy.sh apps/piesson piesson-upstream
+SUBTREE_DEPLOY_CONSERVATIVE=1 bash "$DEPLOY_SCRIPT" apps/piesson piesson-upstream
 
 # Mark today as handled so the Stop-hook backstop knows not to re-fire.
 # Both triggers (LaunchAgent + Claude Code Stop) share this sentinel.
