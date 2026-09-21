@@ -4,8 +4,9 @@ update_readme_charts.py — (2026-09-21 redesign) SVG regeneration + timestamp.
 
 The new README embeds self-contained SVGs (weekly_dashboard.svg,
 progress_sparklines.svg); no QuickChart URLs, no chart-url injection.
-This script now: regenerates both SVGs from data.json, updates the
-"updated at" lines in README.md, and exits cleanly.
+This script now: regenerates both SVGs from data.json, refreshes their
+content-hash cache keys, updates the "updated at" lines in README.md, and
+exits cleanly.
 
 The old dual-axis QuickChart / Token Usage sections were removed with the
 redesign; their generators remain in the repo for reference.
@@ -35,8 +36,10 @@ def update_timestamps():
 def main():
     from generate_svg import generate_dashboard_svg
     from generate_progress_chart import generate_progress_chart
+    from update_readme_asset_versions import update_asset_versions
     generate_dashboard_svg()
     generate_progress_chart()
+    update_asset_versions()
     update_timestamps()
     print('✅ Charts and timestamps updated')
 

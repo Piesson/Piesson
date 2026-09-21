@@ -58,6 +58,9 @@ jobs:
       - name: Restore custom card over the action's standard card
         run: cp /tmp/custom-card.svg profile-summary-card-output/default/0-profile-details.svg
 
+      - name: Refresh README image cache keys
+        run: python dashboard/update_readme_asset_versions.py
+
       # Step 3: Commit both cards
       - name: Commit and push if changed
         run: |

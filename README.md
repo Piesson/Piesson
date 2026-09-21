@@ -7,7 +7,7 @@
 - Curious about my story? → [kimkb.com](https://www.kimkb.com)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg" alt="The Record — commits, pull requests, and issues year by year">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg?v=a813009a12ec" alt="The Record — commits, pull requests, and issues year by year">
 </p>
 
 <div align="right"><sub>updated at 09/21/26</sub></div>
@@ -15,7 +15,7 @@
 # Grinding enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=109d089a87cf" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 09/21/26</sub></div>
@@ -23,7 +23,7 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=979e2198ab18" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 09/21/26</sub></div>
