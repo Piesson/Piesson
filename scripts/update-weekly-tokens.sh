@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Daily 00:05 KST wrapper for the Piesson weekly token dashboard.
+# Daily 00:05 KST wrapper for Piesson dashboard data.
 #
 # Flow:
 #   1. sync vault with its own upstream (obsidian-vault)
-#   2. pull-only subtree pull from Piesson/Piesson so the apps/piesson/
-#      subtree reflects upstream's latest reset state
-#   3. run dashboard/get_weekly_tokens.py which reads currentWeek dates
-#      from data.json and writes claude/codex/total tokens back to it
-#   4. commit only dashboard/data.json (never sweeps other dirty files)
-#   5. subtree-deploy.sh to push vault -> Piesson/Piesson
+#   2. pull-only subtree pull from Piesson/Piesson so apps/piesson reflects
+#      upstream's latest reset state
+#   3. recompute hand-filed metrics from private 200-Daily review blocks
+#   4. refresh weekly Claude/Codex token totals
+#   5. commit only dashboard/data.json (never sweeps other dirty files)
+#   6. subtree-deploy.sh to push vault -> Piesson/Piesson
 
 # ── Self-update preamble ──────────────────────────────────────────────────
 # Closes the propagation gap from PR merges to LaunchAgent. The vault main
@@ -77,6 +77,9 @@ set -euo pipefail
 # be reachable via this explicit PATH. PIESSON_PATH_PREFIX is a test seam —
 # the harness prepends a shim dir (fake ccusage/npx); unset in production.
 export PATH="${PIESSON_PATH_PREFIX:+${PIESSON_PATH_PREFIX}:}/opt/homebrew/bin:/Users/apple/.nvm/versions/node/v22.18.0/bin:/usr/local/bin:/usr/bin:/bin"
+# Imported dashboard helpers must not create untracked __pycache__ files in the
+# conservative cron worktree, where any dirt correctly blocks deployment.
+export PYTHONDONTWRITEBYTECODE=1
 
 # The Stop-hook entry point inherits the Claude session's env. cmux.app
 # injects NODE_OPTIONS=--require=$TMPDIR/cmux-.../restore-node-options.cjs
@@ -188,7 +191,7 @@ if [ "${pull_rc}" -ne 0 ]; then
     unresolved=$(git diff --name-only --diff-filter=U)
     # Full list of upstream-authoritative paths per apps/piesson/CLAUDE.md
     # "Files to NEVER Manually Edit":
-    #   - dashboard/data.json               (slack_response.yml, update_dashboard.yml)
+    #   - dashboard/data.json               (local daily sync, update_dashboard.yml)
     #   - dashboard/weekly_dashboard.svg    (generate_svg.py)
     #   - dashboard/progress_sparklines.svg (generate_progress_chart.py)
     #   - dashboard/history/**              (generate_weekly_history.py on weekly reset)
@@ -219,22 +222,49 @@ if [ "${pull_rc}" -ne 0 ]; then
     git commit --no-edit -q
 fi
 
-echo "[$(ts)] step 3: run dashboard/get_weekly_tokens.py"
+echo "[$(ts)] step 3: recompute hand-filed metrics from 200-Daily"
 cd "${VAULT}/apps/piesson"
-python3 dashboard/get_weekly_tokens.py
+# A malformed hand-edited review must not block token delivery. The parser
+# fails before writing data.json, so continuing is safe; retain the status for
+# health reporting after the scoped commit and deploy.
+metrics_rc=0
+set +e
+python3 dashboard/sync_daily_metrics.py \
+    --daily-dir "${USER_VAULT}/200-Daily" \
+    --data dashboard/data.json
+metrics_rc=$?
+set -e
 
-echo "[$(ts)] step 4: scoped commit of data.json (if changed)"
+echo "[$(ts)] step 4: run dashboard/get_weekly_tokens.py"
+# A token-provider outage must not block a valid daily-note correction. Keep
+# its non-zero status for health reporting, but continue through the scoped
+# commit and deploy. get_weekly_tokens.py already preserves the last good
+# values on failure.
+token_rc=0
+set +e
+python3 dashboard/get_weekly_tokens.py
+token_rc=$?
+set -e
+
+echo "[$(ts)] step 5: scoped commit of data.json (if changed)"
 cd "${VAULT}"
 if ! git diff --quiet -- apps/piesson/dashboard/data.json; then
     git commit --only apps/piesson/dashboard/data.json \
-        -m "chore(piesson): update weekly token usage"
+        -m "chore(piesson): sync daily dashboard data"
     echo "[$(ts)] committed"
 else
-    echo "[$(ts)] no token changes to commit"
+    echo "[$(ts)] no dashboard data changes to commit"
 fi
 
-echo "[$(ts)] step 5: subtree-deploy.sh (push)"
+echo "[$(ts)] step 6: subtree-deploy.sh (push)"
 SUBTREE_DEPLOY_CONSERVATIVE=1 bash "$DEPLOY_SCRIPT" apps/piesson piesson-upstream
+
+if [ "$metrics_rc" -ne 0 ] || [ "$token_rc" -ne 0 ]; then
+    [ "$metrics_rc" -eq 0 ] || echo "[$(ts)] daily metric sync failed; token data was still delivered" >&2
+    [ "$token_rc" -eq 0 ] || echo "[$(ts)] token refresh failed after daily metrics were delivered" >&2
+    [ "$metrics_rc" -eq 0 ] || exit "$metrics_rc"
+    exit "$token_rc"
+fi
 
 # Mark today as handled so the Stop-hook backstop knows not to re-fire.
 # Both triggers (LaunchAgent + Claude Code Stop) share this sentinel.

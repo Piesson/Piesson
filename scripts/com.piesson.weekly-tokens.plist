@@ -14,7 +14,8 @@
 
   Fires daily at 00:05 local time (KST on the target machine). The 5-minute
   offset from midnight is intentional: it gives the system scheduler a jitter
-  buffer and keeps the query range aligned with the labeled week in data.json.
+  buffer, recomputes retained weeks from 200-Daily review blocks, and keeps the
+  token query range aligned with the labeled week in data.json.
 -->
 <plist version="1.0">
 <dict>

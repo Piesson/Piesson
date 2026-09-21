@@ -21,7 +21,7 @@ jobs:
       # queries hit 403 rate-limit every run (2026-07-18 incident: card
       # dropped 6,913 → 253). Running first guarantees a fresh quota.
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 

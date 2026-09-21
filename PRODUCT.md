@@ -63,15 +63,17 @@ displayed. Removed 2026-09-20 — it measured spend, not work.
 
 ## Constraints
 
-- **Four states share one cell today.** A `0` currently means any of: measured zero,
-  reported zero, never reported, or the unfilled default. The design must separate
-  them; this is the product's core honesty problem, not a polish item.
-- **Unfilled default is `1`**, decided 2026-09-20. It reads as "not yet entered," and
-  the surface must not present it as an achievement.
-- **Five consecutive weeks (W33–W37) carry no hand-entered figures.** That is the
-  current truth and the design shows it rather than hiding it behind zeros.
+- **Missing daily input counts as `0`**, decided 2026-09-21. A blank value or an
+  absent day contributes zero; no placeholder can appear as an achievement.
+- Reviews before the 2026-09-21 migration cutoff are ignored, so W38 and older
+  Slack-filed history cannot be partially replaced by a boundary-day note.
+- **Historical social baseline is intentional:** W27 has 11 posts and every week
+  from W28 through W38 has 10. `dashboard/data.json` is authoritative; archived
+  SVGs are generated views and are force-refreshed from it after corrections.
+- W33–W37 carry no non-social hand-entered figures. The historical social baseline
+  above is the explicit exception.
 - Entry happens in the daily note (`200-Daily/`) via the `today` skill, summed weekly.
-  Slack prompts are being retired.
+  Slack prompts and Slack input are retired.
 - `apps/piesson/**` mirrors to the **public** repo `Piesson/Piesson`. Working files
   live under `.impeccable/`, which is gitignored for that reason.
 - Upstream Actions rewrite `README.md` and the dashboard SVGs on a schedule. Any design
