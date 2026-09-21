@@ -151,10 +151,10 @@ def build():
         out.append(leaders(cx + 160, col_x[i % 2] + 390, y - 5))
         out.append(t(cx + 396, y, str(val), 20, INK, '700', anchor='end'))
         out.append(t(cx + 404, y, f'/ {goal}', 13, INK3, family=SANS))
-        if i % 2 == 1 or i == len(hand) - 1:
-            out.append(hline(col_x[i % 2], col_x[i % 2] + 430, y + 12))
-            if i % 2 == 1:
-                y += 42
+        # every slug gets its hairline, both columns, symmetric
+        out.append(hline(cx, cx + 430, y + 12))
+        if i % 2 == 1:
+            y += 42
     if len(hand) % 2 == 1:
         y += 42
 
