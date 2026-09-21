@@ -9,32 +9,56 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-09-14",
-    "endDate": "2026-09-20",
+    "startDate": "2026-09-21",
+    "endDate": "2026-09-27",
     "metrics": {
+      "pullRequests": 16,
       "socialContent": {
-        "instagram": 0,
-        "tiktok": 10,
-        "hellotalk": 0
+        "total": 0
       },
-      "userSessions": 1,
-      "ctoMeetings": 1,
-      "blogPosts": 1,
+      "userSessions": 0,
+      "ctoMeetings": 0,
+      "blogPosts": 0,
       "workouts": {
-        "running": 1,
-        "gym": 1
+        "total": 0
       },
       "tokens": {
-        "claude": 169179062,
-        "codex": 2118667420,
-        "total": 2287846482,
-        "updatedAt": "2026-09-20T11:04:36+09:00"
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
       },
-      "commits": 42,
-      "pullRequests": 77
+      "commits": 48
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W38",
+      "startDate": "2026-09-14",
+      "endDate": "2026-09-20",
+      "metrics": {
+        "commits": 142,
+        "pullRequests": 77,
+        "socialContent": {
+          "instagram": 0,
+          "tiktok": 10,
+          "hellotalk": 0
+        },
+        "userSessions": 1,
+        "ctoMeetings": 1,
+        "blogPosts": 1,
+        "workouts": {
+          "running": 1,
+          "gym": 1
+        },
+        "tokens": {
+          "claude": 169179062,
+          "codex": 2118667420,
+          "total": 2287846482,
+          "updatedAt": "2026-09-20T11:04:36+09:00"
+        }
+      }
+    },
     {
       "week": "2026-W37",
       "startDate": "2026-09-07",
@@ -330,33 +354,6 @@
           "updatedAt": "2026-07-14T00:04:05+09:00"
         },
         "pullRequests": 38
-      }
-    },
-    {
-      "week": "2026-W26",
-      "startDate": "2026-06-22",
-      "endDate": "2026-06-28",
-      "metrics": {
-        "commits": 0,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 3,
-          "hellotalk": 8
-        },
-        "userSessions": 3,
-        "ctoMeetings": 2,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 4,
-          "gym": 3
-        },
-        "tokens": {
-          "claude": 0,
-          "codex": 0,
-          "total": 0,
-          "updatedAt": "2026-07-14T00:04:12+09:00"
-        },
-        "pullRequests": 0
       }
     }
   ]

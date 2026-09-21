@@ -6,13 +6,13 @@
 <line x1="64" y1="54" x2="936" y2="54" stroke="#15150f" stroke-width="2"/>
 <text x="64" y="106" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="400">Pull requests merged</text>
 <line x1="344" y1="105" x2="856" y2="105" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="936" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">706</text>
+<text x="936" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">684</text>
 <text x="64" y="166" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Counted from GitHub search, twelve weeks.</text>
 <line x1="64" y1="240" x2="936" y2="240" stroke="#a9a9a0" stroke-width="1"/>
 <line x1="64" y1="136" x2="936" y2="136" stroke="#c9c9c1" stroke-width="1"/>
-<polyline points="64.0,230.0 143.3,211.6 222.5,203.1 301.8,193.9 381.1,182.6 460.4,173.7 539.6,167.1 618.9,160.7 698.2,152.4 777.5,147.4 856.7,145.1 936.0,134.0" fill="none" stroke="#15150f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="64.0,230.0 143.3,219.8 222.5,208.8 301.8,195.1 381.1,184.4 460.4,176.5 539.6,168.9 618.9,158.9 698.2,152.8 777.5,150.1 856.7,136.8 936.0,134.0" fill="none" stroke="#15150f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="936.0" cy="134.0" r="4.5" fill="#a81f16"/>
-<text x="66" y="124" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">706</text>
+<text x="66" y="124" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">684</text>
 <text x="64" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W27</text>
 <text x="238.4" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W29</text>
 <text x="412.8" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W31</text>
@@ -21,13 +21,13 @@
 <text x="936" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#a81f16" font-weight="600" text-anchor="end">W38</text>
 <text x="64" y="296" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="400">Social posts</text>
 <line x1="344" y1="295" x2="856" y2="295" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="936" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">121</text>
+<text x="936" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">110</text>
 <text x="64" y="356" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Filed by hand, twelve weeks.</text>
 <line x1="64" y1="430" x2="936" y2="430" stroke="#a9a9a0" stroke-width="1"/>
 <line x1="64" y1="326" x2="936" y2="326" stroke="#c9c9c1" stroke-width="1"/>
-<polyline points="64.0,420.0 143.3,411.3 222.5,402.5 301.8,393.8 381.1,385.1 460.4,376.4 539.6,367.6 618.9,358.9 698.2,350.2 777.5,341.5 856.7,332.7 936.0,324.0" fill="none" stroke="#6e6e66" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="64.0,420.0 143.3,410.4 222.5,400.8 301.8,391.2 381.1,381.6 460.4,372.0 539.6,362.4 618.9,352.8 698.2,343.2 777.5,333.6 856.7,324.0 936.0,324.0" fill="none" stroke="#6e6e66" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="936.0" cy="324.0" r="4.5" fill="#a81f16"/>
-<text x="66" y="314" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">121</text>
+<text x="66" y="314" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">110</text>
 <text x="64" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W27</text>
 <text x="238.4" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W29</text>
 <text x="412.8" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W31</text>
@@ -38,14 +38,14 @@
 <line x1="64" y1="562" x2="936" y2="562" stroke="#15150f" stroke-width="1"/>
 <text x="64" y="590" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Workouts</text>
 <line x1="224" y1="585" x2="450" y2="585" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="456" y="590" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">40</text>
+<text x="456" y="590" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">33</text>
 <text x="494" y="590" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Coffee chats</text>
 <line x1="654" y1="585" x2="880" y2="585" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="886" y="590" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">16</text>
+<text x="886" y="590" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">14</text>
 <line x1="64" y1="606" x2="924" y2="606" stroke="#c9c9c1" stroke-width="1"/>
 <text x="64" y="634" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Talks with users</text>
 <line x1="224" y1="629" x2="450" y2="629" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="456" y="634" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">23</text>
+<text x="456" y="634" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">20</text>
 <text x="494" y="634" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Blog posts</text>
 <line x1="654" y1="629" x2="880" y2="629" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
 <text x="886" y="634" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">1</text>

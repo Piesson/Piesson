@@ -15,7 +15,7 @@
 # Grinding enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=1f71d8b3b07f" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=9d7234b73cfa" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 09/21/26</sub></div>
@@ -23,7 +23,7 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=67f6538e4815" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=42cda437eb85" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 09/21/26</sub></div>
@@ -32,18 +32,18 @@
 
 | Week | Period | 🚀 PRs | 📱 Social | 💬 Talks | ☕ Coffee | 🏃 Workouts | 📝 Posts |
 |------|--------|--------|----------|---------|---------|------------|----------|
-| **Week 38 (live)** | 2026-09-14 - 2026-09-20 | 77 | 10 | 1 | 1 | 2 | 1 |
-| **Week 37** | 2026-09-07 - 2026-09-13 | 16 | 10 | — | — | — | — |
-| **Week 36** | 2026-08-31 - 2026-09-06 | 35 | 10 | — | — | — | — |
-| **Week 35** | 2026-08-24 - 2026-08-30 | 58 | 10 | — | — | — | — |
-| **Week 34** | 2026-08-17 - 2026-08-23 | 44 | 10 | — | — | — | — |
-| **Week 33** | 2026-08-10 - 2026-08-16 | 46 | 10 | — | — | — | — |
-| **Week 32** | 2026-08-03 - 2026-08-09 | 62 | 10 | 1 | 1 | 1 | — |
-| **Week 31** | 2026-07-27 - 2026-08-02 | 79 | 10 | — | 1 | 1 | — |
-| **Week 30** | 2026-07-20 - 2026-07-26 | 64 | 10 | 15 | 9 | 22 | — |
-| **Week 29** | 2026-07-13 - 2026-07-19 | 59 | 10 | — | — | — | — |
-| **Week 28** | 2026-07-06 - 2026-07-12 | 128 | 10 | 3 | 2 | 7 | — |
-| **Week 27** | 2026-06-29 - 2026-07-05 | 38 | 11 | 3 | 2 | 7 | — |
+| [**Week 39 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-09-21 - 2026-09-27 | 16 | — | — | — | — | — |
+| [**Week 38**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W38.svg) | 2026-09-14 - 2026-09-20 | 77 | 10 | 1 | 1 | 2 | 1 |
+| [**Week 37**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W37.svg) | 2026-09-07 - 2026-09-13 | 16 | 10 | 0 | 0 | 0 | 0 |
+| [**Week 36**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W36.svg) | 2026-08-31 - 2026-09-06 | 35 | 10 | 0 | 0 | 0 | 0 |
+| [**Week 35**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W35.svg) | 2026-08-24 - 2026-08-30 | 58 | 10 | 0 | 0 | 0 | 0 |
+| [**Week 34**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W34.svg) | 2026-08-17 - 2026-08-23 | 44 | 10 | 0 | 0 | 0 | 0 |
+| [**Week 33**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W33.svg) | 2026-08-10 - 2026-08-16 | 46 | 10 | 0 | 0 | 0 | 0 |
+| [**Week 32**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W32.svg) | 2026-08-03 - 2026-08-09 | 62 | 10 | 1 | 1 | 1 | 0 |
+| [**Week 31**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W31.svg) | 2026-07-27 - 2026-08-02 | 79 | 10 | 0 | 1 | 1 | 0 |
+| [**Week 30**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W30.svg) | 2026-07-20 - 2026-07-26 | 64 | 10 | 15 | 9 | 22 | 0 |
+| [**Week 29**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W29.svg) | 2026-07-13 - 2026-07-19 | 59 | 10 | 0 | 0 | 0 | 0 |
+| [**Week 28**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W28.svg) | 2026-07-06 - 2026-07-12 | 128 | 10 | 3 | 2 | 7 | 0 |
 
 <div align="right"><sub>updated at 09/21/26</sub></div>
 
