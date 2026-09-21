@@ -96,6 +96,35 @@ class DashboardLayoutTests(unittest.TestCase):
             labels["TWELVE WEEKS"] + 14,
         )
 
+    def test_progress_labels_follow_the_rolling_week_window(self):
+        data = sample_data()
+        data["weeklyHistory"] = [
+            {
+                "week": f"2026-W{week}",
+                "startDate": "2026-07-01",
+                "endDate": "2026-07-07",
+                "metrics": {"pullRequests": 1, "socialContent": {"total": 1}},
+            }
+            for week in reversed(range(28, 39))
+        ]
+        data["currentWeek"] = {
+            "startDate": "2026-09-21",
+            "endDate": "2026-09-27",
+            "metrics": {"pullRequests": 1, "socialContent": {"total": 0}},
+        }
+        self.data.write_text(json.dumps(data))
+        out = self.root / "rolling.svg"
+        with patch.object(generate_progress_chart, "DATA", self.data), \
+             patch.object(generate_progress_chart, "OUT", out):
+            generate_progress_chart.generate_progress_chart()
+
+        svg = out.read_text()
+        self.assertIn("W28 — W39", svg)
+        self.assertNotIn("W27 — W38", svg)
+        self.assertNotIn("week 27", svg)
+        self.assertIn("Totals cover W28 — W39, the latest twelve weeks.", svg)
+        self.assertIn(">W39</text>", svg)
+
     def test_hand_filed_figures_are_twelve_week_totals(self):
         out = self.root / "totals.svg"
         with patch.object(generate_progress_chart, "DATA", self.data), \
