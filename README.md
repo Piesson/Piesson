@@ -15,7 +15,7 @@
 # Grinding enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=109d089a87cf" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=1f71d8b3b07f" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 09/21/26</sub></div>
@@ -23,7 +23,7 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=979e2198ab18" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=67f6538e4815" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 09/21/26</sub></div>

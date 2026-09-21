@@ -4,7 +4,7 @@ generate_progress_chart.py — Running Totals (2026-09-21 redesign).
 
 Two cumulative line charts — pull requests (machine-counted) and social
 posts (hand-filed, now the metric that matters most) — each on its own
-scale. Four remaining hand-filed measures print as figures.
+scale. Four remaining hand-filed measures print as twelve-week totals.
 
 Replaces the dual-axis six-line chart and the sparkline cards.
 """
@@ -23,7 +23,7 @@ FILL2 = '#6e6e66'
 SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "system-ui, -apple-system, sans-serif"
 
-W, H = 1000, 770
+W, H = 1000, 730
 L, R = 64, 936
 CHART_W = R - L
 
@@ -107,15 +107,22 @@ def build():
         s += week_soc(e); soc_cum.append(s)
     s += soc_now; soc_cum.append(s)
 
-    # hand totals
-    m = cw['metrics']
-    wo = m.get('workouts', {})
-    wo_tot = sum(v for v in wo.values() if isinstance(v, int))
+    # Twelve-week totals for the remaining hand-filed measures.
+    hand_weeks = hist11 + [cw]
+
+    def sum_metric(key):
+        return sum(e['metrics'].get(key, 0) for e in hand_weeks)
+
+    wo_tot = sum(
+        sum(v for v in e['metrics'].get('workouts', {}).values()
+            if isinstance(v, int))
+        for e in hand_weeks
+    )
     hand = [
         ('Workouts', wo_tot),
-        ('Coffee chats', m.get('ctoMeetings', 0)),
-        ('Talks with users', m.get('userSessions', 0)),
-        ('Blog posts', m.get('blogPosts', 0)),
+        ('Coffee chats', sum_metric('ctoMeetings')),
+        ('Talks with users', sum_metric('userSessions')),
+        ('Blog posts', sum_metric('blogPosts')),
     ]
 
     now = datetime.now().strftime('%-d %b %Y')
@@ -139,7 +146,7 @@ def build():
 
     # hand rows
     y = 548
-    out.append(t(L, y, 'ALSO FILED BY HAND', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(t(L, y, 'ALSO FILED BY HAND · TWELVE-WEEK TOTALS', 12, INK2, '600', family=SANS, letter='0.14em'))
     out.append(hline(L, R, y + 14, INK))
     col_x = [L, L + 430]
     yy = y + 42
@@ -151,12 +158,6 @@ def build():
         if i % 2 == 1:
             out.append(hline(cx - 430 if cx == col_x[1] else cx, cx + 430, yy + 16))
             yy += 44
-
-    # note
-    out.append(t(L, yy + 20, 'The top figure is counted by the machine; the rest are entered by hand each week,',
-                 13, INK2, family=SANS))
-    out.append(t(L, yy + 32, 'which is the point of entering them: the number is the review, not the report.',
-                 13, INK2, family=SANS))
 
     # colophon
     yc = H - 14

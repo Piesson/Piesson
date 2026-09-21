@@ -163,14 +163,18 @@ def build():
     out.append(t(L, ybase, 'TWELVE WEEKS', 12, INK2, '600', family=SANS, letter='0.14em'))
     out.append(hline(L, R, ybase + 14, INK))
 
-    def bar_series(y0, label, vals, peak, color, val_size=19):
-        gy = y0 + 30
-        out.append(t(L, gy - 16, label, 12.5, INK2, '600', family=SANS))
-        out.append(t(R, y0, f'peak {peak}', 12, INK3, family=SANS, anchor='end'))
+    def bar_series(label_y, label, vals, peak, color, val_size=19):
+        # Reserve a full 12 px gutter between the label row and the tallest
+        # bar. The former y0+30 baseline let 64 px bars rise through both the
+        # series label and the TWELVE WEEKS divider.
+        max_h = 64
+        plot_top = label_y + 12
+        gy = plot_top + max_h
+        out.append(t(L, label_y, label, 12.5, INK2, '600', family=SANS))
+        out.append(t(R, label_y, f'peak {peak}', 12, INK3, family=SANS, anchor='end'))
         out.append(hline(L, R, gy, RULE))
         n = len(vals)
         slot = (R - L) / n
-        max_h = 64
         for i, v in enumerate(vals):
             cx = L + slot * i + slot / 2
             h = round(v / peak * max_h) if (v and peak) else 0
@@ -186,8 +190,8 @@ def build():
 
     pr_peak = max(pr_series) or 1
     soc_peak = max(soc_series) or 1
-    bar_series(ybase + 34, 'Pull requests merged', pr_series, pr_peak, INK)
-    bar_series(ybase + 34 + 118, 'Social posts', soc_series, soc_peak, FILL2, 15)
+    bar_series(ybase + 42, 'Pull requests merged', pr_series, pr_peak, INK)
+    bar_series(ybase + 42 + 148, 'Social posts', soc_series, soc_peak, FILL2, 15)
 
     # colophon
     yc = H - 40
