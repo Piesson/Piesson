@@ -23,7 +23,7 @@ FILL2 = '#6e6e66'
 SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "system-ui, -apple-system, sans-serif"
 
-W, H = 1000, 730
+W, H = 1000, 770
 L, R = 64, 936
 CHART_W = R - L
 
@@ -49,14 +49,14 @@ def dotted(x1, x2, y):
 def line_chart(y0, label, cum, total, sub, color, h=120):
     """Cumulative line chart: baseline at y0+h, top at y0."""
     out = []
-    out.append(t(L, y0 - 10, label, 21, INK))
+    out.append(t(L, y0 - 14, label, 21, INK))
     out.append(dotted(L + 280, R - 80, y0 - 15))
     out.append(t(R, y0 - 10, str(total), 56, INK, '700', anchor='end', letter='-0.03em'))
-    out.append(t(L, y0 + 22, sub, 13, INK2, family=SANS))
+    out.append(t(L, y0 + 46, sub, 13, INK2, family=SANS))
 
     gy = y0 + h
     out.append(hline(L, R, gy, RULE))
-    out.append(hline(L, R, y0 + 8, HAIR))
+    out.append(hline(L, R, y0 + 16, HAIR))
 
     n = len(cum)
     mx = max(cum) or 1
@@ -127,7 +127,7 @@ def build():
 
     out.append(t(L, 40, 'PIESSON · RUNNING TOTALS', 12, INK2, '600', family=SANS, letter='0.14em'))
     out.append(t(R, 40, 'W27 — W38', 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
-    out.append(hline(L, R, 50, INK, 2))
+    out.append(hline(L, R, 54, INK, 2))
 
     # chart 1: PR
     out += line_chart(120, 'Pull requests merged', pr_cum, pr_cum[-1],
@@ -138,9 +138,9 @@ def build():
                       'Filed by hand, twelve weeks.', FILL2)
 
     # hand rows
-    y = 530
+    y = 548
     out.append(t(L, y, 'ALSO FILED BY HAND', 12, INK2, '600', family=SANS, letter='0.14em'))
-    out.append(hline(L, R, y + 10, INK))
+    out.append(hline(L, R, y + 14, INK))
     col_x = [L, L + 430]
     yy = y + 42
     for i, (name, val) in enumerate(hand):
@@ -149,18 +149,18 @@ def build():
         out.append(dotted(cx + 160, cx + 386, yy - 5))
         out.append(t(cx + 392, yy, str(val), 21, INK, '700', anchor='end'))
         if i % 2 == 1:
-            out.append(hline(cx - 430 if cx == col_x[1] else cx, cx + 430, yy + 12))
-            yy += 38
+            out.append(hline(cx - 430 if cx == col_x[1] else cx, cx + 430, yy + 16))
+            yy += 44
 
     # note
     out.append(t(L, yy + 20, 'The top figure is counted by the machine; the rest are entered by hand each week,',
                  13, INK2, family=SANS))
-    out.append(t(L, yy + 42, 'which is the point of entering them: the number is the review, not the report.',
+    out.append(t(L, yy + 32, 'which is the point of entering them: the number is the review, not the report.',
                  13, INK2, family=SANS))
 
     # colophon
-    yc = H - 18
-    out.append(hline(L, R, yc - 12, INK))
+    yc = H - 14
+    out.append(hline(L, R, yc - 28, INK))
     out.append(t(L, yc, 'Totals run from week 27 and reset with the quarter.', 13, INK2, family=SANS))
     out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
 

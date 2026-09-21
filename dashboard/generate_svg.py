@@ -28,7 +28,7 @@ FILL2 = '#6e6e66'
 SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "system-ui, -apple-system, sans-serif"
 
-W, H = 1000, 780
+W, H = 1000, 820
 L, R = 64, 936
 
 
@@ -122,7 +122,7 @@ def build():
     # runhead
     out.append(t(L, 40, 'PIESSON · WEEKLY GALLEY', 12, INK2, '600', family=SANS, letter='0.14em'))
     out.append(t(R, 40, weeks[-1], 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
-    out.append(hline(L, R, 50, INK, 2))
+    out.append(hline(L, R, 54, INK, 2))
     out.append(t(W / 2, 76, period, 16, INK2, style='italic'))
 
     # lead
@@ -131,9 +131,9 @@ def build():
     out.append(t(R, 136, str(pr_now) if pr_now is not None else '\u2014', 62, INK, '700', anchor='end', letter='-0.03em'))
     pct = round(pr_now / goal_for('pullRequests') * 100) if pr_now else 0
     pr_label = f'Counted from GitHub search \u00b7 goal {goal_for("pullRequests")} \u00b7 {pct}% of target' if pr_now is not None else 'Counted from GitHub search'
-    out.append(t(L, 158, f'Counted from GitHub search · goal {goal_for("pullRequests")} · {pct}% of target',
+    out.append(t(L, 170, f'Counted from GitHub search · goal {goal_for("pullRequests")} · {pct}% of target',
                  13, INK2, family=SANS))
-    out.append(hline(L, R, 176, INK))
+    out.append(hline(L, R, 184, INK))
 
     # hand-filed rows (2 columns x 3)
     hand = [
@@ -144,7 +144,7 @@ def build():
         ('Blog posts', m.get('blogPosts', 0), 1),
     ]
     col_x = [L, L + 430]
-    y = 210
+    y = 218
     for i, (name, val, goal) in enumerate(hand):
         cx = col_x[i % 2]
         out.append(t(cx, y, name, 17, INK))
@@ -152,21 +152,21 @@ def build():
         out.append(t(cx + 396, y, str(val), 20, INK, '700', anchor='end'))
         out.append(t(cx + 404, y, f'/ {goal}', 13, INK3, family=SANS))
         # every slug gets its hairline, both columns, symmetric
-        out.append(hline(cx, cx + 430, y + 12))
+        out.append(hline(cx, cx + 430, y + 16))
         if i % 2 == 1:
-            y += 42
+            y += 48
     if len(hand) % 2 == 1:
-        y += 42
+        y += 48
 
     # twelve weeks — two series
-    ybase = y + 50
+    ybase = y + 44
     out.append(t(L, ybase, 'TWELVE WEEKS', 12, INK2, '600', family=SANS, letter='0.14em'))
-    out.append(hline(L, R, ybase + 10, INK))
+    out.append(hline(L, R, ybase + 14, INK))
 
     def bar_series(y0, label, vals, peak, color, val_size=19):
-        out.append(t(L, y0, label, 12.5, INK2, '600', family=SANS))
+        gy = y0 + 30
+        out.append(t(L, gy - 16, label, 12.5, INK2, '600', family=SANS))
         out.append(t(R, y0, f'peak {peak}', 12, INK3, family=SANS, anchor='end'))
-        gy = y0 + 14
         out.append(hline(L, R, gy, RULE))
         n = len(vals)
         slot = (R - L) / n
@@ -179,19 +179,19 @@ def build():
                 bx = cx - bw / 2
                 c = RED if i == n - 1 else color
                 out.append(f'<rect x="{bx:.1f}" y="{gy - h}" width="{bw:.1f}" height="{h}" fill="{c}"/>\n')
-            out.append(t(cx, gy + 18, str(v), val_size, INK if i < n - 1 else RED,
+            out.append(t(cx, gy + 24, str(v), val_size, INK if i < n - 1 else RED,
                          '400' if i < n - 1 else '700', anchor='middle'))
-            out.append(t(cx, gy + 34, weeks[i], 11.5, INK3 if i < n - 1 else RED,
+            out.append(t(cx, gy + 42, weeks[i], 11.5, INK3 if i < n - 1 else RED,
                          '400' if i < n - 1 else '600', anchor='middle', family=SANS, letter='0.06em'))
 
     pr_peak = max(pr_series) or 1
     soc_peak = max(soc_series) or 1
-    bar_series(ybase + 30, 'Pull requests merged', pr_series, pr_peak, INK)
-    bar_series(ybase + 30 + 108, 'Social posts', soc_series, soc_peak, FILL2, 15)
+    bar_series(ybase + 34, 'Pull requests merged', pr_series, pr_peak, INK)
+    bar_series(ybase + 34 + 118, 'Social posts', soc_series, soc_peak, FILL2, 15)
 
     # colophon
     yc = H - 40
-    out.append(hline(L, R, yc - 16, INK))
+    out.append(hline(L, R, yc - 24, INK))
     out.append(t(L, yc, 'Figures are counted, never estimated.', 13, INK2, family=SANS))
     out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
 

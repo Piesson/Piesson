@@ -32,7 +32,7 @@ FILL2 = '#8e8e85'
 SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "system-ui, -apple-system, sans-serif"
 
-W, H = 1000, 620
+W, H = 1000, 640
 L, R = 64, 936
 
 
@@ -111,7 +111,7 @@ def build():
     # runhead
     out.append(t(L, 40, 'PIESSON — KB KIM', 12, INK2, '600', family=SANS, letter='0.14em'))
     out.append(t(R, 40, 'SINCE AUGUST 2024', 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
-    out.append(hline(L, R, 50, INK, 2))
+    out.append(hline(L, R, 54, INK, 2))
 
     # copy (verbatim) — left
     bullets = [
@@ -132,26 +132,26 @@ def build():
     rx = 740
     out.append(t(rx, 96, 'DAYS BUILDING', 12, INK2, '600', family=SANS, letter='0.14em'))
     out.append(t(rx, 168, str(days), 72, INK, '700', letter='-0.035em'))
-    out.append(t(rx, 196, 'from the first line of code to today', 15, INK2, style='italic'))
+    out.append(t(rx, 200, 'from the first line of code to today', 15, INK2, style='italic'))
 
     # divider
-    out.append(hline(L, R, 296, INK))
+    out.append(hline(L, R, 292, INK))
 
     # The record — table
-    out.append(t(L, 328, 'THE RECORD', 12, INK2, '600', family=SANS, letter='0.14em'))
-    out.append(hline(L, R, 338, INK, 1))
+    out.append(t(L, 322, 'THE RECORD', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, 334, INK, 1))
 
     # column heads
     cols = [(L, 'Year'), (L + 120, 'SCALE OF THE YEAR'),
             (R - 260, 'COMMITS'), (R - 140, 'MERGED'), (R - 50, 'ISSUES')]
     for cx, label in cols:
         anchor = 'start' if cx < R - 300 else 'end'
-        out.append(t(cx, 360, label, 11, INK3, '600', anchor=anchor, family=SANS, letter='0.07em'))
-    out.append(hline(L, R, 370))
+        out.append(t(cx, 368, label, 11, INK3, '600', anchor=anchor, family=SANS, letter='0.07em'))
+    out.append(hline(L, R, 380))
 
     # year rows
     bar_x, bar_max = L + 120, 380
-    y = 396
+    y = 410
     for yr in ys:
         v = years[yr]
         cur = yr == ys[-1]
@@ -163,8 +163,8 @@ def build():
         out.append(t(R - 260, y + 6, f"{v['commits']:,}", 20, INK, wgt, anchor='end'))
         out.append(t(R - 140, y + 6, str(v['merged']), 20, INK, wgt, anchor='end'))
         out.append(t(R - 50, y + 6, str(v['issues']), 20, INK, wgt, anchor='end'))
-        y += 38
-        out.append(hline(L, R, y - 14))
+        y += 44
+        out.append(hline(L, R, y - 21))
 
     # total row: bar shows composition (the pie's fact, once)
     y += 8
@@ -187,7 +187,7 @@ def build():
 
     # colophon
     yc = H - 24
-    out.append(hline(L, R, yc - 14, INK))
+    out.append(hline(L, R, yc - 22, INK))
     out.append(t(L, yc, 'Figures from the GitHub API and yearly cache, never estimated.', 13, INK2, family=SANS))
     out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
 
