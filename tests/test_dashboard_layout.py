@@ -39,11 +39,11 @@ def sample_data():
             "metrics": {
                 "pullRequests": 12,
                 "commits": 1,
-                "socialContent": {"instagram": 1, "tiktok": 0, "hellotalk": 0},
+                "socialContent": {"total": 1},
                 "userSessions": 2,
                 "ctoMeetings": 1,
                 "blogPosts": 1,
-                "workouts": {"running": 1, "gym": 2},
+                "workouts": {"total": 3},
             },
         },
         "weeklyHistory": history,
@@ -64,7 +64,8 @@ class DashboardLayoutTests(unittest.TestCase):
         out = self.root / "weekly.svg"
         with patch.object(generate_svg, "DATA", self.data), \
              patch.object(generate_svg, "OUT", out), \
-             patch("get_weekly_commits.get_weekly_commits", return_value=None):
+             patch("get_weekly_commits.get_weekly_commits", return_value=None), \
+             patch("get_weekly_pull_requests.get_weekly_pull_requests", return_value=None):
             generate_svg.generate_dashboard_svg()
 
         root = ET.parse(out).getroot()

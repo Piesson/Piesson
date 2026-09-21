@@ -15,6 +15,8 @@ import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from metric_totals import grouped_total
+
 
 KST = timezone(timedelta(hours=9))
 DATA = Path('dashboard/data.json')
@@ -70,13 +72,21 @@ def generate_dashboard_svg():
 
 def build():
     d = load()
-    # Auto-refresh commits from GitHub (regression guard: None = keep previous,
-    # never write 0 — 2026-05 incident contract, tests/test_caller_fallbacks.py)
+    # Auto-refresh machine-counted metrics. None means preserve the previous
+    # value; transient API/auth failures must never become a false zero.
     import get_weekly_commits as _gwc
-    fresh = _gwc.get_weekly_commits()
-    if fresh is not None:
-        d['currentWeek']['metrics']['commits'] = fresh
-        json.dump(d, open(DATA, 'w'), indent=2, ensure_ascii=False)
+    import get_weekly_pull_requests as _gwpr
+    machine_changed = False
+    fresh_commits = _gwc.get_weekly_commits()
+    if fresh_commits is not None:
+        machine_changed |= d['currentWeek']['metrics'].get('commits') != fresh_commits
+        d['currentWeek']['metrics']['commits'] = fresh_commits
+    fresh_prs = _gwpr.get_weekly_pull_requests(DATA)
+    if fresh_prs is not None:
+        machine_changed |= d['currentWeek']['metrics'].get('pullRequests') != fresh_prs
+        d['currentWeek']['metrics']['pullRequests'] = fresh_prs
+    if machine_changed:
+        DATA.write_text(json.dumps(d, indent=2, ensure_ascii=False) + '\n')
 
     cw = d['currentWeek']
     m = cw['metrics']
@@ -84,18 +94,15 @@ def build():
 
     # ---- data ----
     pr_now = m.get('pullRequests')  # no commits fallback — the label says PRs
-    social = m.get('socialContent', {})
-    social_now = sum(v for v in social.values() if isinstance(v, int))
-    workouts = m.get('workouts', {})
-    wo_now = sum(v for v in workouts.values() if isinstance(v, int))
+    social_now = grouped_total(m.get('socialContent', {}))
+    wo_now = grouped_total(m.get('workouts', {}))
 
     # weekly PR + social series (12 weeks incl current)
     def week_pr(entry):
         return entry['metrics'].get('pullRequests', 0)
 
     def week_soc(entry):
-        s = entry['metrics'].get('socialContent', {})
-        return sum(v for v in s.values() if isinstance(v, int))
+        return grouped_total(entry['metrics'].get('socialContent', {}))
 
     hist11 = hist[-11:] if len(hist) >= 11 else hist
     pr_series = [week_pr(e) for e in hist11] + [pr_now]

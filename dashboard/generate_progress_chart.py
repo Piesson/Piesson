@@ -13,6 +13,8 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from metric_totals import grouped_total
+
 DATA = Path('dashboard/data.json')
 OUT = Path('dashboard/progress_sparklines.svg')
 
@@ -91,11 +93,10 @@ def build():
         return e['metrics'].get('pullRequests', e['metrics'].get('commits', 0))
 
     def week_soc(e):
-        s = e['metrics'].get('socialContent', {})
-        return sum(v for v in s.values() if isinstance(v, int))
+        return grouped_total(e['metrics'].get('socialContent', {}))
 
     pr_now = cw['metrics'].get('pullRequests', cw['metrics'].get('commits', 0))
-    soc_now = sum(v for v in cw['metrics'].get('socialContent', {}).values() if isinstance(v, int))
+    soc_now = grouped_total(cw['metrics'].get('socialContent', {}))
 
     pr_cum, s = [], 0
     for e in hist11:
@@ -113,11 +114,7 @@ def build():
     def sum_metric(key):
         return sum(e['metrics'].get(key, 0) for e in hand_weeks)
 
-    wo_tot = sum(
-        sum(v for v in e['metrics'].get('workouts', {}).values()
-            if isinstance(v, int))
-        for e in hand_weeks
-    )
+    wo_tot = sum(grouped_total(e['metrics'].get('workouts', {})) for e in hand_weeks)
     hand = [
         ('Workouts', wo_tot),
         ('Coffee chats', sum_metric('ctoMeetings')),

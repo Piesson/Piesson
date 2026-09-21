@@ -2,13 +2,9 @@ name: Update Dashboard
 
 on:
   schedule:
-    # Monday 7 AM KST = Sunday 22:00 UTC: Weekly reset only (no reminder)
+    # Monday 7 AM KST = Sunday 22:00 UTC: archive and reset the prior week.
     - cron: '0 22 * * 0'
-    # Tue-Sun 7 AM KST = Mon-Sat 22:00 UTC: Morning reminder
-    - cron: '0 22 * * 1,2,3,4,5,6'
-    # Every day 9:40 PM KST = 12:40 UTC: Evening reminder if no input
-    - cron: '40 12 * * *'
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch:
   push:
     paths:
       - 'dashboard/data.json'
@@ -17,7 +13,7 @@ permissions:
   contents: write
 
 jobs:
-  daily-reminder:
+  weekly-reset:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
@@ -27,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -39,8 +35,6 @@ jobs:
       - name: Check weekly reset
         id: check_weekly
         env:
-          # check_weekly_reset.py confirms the closing week's commits from
-          # the GraphQL API at snapshot time (no token → keeps stored value)
           GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
         run: |
@@ -48,109 +42,49 @@ jobs:
           python3 dashboard/check_weekly_reset.py
           EXIT_CODE=$?
           set -e
-          echo "reset_happened=$EXIT_CODE" >> $GITHUB_OUTPUT
-
-      - name: Generate weekly history SVGs
-        if: steps.check_weekly.outputs.reset_happened == '0'
-        run: |
-          python3 dashboard/generate_weekly_history.py
-
-      - name: Update README with history
-        if: steps.check_weekly.outputs.reset_happened == '0'
-        run: |
-          python3 dashboard/update_readme_history.py
+          echo "reset_happened=$EXIT_CODE" >> "$GITHUB_OUTPUT"
 
       - name: Update README with charts
         if: steps.check_weekly.outputs.reset_happened == '0'
-        run: |
-          python3 dashboard/update_readme_charts.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+        run: python3 dashboard/update_readme_charts.py
+
+      - name: Generate weekly history SVGs
+        if: steps.check_weekly.outputs.reset_happened == '0'
+        run: python3 dashboard/generate_weekly_history.py
+
+      - name: Update README with history
+        if: steps.check_weekly.outputs.reset_happened == '0'
+        run: python3 dashboard/update_readme_history.py
 
       - name: Commit weekly reset changes
         if: steps.check_weekly.outputs.reset_happened == '0'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dashboard/data.json dashboard/history/ dashboard/progress_sparklines.svg README.md
+          git add dashboard/data.json dashboard/history/ dashboard/weekly_dashboard.svg dashboard/progress_sparklines.svg README.md
           if ! git diff --staged --quiet; then
             git commit -m "Weekly reset: save history and reset metrics" -m "Auto-generated weekly history SVGs and updated README"
             git pull --rebase
             git push
           fi
 
-      - name: Send weekly summary to Slack
-        if: steps.check_weekly.outputs.reset_happened == '0'
-        run: |
-          echo "📊 Sending weekly summary..."
-          SUMMARY_JSON=$(python3 dashboard/generate_weekly_summary.py)
-          if [ $? -eq 0 ]; then
-            curl -X POST -H 'Content-type: application/json' \
-              --data "$SUMMARY_JSON" \
-              ${{ secrets.SLACK_WEBHOOK_URL }}
-            echo "✅ Weekly summary sent!"
-          else
-            echo "⚠️ Failed to generate weekly summary"
-          fi
-
-      - name: Check if reminder needed
-        id: check_update
-        run: |
-          # Convert UTC to KST for proper day detection
-          CURRENT_HOUR_UTC=$(date -u +%H)
-          CURRENT_DATE_KST=$(TZ='Asia/Seoul' date +%Y-%m-%d)
-          DAY_OF_WEEK_KST=$(TZ='Asia/Seoul' date +%u)
-
-          echo "UTC Hour: $CURRENT_HOUR_UTC, KST Date: $CURRENT_DATE_KST, KST Day: $DAY_OF_WEEK_KST"
-
-          # Skip morning reminder on Monday KST (weekly reset day)
-          if [ "$CURRENT_HOUR_UTC" -eq "22" ] && [ "$DAY_OF_WEEK_KST" -eq "1" ]; then
-            echo "🔄 Monday morning (KST): Weekly reset completed, skipping reminder"
-            echo "send_reminder=1" >> $GITHUB_OUTPUT
-          else
-            set +e
-            python3 dashboard/check_daily_update.py
-            EXIT_CODE=$?
-            set -e
-            echo "send_reminder=$EXIT_CODE" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Generate and send daily reminder
-        if: steps.check_update.outputs.send_reminder == '0'
-        env:
-          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
-          USERNAME: ${{ github.repository_owner }}
-        run: |
-          CURRENT_HOUR=$(date -u +%H)
-          if [ "$CURRENT_HOUR" -eq "22" ]; then
-            echo "🌅 Morning reminder (7 AM KST)"
-            MESSAGE_TYPE="morning"
-          else
-            echo "🌆 Evening reminder (7 PM KST) - No input received today"
-            MESSAGE_TYPE="evening"
-          fi
-
-          echo "📊 Sending daily reminder..."
-          MESSAGE_JSON=$(python3 dashboard/generate_slack_message.py "$MESSAGE_TYPE")
-          if [ $? -eq 0 ]; then
-            curl -X POST -H 'Content-type: application/json' \
-              --data "$MESSAGE_JSON" \
-              ${{ secrets.SLACK_WEBHOOK_URL }}
-            echo "✅ Daily reminder sent!"
-          else
-            echo "⚠️ Failed to generate daily reminder"
-          fi
-
   update-dashboard:
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: weekly-reset
+    if: always() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout latest branch state
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.ref }}
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -159,21 +93,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Generate Dashboard SVG
+      - name: Regenerate dashboard, charts, and cache keys
         env:
           GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-        run: |
-          cd ${{ github.workspace }}
-          python dashboard/generate_svg.py
+        run: python3 dashboard/update_readme_charts.py
+
+      - name: Regenerate history SVGs from corrected data
+        run: python3 dashboard/generate_weekly_history.py --force
 
       - name: Update README with history
-        run: |
-          python3 dashboard/update_readme_history.py
-
-      - name: Update README with charts
-        run: |
-          python3 dashboard/update_readme_charts.py
+        run: python3 dashboard/update_readme_history.py
 
       - name: Commit and push if changed
         run: |

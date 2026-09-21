@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Check if we're in a new week and reset metrics if needed
-Runs daily at 7 AM KST before sending reminder
+Check if we're in a new week and reset metrics if needed.
+Runs every Monday morning KST before the new week's dashboard is generated.
 """
 
 import json
@@ -10,6 +10,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from get_weekly_commits import get_commits_for_range
+from get_weekly_pull_requests import get_pull_requests_for_range
+from week_utils import iso_week_id
 
 # KST = UTC + 9 hours
 KST = timezone(timedelta(hours=9))
@@ -20,7 +22,7 @@ def get_current_week_info():
     monday = today - timedelta(days=today.weekday())
     sunday = monday + timedelta(days=6)
 
-    week_id = f"{monday.year}-W{monday.isocalendar()[1]:02d}"
+    week_id = iso_week_id(monday)
 
     return {
         'week_id': week_id,
@@ -44,13 +46,12 @@ def save_to_history(data, current_week_info):
     if stored_start:
         # Parse stored date and calculate its week number
         stored_date = datetime.strptime(stored_start, '%Y-%m-%d')
-        week_num = stored_date.isocalendar()[1]
-        week_id = f"{stored_date.year}-W{week_num:02d}"
+        week_id = iso_week_id(stored_date)
     else:
         # Fallback: calculate last week's ID
         today = datetime.now(KST)
         last_monday = today - timedelta(days=today.weekday() + 7)
-        week_id = f"{last_monday.year}-W{last_monday.isocalendar()[1]:02d}"
+        week_id = iso_week_id(last_monday)
 
     history_entry = {
         "week": week_id,
@@ -59,21 +60,17 @@ def save_to_history(data, current_week_info):
         "metrics": {
             "commits": current['metrics'].get('commits', 0),
             "pullRequests": current['metrics'].get('pullRequests', 0),
-            "socialContent": current['metrics'].get('socialContent', {
-                'instagram': 0,
-                'tiktok': 0,
-                'hellotalk': 0
-            }),
+            "socialContent": current['metrics'].get('socialContent', {'total': 0}),
             "userSessions": current['metrics'].get('userSessions', 0),
             "ctoMeetings": current['metrics'].get('ctoMeetings', 0),
             "blogPosts": current['metrics'].get('blogPosts', 0),
-            "workouts": current['metrics'].get('workouts', {
-                'running': 0,
-                'gym': 0
-            }),
+            "workouts": current['metrics'].get('workouts', {'total': 0}),
             "tokens": current['metrics'].get('tokens')
         }
     }
+
+    if current.get('manualMetricsSource') == 'daily-notes':
+        history_entry['manualMetricsSource'] = 'daily-notes'
 
     # Check if this week already exists in history
     existing_index = None
@@ -97,21 +94,15 @@ def save_to_history(data, current_week_info):
     return True
 
 def reset_current_week_metrics(data):
-    """Reset all metrics to 0 (except commits which is calculated from git)"""
+    """Reset all metrics to 0 (except commits which is calculated from git)."""
+    data['currentWeek'].pop('manualMetricsSource', None)
     data['currentWeek']['metrics'] = {
         'pullRequests': 0,  # filled by the weekly PR counter; 0 until first run
-        'socialContent': {
-            'instagram': 0,
-            'tiktok': 0,
-            'hellotalk': 0
-        },
+        'socialContent': {'total': 0},
         'userSessions': 0,
         'ctoMeetings': 0,
         'blogPosts': 0,
-        'workouts': {
-            'running': 0,
-            'gym': 0
-        },
+        'workouts': {'total': 0},
         'tokens': {
             'claude': 0,
             'codex': 0,
@@ -163,6 +154,13 @@ def check_and_reset_weekly_data():
             else:
                 print("\n🔎 Commits API unavailable — keeping stored value")
 
+            confirmed_prs = get_pull_requests_for_range(stored_start, stored_end)
+            if confirmed_prs is not None:
+                data['currentWeek']['metrics']['pullRequests'] = confirmed_prs
+                print(f"🔎 Closing-week pull requests confirmed from API: {confirmed_prs}")
+            else:
+                print("🔎 Pull request API unavailable — keeping stored value")
+
         # Step 1: Save last week's data to history
         print("\n📚 Step 1: Saving last week to history...")
         saved = save_to_history(data, current_week)
@@ -182,8 +180,7 @@ def check_and_reset_weekly_data():
 
         # Step 5: Save updated data
         print("\n💾 Step 4: Saving data.json...")
-        with open(data_file, 'w') as f:
-            json.dump(data, f, indent=2)
+        data_file.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 
         print(f"\n✅ Weekly reset completed for {current_week['week_id']}")
         print(f"   All metrics reset to 0")

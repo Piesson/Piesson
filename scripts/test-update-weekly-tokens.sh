@@ -17,6 +17,8 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 WRAPPER_SRC="${REPO_ROOT}/apps/piesson/scripts/update-weekly-tokens.sh"
 DEPLOY_SRC="${REPO_ROOT}/scripts/subtree-deploy.sh"
 TOKENS_PY="${REPO_ROOT}/apps/piesson/dashboard/get_weekly_tokens.py"
+METRICS_PY="${REPO_ROOT}/apps/piesson/dashboard/sync_daily_metrics.py"
+WEEK_UTILS_PY="${REPO_ROOT}/apps/piesson/dashboard/week_utils.py"
 
 T=$(mktemp -d)
 trap 'rm -rf "$T"' EXIT
@@ -54,6 +56,8 @@ setup() {
     && mkdir -p dashboard scripts \
     && printf '{"lastUpdated":"2026-01-01","currentWeek":{"startDate":"%s","endDate":"%s","metrics":{"commits":0,"socialContent":{"instagram":0,"tiktok":0,"hellotalk":0},"userSessions":0,"ctoMeetings":0,"blogPosts":0,"workouts":{"running":0,"gym":0},"tokens":{"claude":0,"codex":0,"total":0,"updatedAt":null}}},"weeklyHistory":[]}\n' "$MONDAY" "$SUNDAY" > dashboard/data.json \
     && cp "$TOKENS_PY" dashboard/get_weekly_tokens.py \
+    && cp "$METRICS_PY" dashboard/sync_daily_metrics.py \
+    && cp "$WEEK_UTILS_PY" dashboard/week_utils.py \
     && cp "$WRAPPER_SRC" scripts/update-weekly-tokens.sh \
     && git add -A && git commit -qm up-init \
     && git push -q ../up.git HEAD:refs/heads/main)
@@ -61,7 +65,7 @@ setup() {
   git init -q --bare -b main vault-origin.git
   git init -q -b main vault
   (cd vault && git config user.email t@t.t && git config user.name T \
-    && mkdir -p scripts && cp "$DEPLOY_SRC" scripts/subtree-deploy.sh \
+    && mkdir -p scripts 200-Daily && cp "$DEPLOY_SRC" scripts/subtree-deploy.sh \
     && cp "$REPO_ROOT/scripts/automation-cron-common.sh" scripts/ \
     && echo vault > readme.md && git add -A && git commit -qm init \
     && git remote add origin ../vault-origin.git \
@@ -84,6 +88,9 @@ run_wrapper() {
 }
 upstream_claude() {
   git -C "$T/up.git" show main:dashboard/data.json | python3 -c "import json,sys; print(json.load(sys.stdin)['currentWeek']['metrics']['tokens']['claude'])"
+}
+upstream_metric() {
+  git -C "$T/up.git" show main:dashboard/data.json | python3 -c "import json,sys; d=json.load(sys.stdin)['currentWeek']['metrics']; print(d[$1] if not isinstance(d[$1], dict) else d[$1].get('total'))"
 }
 
 echo "── W1: 정상 전체 실행 (안전 점검→집계→commit→subtree push→sentinel)"
@@ -208,5 +215,46 @@ unset TEST_SELF_UPDATED
 check 1 "$(find "$TMPDIR" -type f | wc -l | tr -d ' ')" 'failure also removes owned temporary files'
 check unrelated "$(cat "$TMPDIR/keep.txt")" 'failure retains unrelated temporary file'
 export TMPDIR="$SAVED_TMPDIR"
+
+echo '── W9: private daily-note review is recomputed and delivered'
+setup
+mkdir -p "$T/vault/200-Daily"
+cat > "$T/vault/200-Daily/today.md" <<EOF
+# 어제의 점검
+<!-- piesson-review-date: $MONDAY -->
+- 소셜 포스트: 3
+- 유저 대화: 2
+- 커피챗: 1
+- 운동: 4
+- 글: 1
+EOF
+check 0 "$(run_wrapper)" 'daily-note metrics sync exits 0'
+check 3 "$(upstream_metric \"'socialContent'\")" 'social total delivered'
+check 2 "$(upstream_metric \"'userSessions'\")" 'talk total delivered'
+check 1 "$(upstream_metric \"'ctoMeetings'\")" 'coffee total delivered'
+check 4 "$(upstream_metric \"'workouts'\")" 'workout total delivered'
+check 1 "$(upstream_metric \"'blogPosts'\")" 'blog total delivered'
+
+# Editing the source note replaces, rather than increments, the weekly total.
+perl -0pi -e 's/소셜 포스트: 3/소셜 포스트: 7/' "$T/vault/200-Daily/today.md"
+rm -f "$T/cache/last-run-date"
+check 0 "$(run_wrapper)" 'edited note resync exits 0'
+check 7 "$(upstream_metric \"'socialContent'\")" 'edited social total replaces prior value'
+
+echo '── W10: malformed review fails closed but does not block token delivery'
+setup
+mkdir -p "$T/vault/200-Daily"
+cat > "$T/vault/200-Daily/bad.md" <<EOF
+# 어제의 점검
+<!-- piesson-review-date: $MONDAY -->
+- 소셜 포스트: 3
+- 유저 대화: 2
+- 커피챗: 1
+- 운동함: 4
+- 글: 1
+EOF
+check 1 "$(run_wrapper)" 'malformed review remains a visible failure'
+check 12345 "$(upstream_claude)" 'token data still delivered after metric parse failure'
+check 0 "$(upstream_metric \"'userSessions'\")" 'malformed metric data was not written'
 
 echo; echo "RESULT: $PASS passed, $FAIL failed"; [ $FAIL -eq 0 ]
