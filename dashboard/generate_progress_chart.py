@@ -14,6 +14,7 @@ from datetime import datetime
 from pathlib import Path
 
 from metric_totals import grouped_total
+from week_utils import iso_week_id
 
 DATA = Path('dashboard/data.json')
 OUT = Path('dashboard/progress_sparklines.svg')
@@ -48,7 +49,7 @@ def dotted(x1, x2, y):
     return f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{RULE}" stroke-width="1" stroke-dasharray="1.5,3.5"/>\n'
 
 
-def line_chart(y0, label, cum, total, sub, color, h=120):
+def line_chart(y0, label, cum, total, sub, color, week_labels, h=120):
     """Cumulative line chart: baseline at y0+h, top at y0."""
     out = []
     out.append(t(L, y0 - 14, label, 21, INK))
@@ -66,7 +67,7 @@ def line_chart(y0, label, cum, total, sub, color, h=120):
     rng = (mx - mn) or 1
     pts = []
     for i, v in enumerate(cum):
-        x = L + i * CHART_W / (n - 1)
+        x = L if n == 1 else L + i * CHART_W / (n - 1)
         yv = gy - 10 - (v - mn) / rng * (h - 24)
         pts.append((x, yv))
     poly = ' '.join(f'{x:.1f},{y:.1f}' for x, y in pts)
@@ -75,11 +76,18 @@ def line_chart(y0, label, cum, total, sub, color, h=120):
     out.append(f'<circle cx="{lx:.1f}" cy="{ly:.1f}" r="4.5" fill="{RED}"/>\n')
     out.append(t(L + 2, y0 + 4, str(mx), 11, INK3, family=SANS))
 
-    # axis
-    out.append(t(L, gy + 18, 'W27', 12, INK3, family=SANS))
-    for frac, lbl in [(0.2, 'W29'), (0.4, 'W31'), (0.6, 'W33'), (0.8, 'W35')]:
-        out.append(t(L + CHART_W * frac, gy + 18, lbl, 12, INK3, family=SANS))
-    out.append(t(R, gy + 18, 'W38', 12, RED, '600', anchor='end', family=SANS))
+    # Axis labels follow the rolling data window instead of a fixed launch range.
+    tick_indexes = sorted(range(n - 1, -1, -2))
+    for index in tick_indexes:
+        x = L if n == 1 else L + index * CHART_W / (n - 1)
+        is_last = index == n - 1
+        out.append(t(
+            x, gy + 18, week_labels[index], 12,
+            RED if is_last else INK3,
+            '600' if is_last else '400',
+            anchor='end' if is_last and n > 1 else 'start',
+            family=SANS,
+        ))
     return out
 
 
@@ -88,6 +96,15 @@ def build():
     cw = d['currentWeek']
     hist = list(reversed(d['weeklyHistory']))
     hist11 = hist[-11:] if len(hist) >= 11 else hist
+    hand_weeks = hist11 + [cw]
+
+    def week_label(entry):
+        week_id = entry.get('week')
+        if not week_id:
+            week_id = iso_week_id(datetime.strptime(entry['startDate'], '%Y-%m-%d'))
+        return f"W{int(week_id.split('-W')[1])}"
+
+    week_labels = [week_label(entry) for entry in hand_weeks]
 
     def week_pr(e):
         return e['metrics'].get('pullRequests', e['metrics'].get('commits', 0))
@@ -109,8 +126,6 @@ def build():
     s += soc_now; soc_cum.append(s)
 
     # Twelve-week totals for the remaining hand-filed measures.
-    hand_weeks = hist11 + [cw]
-
     def sum_metric(key):
         return sum(e['metrics'].get(key, 0) for e in hand_weeks)
 
@@ -130,16 +145,17 @@ def build():
     out.append(f'<style>text{{font-variant-numeric:tabular-nums;}}</style>\n')
 
     out.append(t(L, 40, 'PIESSON · RUNNING TOTALS', 12, INK2, '600', family=SANS, letter='0.14em'))
-    out.append(t(R, 40, 'W27 — W38', 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
+    window_label = f"{week_labels[0]} — {week_labels[-1]}"
+    out.append(t(R, 40, window_label, 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
     out.append(hline(L, R, 54, INK, 2))
 
     # chart 1: PR
     out += line_chart(120, 'Pull requests merged', pr_cum, pr_cum[-1],
-                      'Counted from GitHub search, twelve weeks.', INK)
+                      'Counted from GitHub search, twelve weeks.', INK, week_labels)
 
     # chart 2: Social
     out += line_chart(310, 'Social posts', soc_cum, soc_cum[-1],
-                      'Filed by hand, twelve weeks.', FILL2)
+                      'Filed by hand, twelve weeks.', FILL2, week_labels)
 
     # hand rows
     y = 548
@@ -159,7 +175,7 @@ def build():
     # colophon
     yc = H - 14
     out.append(hline(L, R, yc - 28, INK))
-    out.append(t(L, yc, 'Totals run from week 27 and reset with the quarter.', 13, INK2, family=SANS))
+    out.append(t(L, yc, f'Totals cover {window_label}, the latest twelve weeks.', 13, INK2, family=SANS))
     out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
 
     out.append('</svg>\n')
