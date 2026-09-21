@@ -5,8 +5,8 @@
 <text x="936" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" text-anchor="end" letter-spacing="0.14em">W38</text>
 <line x1="64" y1="50" x2="936" y2="50" stroke="#15150f" stroke-width="2"/>
 <text x="500.0" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#3e3e37" font-weight="400" font-style="italic">September 14 – 20, 2026</text>
-<text x="64" y="132" font-family="Georgia, 'Times New Roman', serif" font-size="24" fill="#15150f" font-weight="400">Pull requests merged</text>
-<line x1="364" y1="126" x2="826" y2="126" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
+<text x="64" y="136" font-family="Georgia, 'Times New Roman', serif" font-size="24" fill="#15150f" font-weight="400">Pull requests merged</text>
+<line x1="364" y1="130" x2="826" y2="130" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
 <text x="936" y="136" font-family="Georgia, 'Times New Roman', serif" font-size="62" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">77</text>
 <text x="64" y="158" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Counted from GitHub search · goal 60 · 128% of target</text>
 <line x1="64" y1="176" x2="936" y2="176" stroke="#15150f" stroke-width="1"/>

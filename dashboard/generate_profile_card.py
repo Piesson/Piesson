@@ -83,9 +83,13 @@ def load_stats(live=None):
 
 def build():
     # 2026-07-18 incident contract: GraphQL failure → keep previous card untouched
-    live = get_github_activity_stats()
-    if live is None:
-        return  # keep the previous card exactly as it is
+    import os
+    if os.environ.get('SKIP_LIVE'):
+        live = None  # offline mode: use cache/defaults
+    else:
+        live = get_github_activity_stats()
+        if live is None:
+            return  # keep the previous card exactly as it is
     years = load_stats(live)
     ys = sorted(y for y in years if years[y]['commits'] or years[y]['merged'] or years[y]['issues'])
 
@@ -131,23 +135,23 @@ def build():
     out.append(t(rx, 196, 'from the first line of code to today', 15, INK2, style='italic'))
 
     # divider
-    out.append(hline(L, R, 268, INK))
+    out.append(hline(L, R, 296, INK))
 
     # The record — table
-    out.append(t(L, 300, 'THE RECORD', 12, INK2, '600', family=SANS, letter='0.14em'))
-    out.append(hline(L, R, 310, INK, 1))
+    out.append(t(L, 328, 'THE RECORD', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, 338, INK, 1))
 
     # column heads
     cols = [(L, 'Year'), (L + 120, 'SCALE OF THE YEAR'),
             (R - 260, 'COMMITS'), (R - 140, 'MERGED'), (R - 50, 'ISSUES')]
     for cx, label in cols:
         anchor = 'start' if cx < R - 300 else 'end'
-        out.append(t(cx, 332, label, 11, INK3, '600', anchor=anchor, family=SANS, letter='0.07em'))
-    out.append(hline(L, R, 342))
+        out.append(t(cx, 360, label, 11, INK3, '600', anchor=anchor, family=SANS, letter='0.07em'))
+    out.append(hline(L, R, 370))
 
     # year rows
     bar_x, bar_max = L + 120, 380
-    y = 368
+    y = 396
     for yr in ys:
         v = years[yr]
         cur = yr == ys[-1]

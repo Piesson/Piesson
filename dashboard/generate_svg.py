@@ -126,8 +126,8 @@ def build():
     out.append(t(W / 2, 76, period, 16, INK2, style='italic'))
 
     # lead
-    out.append(t(L, 132, 'Pull requests merged', 24, INK))
-    out.append(leaders(L + 300, R - 110, 126))
+    out.append(t(L, 136, 'Pull requests merged', 24, INK))
+    out.append(leaders(L + 300, R - 110, 130))
     out.append(t(R, 136, str(pr_now) if pr_now is not None else '\u2014', 62, INK, '700', anchor='end', letter='-0.03em'))
     pct = round(pr_now / goal_for('pullRequests') * 100) if pr_now else 0
     pr_label = f'Counted from GitHub search \u00b7 goal {goal_for("pullRequests")} \u00b7 {pct}% of target' if pr_now is not None else 'Counted from GitHub search'

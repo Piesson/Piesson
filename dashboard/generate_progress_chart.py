@@ -23,7 +23,7 @@ FILL2 = '#6e6e66'
 SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "system-ui, -apple-system, sans-serif"
 
-W, H = 1000, 700
+W, H = 1000, 730
 L, R = 64, 936
 CHART_W = R - L
 
@@ -49,10 +49,10 @@ def dotted(x1, x2, y):
 def line_chart(y0, label, cum, total, sub, color, h=120):
     """Cumulative line chart: baseline at y0+h, top at y0."""
     out = []
-    out.append(t(L, y0 - 14, label, 21, INK))
-    out.append(dotted(L + 280, R - 80, y0 - 20))
+    out.append(t(L, y0 - 10, label, 21, INK))
+    out.append(dotted(L + 280, R - 80, y0 - 15))
     out.append(t(R, y0 - 10, str(total), 56, INK, '700', anchor='end', letter='-0.03em'))
-    out.append(t(L, y0 + 10, sub, 13, INK2, family=SANS))
+    out.append(t(L, y0 + 22, sub, 13, INK2, family=SANS))
 
     gy = y0 + h
     out.append(hline(L, R, gy, RULE))
@@ -130,15 +130,15 @@ def build():
     out.append(hline(L, R, 50, INK, 2))
 
     # chart 1: PR
-    out += line_chart(90, 'Pull requests merged', pr_cum, pr_cum[-1],
+    out += line_chart(120, 'Pull requests merged', pr_cum, pr_cum[-1],
                       'Counted from GitHub search, twelve weeks.', INK)
 
     # chart 2: Social
-    out += line_chart(290, 'Social posts', soc_cum, soc_cum[-1],
+    out += line_chart(310, 'Social posts', soc_cum, soc_cum[-1],
                       'Filed by hand, twelve weeks.', FILL2)
 
     # hand rows
-    y = 520
+    y = 530
     out.append(t(L, y, 'ALSO FILED BY HAND', 12, INK2, '600', family=SANS, letter='0.14em'))
     out.append(hline(L, R, y + 10, INK))
     col_x = [L, L + 430]
@@ -153,14 +153,14 @@ def build():
             yy += 38
 
     # note
-    out.append(t(L, yy + 24, 'The top figure is counted by the machine; the rest are entered by hand each week,',
+    out.append(t(L, yy + 20, 'The top figure is counted by the machine; the rest are entered by hand each week,',
                  13, INK2, family=SANS))
     out.append(t(L, yy + 42, 'which is the point of entering them: the number is the review, not the report.',
                  13, INK2, family=SANS))
 
     # colophon
-    yc = H - 24
-    out.append(hline(L, R, yc - 14, INK))
+    yc = H - 18
+    out.append(hline(L, R, yc - 12, INK))
     out.append(t(L, yc, 'Totals run from week 27 and reset with the quarter.', 13, INK2, family=SANS))
     out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
 
