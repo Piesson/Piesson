@@ -7,8 +7,8 @@
 <text x="500.0" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#3e3e37" font-weight="400" font-style="italic">September 21 – 27, 2026</text>
 <text x="64" y="136" font-family="Georgia, 'Times New Roman', serif" font-size="24" fill="#15150f" font-weight="400">Pull requests merged</text>
 <line x1="364" y1="130" x2="826" y2="130" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="936" y="136" font-family="Georgia, 'Times New Roman', serif" font-size="62" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">16</text>
-<text x="64" y="170" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Counted from GitHub search · goal 60 · 27% of target</text>
+<text x="936" y="136" font-family="Georgia, 'Times New Roman', serif" font-size="62" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">17</text>
+<text x="64" y="170" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Counted from GitHub search · goal 60 · 28% of target</text>
 <line x1="64" y1="184" x2="936" y2="184" stroke="#15150f" stroke-width="1"/>
 <text x="64" y="218" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Talks with users</text>
 <line x1="224" y1="213" x2="454" y2="213" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
@@ -74,7 +74,7 @@
 <text x="827.0000000000001" y="548" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#15150f" font-weight="400" text-anchor="middle">77</text>
 <text x="827.0000000000001" y="566" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#575750" font-weight="400" text-anchor="middle" letter-spacing="0.06em">W38</text>
 <rect x="878.7" y="516" width="42.0" height="8" fill="#a81f16"/>
-<text x="899.6666666666667" y="548" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#a81f16" font-weight="700" text-anchor="middle">16</text>
+<text x="899.6666666666667" y="548" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#a81f16" font-weight="700" text-anchor="middle">17</text>
 <text x="899.6666666666667" y="566" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#a81f16" font-weight="600" text-anchor="middle" letter-spacing="0.06em">W39</text>
 <text x="64" y="596" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#3e3e37" font-weight="600">Social posts</text>
 <text x="936" y="596" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400" text-anchor="end">peak 10</text>
