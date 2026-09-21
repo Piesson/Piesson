@@ -9,6 +9,9 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
+from metric_totals import grouped_total
+
+
 def generate_history_svg(week_entry):
     """Generate SVG for a single week's history"""
     week_id = week_entry['week']
@@ -25,28 +28,25 @@ def generate_history_svg(week_entry):
 
     # Extract metrics with proper structure
     social = metrics.get('socialContent', {})
-    if isinstance(social, dict):
-        instagram = social.get('instagram', 0)
-        tiktok = social.get('tiktok', 0)
-        hellotalk = social.get('hellotalk', 0)
-        total_social = instagram + tiktok + hellotalk
+    total_social = grouped_total(social)
+    if isinstance(social, dict) and 'total' not in social:
+        social_detail = (
+            f"IG:{social.get('instagram', 0)} TT:{social.get('tiktok', 0)} "
+            f"HT:{social.get('hellotalk', 0)}"
+        )
+    elif week_entry.get('manualMetricsSource') == 'daily-notes':
+        social_detail = "Filed from daily notes"
     else:
-        # Old format: socialContent was a number
-        total_social = social
-        instagram = total_social // 3
-        tiktok = total_social // 3
-        hellotalk = total_social - (instagram + tiktok)
+        social_detail = "Legacy aggregate"
 
     workouts = metrics.get('workouts', {})
-    if isinstance(workouts, dict):
-        running = workouts.get('running', 0)
-        gym = workouts.get('gym', 0)
-        total_workouts = running + gym
+    total_workouts = grouped_total(workouts)
+    if isinstance(workouts, dict) and 'total' not in workouts:
+        workout_detail = f"Run:{workouts.get('running', 0)} Gym:{workouts.get('gym', 0)}"
+    elif week_entry.get('manualMetricsSource') == 'daily-notes':
+        workout_detail = "Filed from daily notes"
     else:
-        # Old format: workouts was a number
-        total_workouts = workouts
-        running = total_workouts // 2
-        gym = total_workouts - running
+        workout_detail = "Legacy aggregate"
 
     # Commits (from old format, might not exist)
     commits = metrics.get('commits', 0)
@@ -122,7 +122,7 @@ def generate_history_svg(week_entry):
             📱 SOCIAL POSTS
         </text>
         <text x="60" y="78" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="400" font-family="system-ui, -apple-system, sans-serif">
-            IG:{instagram} TT:{tiktok} HT:{hellotalk}
+            {social_detail}
         </text>
     </g>
 
@@ -151,7 +151,7 @@ def generate_history_svg(week_entry):
             🏃 WORKOUTS
         </text>
         <text x="60" y="78" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="400" font-family="system-ui, -apple-system, sans-serif">
-            Run:{running} Gym:{gym}
+            {workout_detail}
         </text>
     </g>
 

@@ -14,15 +14,15 @@
     "metrics": {
       "socialContent": {
         "instagram": 0,
-        "tiktok": 0,
+        "tiktok": 10,
         "hellotalk": 0
       },
-      "userSessions": 0,
-      "ctoMeetings": 0,
-      "blogPosts": 0,
+      "userSessions": 1,
+      "ctoMeetings": 1,
+      "blogPosts": 1,
       "workouts": {
-        "running": 0,
-        "gym": 0
+        "running": 1,
+        "gym": 1
       },
       "tokens": {
         "claude": 169179062,
@@ -30,7 +30,8 @@
         "total": 2287846482,
         "updatedAt": "2026-09-20T11:04:36+09:00"
       },
-      "commits": 121
+      "commits": 42,
+      "pullRequests": 77
     }
   },
   "weeklyHistory": [
@@ -42,7 +43,7 @@
         "commits": 74,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 0,
@@ -57,7 +58,8 @@
           "codex": 684692378,
           "total": 989739179,
           "updatedAt": "2026-09-14T18:38:03+09:00"
-        }
+        },
+        "pullRequests": 16
       }
     },
     {
@@ -68,7 +70,7 @@
         "commits": 115,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 0,
@@ -83,7 +85,8 @@
           "codex": 1588530490,
           "total": 2842299571,
           "updatedAt": "2026-09-07T00:05:19+09:00"
-        }
+        },
+        "pullRequests": 35
       }
     },
     {
@@ -94,7 +97,7 @@
         "commits": 344,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 0,
@@ -109,7 +112,8 @@
           "codex": 1623445156,
           "total": 4934393924,
           "updatedAt": "2026-08-31T01:17:09+09:00"
-        }
+        },
+        "pullRequests": 58
       }
     },
     {
@@ -120,7 +124,7 @@
         "commits": 126,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 0,
@@ -135,7 +139,8 @@
           "codex": 999022556,
           "total": 2747876473,
           "updatedAt": "2026-08-24T00:05:23+09:00"
-        }
+        },
+        "pullRequests": 44
       }
     },
     {
@@ -146,7 +151,7 @@
         "commits": 99,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 0,
@@ -161,7 +166,8 @@
           "codex": 763673279,
           "total": 4496989598,
           "updatedAt": "2026-08-17T13:22:24+09:00"
-        }
+        },
+        "pullRequests": 46
       }
     },
     {
@@ -171,8 +177,8 @@
       "metrics": {
         "commits": 147,
         "socialContent": {
-          "instagram": 3,
-          "tiktok": 3,
+          "instagram": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 1,
@@ -187,7 +193,8 @@
           "codex": 220028227,
           "total": 4653726732,
           "updatedAt": "2026-08-10T00:05:20+09:00"
-        }
+        },
+        "pullRequests": 62
       }
     },
     {
@@ -198,7 +205,7 @@
         "commits": 166,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 0,
@@ -213,7 +220,8 @@
           "codex": 290772748,
           "total": 3887570270,
           "updatedAt": "2026-08-03T00:02:22+09:00"
-        }
+        },
+        "pullRequests": 79
       }
     },
     {
@@ -223,8 +231,8 @@
       "metrics": {
         "commits": 202,
         "socialContent": {
-          "instagram": 1,
-          "tiktok": 1,
+          "instagram": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 15,
@@ -239,7 +247,8 @@
           "codex": 87275861,
           "total": 3418468139,
           "updatedAt": "2026-07-28T00:05:26+09:00"
-        }
+        },
+        "pullRequests": 64
       }
     },
     {
@@ -250,7 +259,7 @@
         "commits": 169,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 0,
+          "tiktok": 10,
           "hellotalk": 0
         },
         "userSessions": 0,
@@ -265,7 +274,8 @@
           "codex": 0,
           "total": 2826717906,
           "updatedAt": "2026-07-20T12:56:04+09:00"
-        }
+        },
+        "pullRequests": 59
       }
     },
     {
@@ -276,8 +286,8 @@
         "commits": 312,
         "socialContent": {
           "instagram": 0,
-          "tiktok": 3,
-          "hellotalk": 8
+          "tiktok": 10,
+          "hellotalk": 0
         },
         "userSessions": 3,
         "ctoMeetings": 2,
@@ -291,7 +301,8 @@
           "codex": 0,
           "total": 5246465623,
           "updatedAt": "2026-07-14T00:03:58+09:00"
-        }
+        },
+        "pullRequests": 128
       }
     },
     {
@@ -317,7 +328,8 @@
           "codex": 0,
           "total": 1755114138,
           "updatedAt": "2026-07-14T00:04:05+09:00"
-        }
+        },
+        "pullRequests": 38
       }
     },
     {
@@ -343,7 +355,8 @@
           "codex": 0,
           "total": 0,
           "updatedAt": "2026-07-14T00:04:12+09:00"
-        }
+        },
+        "pullRequests": 0
       }
     }
   ]

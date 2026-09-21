@@ -293,7 +293,7 @@ def main():
     except Exception as exc:  # noqa: BLE001 — last-resort safety net
         log(f"[backfill] unexpected error, skipping: {exc}")
 
-    DATA.write_text(json.dumps(data, indent=2) + '\n')
+    DATA.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 
     print(
         f"Updated tokens: claude={fmt_b(new_claude)}, "

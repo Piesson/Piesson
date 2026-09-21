@@ -23,3 +23,9 @@ Thumbs.db
 
 # Local test files
 *.log
+
+# Impeccable design skill working files. apps/piesson mirrors to the PUBLIC
+# repo Piesson/Piesson, so comps, screenshots, diffs, and build state must
+# never ride along. PRODUCT.md and DESIGN.md are deliberate exceptions: they
+# are durable decisions worth publishing.
+.impeccable/
