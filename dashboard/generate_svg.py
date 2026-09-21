@@ -1,321 +1,204 @@
+#!/usr/bin/env python3
+"""
+generate_svg.py — Weekly Galley (2026-09-21 redesign).
+
+Design: proof-shop galley. Cool proof stock, Caslon-register serif (Georgia),
+Archivo-register sans (system-ui), dotted leaders, hairline rules.
+The lead figure (PR merged) is the week's subject; five hand-filed rows
+sit in two columns below; twelve weeks of two series (PR + social) close.
+
+SVG-in-<img> constraint: no web fonts. Georgia/system stacks only.
+"""
+
 import json
-import datetime
-import os
-import sys
+import math
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from get_weekly_commits import get_weekly_commits
 
-# KST = UTC + 9 hours
-KST = datetime.timezone(datetime.timedelta(hours=9))
 
-def get_trend_indicator(current, last_week_value):
-    """Calculate trend arrow and percentage change"""
-    if last_week_value is None or last_week_value == 0:
-        return "", ""
+KST = timezone(timedelta(hours=9))
+DATA = Path('dashboard/data.json')
+OUT = Path('dashboard/weekly_dashboard.svg')
 
-    diff = current - last_week_value
-    pct = int((diff / last_week_value) * 100)
+# tokens (mirror .impeccable/mocks/a-galley.html)
+PAPER = '#e4e4df'; EDGE = '#cbcbc4'
+INK = '#15150f'; INK2 = '#3e3e37'; INK3 = '#575750'
+RED = '#a81f16'; RULE = '#a9a9a0'; HAIR = '#c9c9c1'
+FILL2 = '#6e6e66'
+SERIF = "Georgia, 'Times New Roman', serif"
+SANS = "system-ui, -apple-system, sans-serif"
 
-    if diff > 0:
-        arrow = "▲"
-        color = "#10b981"  # green
-        sign = "+"
-    elif diff < 0:
-        arrow = "▼"
-        color = "#ef4444"  # red
-        sign = ""
-    else:
-        return "", ""
+W, H = 1000, 780
+L, R = 64, 936
 
-    return arrow, f"{sign}{pct}%", color
 
-def get_progress_bar(current, goal):
-    """Generate progress bar and percentage"""
-    if goal == 0:
-        return "", "N/A"
+def esc(s):
+    return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
-    percentage = min(int((current / goal) * 100), 100)
-    filled = int(percentage / 10)
-    empty = 10 - filled
 
-    bar = "█" * filled + "░" * empty
-    return bar, f"{percentage}%"
+def t(x, y, s, size=13, fill=INK, weight='400', anchor='start',
+       family=SERIF, style='', letter=''):
+    a = f' text-anchor="{anchor}"' if anchor != 'start' else ''
+    ls = f' letter-spacing="{letter}"' if letter else ''
+    st = f' font-style="{style}"' if style else ''
+    return (f'<text x="{x}" y="{y}" font-family="{family}" font-size="{size}" '
+            f'fill="{fill}" font-weight="{weight}"{a}{st}{ls}>{esc(s)}</text>\n')
 
-def fmt_b(n):
-    """Format token count as B (billion) string. Uses 1 decimal at >=1B,
-    2 decimals for smaller values so Codex sub-billion totals stay readable."""
-    n = int(n or 0)
-    if n >= 1_000_000_000:
-        return f"{n / 1_000_000_000:.1f}B"
-    if n > 0:
-        return f"{n / 1_000_000_000:.2f}B"
-    return "0.0B"
+
+def leaders(x1, x2, y):
+    return f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{RULE}" stroke-width="1" stroke-dasharray="1.5,3.5"/>\n'
+
+
+def hline(x1, x2, y, color=HAIR, w=1):
+    return f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{color}" stroke-width="{w}"/>\n'
+
+
+def load():
+    return json.loads(DATA.read_text())
+
+
+def goal_for(key):
+    goals = {'pullRequests': 60, 'userSessions': 7, 'social': 7,
+             'workouts': 7, 'coffee': 2, 'blog': 1}
+    return goals.get(key, 7)
+
 
 def generate_dashboard_svg():
-    # Load data
-    with open('dashboard/data.json', 'r') as f:
-        data = json.load(f)
+    """Backward-compat wrapper — tests and workflows call this name."""
+    build()
 
-    # Auto-update commits from GitHub GraphQL API (all repos).
-    # If the API returns None (rate-limit, network, auth, schema drift, etc.)
-    # KEEP the value already in data.json. NEVER overwrite with 0 — that
-    # would turn a transient blip into permanent data corruption committed
-    # to git (May 1 2026 incident: 166 -> 0).
-    fresh = get_weekly_commits()
+
+def build():
+    d = load()
+    # Auto-refresh commits from GitHub (regression guard: None = keep previous,
+    # never write 0 — 2026-05 incident contract, tests/test_caller_fallbacks.py)
+    import get_weekly_commits as _gwc
+    fresh = _gwc.get_weekly_commits()
     if fresh is not None:
-        data['currentWeek']['metrics']['commits'] = fresh
-    else:
-        prev = data['currentWeek']['metrics'].get('commits', 0)
-        print(
-            f"[generate_svg] commits API failed; keeping previous value {prev}",
-            file=sys.stderr,
-        )
+        d['currentWeek']['metrics']['commits'] = fresh
+        json.dump(d, open(DATA, 'w'), indent=2, ensure_ascii=False)
 
-    # Save updated data back
-    with open('dashboard/data.json', 'w') as f:
-        json.dump(data, f, indent=2)
+    cw = d['currentWeek']
+    m = cw['metrics']
+    hist = list(reversed(d['weeklyHistory']))  # oldest first
 
-    current = data['currentWeek']['metrics']
-    goals = data.get('goals', {})
+    # ---- data ----
+    pr_now = m.get('pullRequests')  # no commits fallback — the label says PRs
+    social = m.get('socialContent', {})
+    social_now = sum(v for v in social.values() if isinstance(v, int))
+    workouts = m.get('workouts', {})
+    wo_now = sum(v for v in workouts.values() if isinstance(v, int))
 
-    # Get last week's data for trend calculation
-    history = data.get('weeklyHistory', [])
-    last_week = history[0]['metrics'] if history else None
+    # weekly PR + social series (12 weeks incl current)
+    def week_pr(entry):
+        return entry['metrics'].get('pullRequests', 0)
 
-    # Calculate current week dates (Monday to Sunday) in KST
-    today = datetime.datetime.now(KST)
-    monday = today - datetime.timedelta(days=today.weekday())
-    sunday = monday + datetime.timedelta(days=6)
+    def week_soc(entry):
+        s = entry['metrics'].get('socialContent', {})
+        return sum(v for v in s.values() if isinstance(v, int))
 
-    # Format dates: "October 27 - November 2 · W44"
-    week_start = monday.strftime('%B %-d')  # "October 27"
-    week_end = sunday.strftime('%B %-d')    # "November 2"
-    week_number = f"W{monday.isocalendar()[1]}"  # "W44"
-    date_range = f"{week_start} - {week_end} · {week_number}"
+    hist11 = hist[-11:] if len(hist) >= 11 else hist
+    pr_series = [week_pr(e) for e in hist11] + [pr_now]
+    soc_series = [week_soc(e) for e in hist11] + [social_now]
+    weeks = []
+    for e in hist11:
+        dt = datetime.fromisoformat(e['startDate'])
+        weeks.append(f"W{dt.isocalendar()[1]}")
+    dt = datetime.fromisoformat(cw['startDate'])
+    weeks.append(f"W{dt.isocalendar()[1]}")
 
-    # Calculate totals
-    total_social = current['socialContent']['instagram'] + current['socialContent']['tiktok'] + current['socialContent']['hellotalk']
-    total_workouts = current['workouts']['running'] + current['workouts']['gym']
+    # period label
+    s = datetime.fromisoformat(cw['startDate'])
+    e = datetime.fromisoformat(cw['endDate'])
+    period = f"{s.strftime('%B %-d')} – {e.strftime('%-d, %Y')}"
+    now = datetime.now(KST).strftime('%-d %b %Y')
 
-    # Calculate trends and progress
-    if last_week:
-        commits_trend = get_trend_indicator(current['commits'], last_week['commits'])
-        talks_trend = get_trend_indicator(current['userSessions'], last_week['userSessions'])
-        social_trend = get_trend_indicator(total_social, last_week['socialContent']['instagram'] + last_week['socialContent']['tiktok'] + last_week['socialContent']['hellotalk'])
-        coffee_trend = get_trend_indicator(current['ctoMeetings'], last_week['ctoMeetings'])
-        workouts_trend = get_trend_indicator(total_workouts, last_week['workouts']['running'] + last_week['workouts']['gym'])
-        blog_trend = get_trend_indicator(current['blogPosts'], last_week['blogPosts'])
-    else:
-        commits_trend = talks_trend = social_trend = coffee_trend = workouts_trend = blog_trend = ("", "", "#9ca3af")
+    # ---- svg ----
+    out = []
+    out.append(f'<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">\n')
+    out.append(f'<rect width="{W}" height="{H}" rx="0" fill="{PAPER}" stroke="{EDGE}" stroke-width="1"/>\n')
+    out.append(f'<style>text{{font-variant-numeric:tabular-nums;}}</style>\n')
 
-    # Calculate progress bars
-    commits_progress = get_progress_bar(current['commits'], goals.get('weeklyCommits', 140))
-    talks_progress = get_progress_bar(current['userSessions'], goals.get('weeklyUserTalks', 7))
-    social_progress = get_progress_bar(total_social, goals.get('weeklySocial', 7))
-    coffee_progress = get_progress_bar(current['ctoMeetings'], goals.get('weeklyCoffee', 2))
-    workouts_progress = get_progress_bar(total_workouts, goals.get('weeklyWorkouts', 7))
-    blog_progress = get_progress_bar(current['blogPosts'], goals.get('weeklyBlog', 1))
+    # runhead
+    out.append(t(L, 40, 'PIESSON · WEEKLY GALLEY', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(t(R, 40, weeks[-1], 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, 50, INK, 2))
+    out.append(t(W / 2, 76, period, 16, INK2, style='italic'))
 
-    # Token usage banner (Claude Code + Codex CLI combined total, written by get_weekly_tokens.py).
-    # Breakdown lives in the Weekly History table and the Token Usage chart, not here.
-    tokens = current.get('tokens') or {'claude': 0, 'codex': 0, 'total': 0}
-    tokens_total_str = fmt_b(tokens.get('total', 0))
+    # lead
+    out.append(t(L, 132, 'Pull requests merged', 24, INK))
+    out.append(leaders(L + 300, R - 110, 126))
+    out.append(t(R, 136, str(pr_now) if pr_now is not None else '\u2014', 62, INK, '700', anchor='end', letter='-0.03em'))
+    pct = round(pr_now / goal_for('pullRequests') * 100) if pr_now else 0
+    pr_label = f'Counted from GitHub search \u00b7 goal {goal_for("pullRequests")} \u00b7 {pct}% of target' if pr_now is not None else 'Counted from GitHub search'
+    out.append(t(L, 158, f'Counted from GitHub search · goal {goal_for("pullRequests")} · {pct}% of target',
+                 13, INK2, family=SANS))
+    out.append(hline(L, R, 176, INK))
 
-    svg_content = f'''<svg width="520" height="400" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#f1f5f9;stop-opacity:1" />
-        </linearGradient>
-        <filter id="shadow">
-            <feDropShadow dx="0" dy="2" stdDeviation="8" flood-color="#000000" flood-opacity="0.1"/>
-        </filter>
-    </defs>
+    # hand-filed rows (2 columns x 3)
+    hand = [
+        ('Talks with users', m.get('userSessions', 0), 7),
+        ('Social posts', social_now, 7),
+        ('Workouts', wo_now, 7),
+        ('Coffee chats', m.get('ctoMeetings', 0), 2),
+        ('Blog posts', m.get('blogPosts', 0), 1),
+    ]
+    col_x = [L, L + 430]
+    y = 210
+    for i, (name, val, goal) in enumerate(hand):
+        cx = col_x[i % 2]
+        out.append(t(cx, y, name, 17, INK))
+        out.append(leaders(cx + 160, col_x[i % 2] + 390, y - 5))
+        out.append(t(cx + 396, y, str(val), 20, INK, '700', anchor='end'))
+        out.append(t(cx + 404, y, f'/ {goal}', 13, INK3, family=SANS))
+        if i % 2 == 1 or i == len(hand) - 1:
+            out.append(hline(col_x[i % 2], col_x[i % 2] + 430, y + 12))
+            if i % 2 == 1:
+                y += 42
+    if len(hand) % 2 == 1:
+        y += 42
 
-    <!-- Background -->
-    <rect width="520" height="400" fill="url(#bg)" rx="16" stroke="#e2e8f0" stroke-width="1"/>
+    # twelve weeks — two series
+    ybase = y + 50
+    out.append(t(L, ybase, 'TWELVE WEEKS', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, ybase + 10, INK))
 
-    <!-- Title -->
-    <text x="260" y="35" text-anchor="middle" fill="#0f172a" font-size="22" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-        Moved the needle this week? 📈
-    </text>
-    <text x="260" y="60" text-anchor="middle" fill="#64748b" font-size="12" font-family="system-ui, -apple-system, sans-serif">
-        {date_range}
-    </text>
+    def bar_series(y0, label, vals, peak, color, val_size=19):
+        out.append(t(L, y0, label, 12.5, INK2, '600', family=SANS))
+        out.append(t(R, y0, f'peak {peak}', 12, INK3, family=SANS, anchor='end'))
+        gy = y0 + 14
+        out.append(hline(L, R, gy, RULE))
+        n = len(vals)
+        slot = (R - L) / n
+        max_h = 64
+        for i, v in enumerate(vals):
+            cx = L + slot * i + slot / 2
+            h = round(v / peak * max_h) if (v and peak) else 0
+            if h > 0:
+                bw = min(slot * 0.6, 42)
+                bx = cx - bw / 2
+                c = RED if i == n - 1 else color
+                out.append(f'<rect x="{bx:.1f}" y="{gy - h}" width="{bw:.1f}" height="{h}" fill="{c}"/>\n')
+            out.append(t(cx, gy + 18, str(v), val_size, INK if i < n - 1 else RED,
+                         '400' if i < n - 1 else '700', anchor='middle'))
+            out.append(t(cx, gy + 34, weeks[i], 11.5, INK3 if i < n - 1 else RED,
+                         '400' if i < n - 1 else '600', anchor='middle', family=SANS, letter='0.06em'))
 
-    <!-- Metrics Grid -->
-    <!-- Row 1: Commits, User Talks, Social Posts -->
-    <!-- Commits -->
-    <g transform="translate(60, 85)">
-        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {current['commits']}
-        </text>
-        <text x="60" y="48" text-anchor="middle" fill="{commits_trend[2] if len(commits_trend) > 2 else '#9ca3af'}" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {commits_trend[0] + ' ' + commits_trend[1] if len(commits_trend) > 1 and commits_trend[0] else ''}
-        </text>
-        <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            🚀 CODE COMMITS
-        </text>
-        <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            {commits_progress[0]}
-        </text>
-        <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {commits_progress[1]} of goal
-        </text>
-    </g>
+    pr_peak = max(pr_series) or 1
+    soc_peak = max(soc_series) or 1
+    bar_series(ybase + 30, 'Pull requests merged', pr_series, pr_peak, INK)
+    bar_series(ybase + 30 + 108, 'Social posts', soc_series, soc_peak, FILL2, 15)
 
-    <!-- User Talks -->
-    <g transform="translate(200, 85)">
-        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {current['userSessions']}
-        </text>
-        <text x="60" y="48" text-anchor="middle" fill="{talks_trend[2] if len(talks_trend) > 2 else '#9ca3af'}" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {talks_trend[0] + ' ' + talks_trend[1] if len(talks_trend) > 1 and talks_trend[0] else ''}
-        </text>
-        <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            💬 USER TALKS
-        </text>
-        <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            {talks_progress[0]}
-        </text>
-        <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {talks_progress[1]} of goal
-        </text>
-    </g>
+    # colophon
+    yc = H - 40
+    out.append(hline(L, R, yc - 16, INK))
+    out.append(t(L, yc, 'Figures are counted, never estimated.', 13, INK2, family=SANS))
+    out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
 
-    <!-- Social Posts -->
-    <g transform="translate(340, 85)">
-        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {total_social}
-        </text>
-        <text x="60" y="48" text-anchor="middle" fill="{social_trend[2] if len(social_trend) > 2 else '#9ca3af'}" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {social_trend[0] + ' ' + social_trend[1] if len(social_trend) > 1 and social_trend[0] else ''}
-        </text>
-        <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            📱 SOCIAL POSTS
-        </text>
-        <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            {social_progress[0]}
-        </text>
-        <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {social_progress[1]} of goal
-        </text>
-    </g>
+    out.append('</svg>\n')
+    OUT.write_text(''.join(out))
+    print(f'wrote {OUT}')
 
-    <!-- Row 2: Coffee Chats, Workouts, Blog Posts -->
-    <!-- Coffee Chats -->
-    <g transform="translate(60, 200)">
-        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {current['ctoMeetings']}
-        </text>
-        <text x="60" y="48" text-anchor="middle" fill="{coffee_trend[2] if len(coffee_trend) > 2 else '#9ca3af'}" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {coffee_trend[0] + ' ' + coffee_trend[1] if len(coffee_trend) > 1 and coffee_trend[0] else ''}
-        </text>
-        <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            ☕ COFFEE CHATS
-        </text>
-        <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            {coffee_progress[0]}
-        </text>
-        <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {coffee_progress[1]} of goal
-        </text>
-    </g>
 
-    <!-- Workouts -->
-    <g transform="translate(200, 200)">
-        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {total_workouts}
-        </text>
-        <text x="60" y="48" text-anchor="middle" fill="{workouts_trend[2] if len(workouts_trend) > 2 else '#9ca3af'}" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {workouts_trend[0] + ' ' + workouts_trend[1] if len(workouts_trend) > 1 and workouts_trend[0] else ''}
-        </text>
-        <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            🏃 WORKOUTS
-        </text>
-        <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            {workouts_progress[0]}
-        </text>
-        <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {workouts_progress[1]} of goal
-        </text>
-    </g>
-
-    <!-- Blog Posts -->
-    <g transform="translate(340, 200)">
-        <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="60" y="32" text-anchor="middle" fill="#000000" font-size="32" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {current['blogPosts']}
-        </text>
-        <text x="60" y="48" text-anchor="middle" fill="{blog_trend[2] if len(blog_trend) > 2 else '#9ca3af'}" font-size="9" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {blog_trend[0] + ' ' + blog_trend[1] if len(blog_trend) > 1 and blog_trend[0] else ''}
-        </text>
-        <text x="60" y="62" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            📝 BLOG POSTS
-        </text>
-        <text x="60" y="76" text-anchor="middle" fill="#9ca3af" font-size="7" font-weight="400" font-family="Monaco, monospace">
-            {blog_progress[0]}
-        </text>
-        <text x="60" y="88" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-            {blog_progress[1]} of goal
-        </text>
-    </g>
-
-    <!-- Token Usage banner (full-width, below 6-card grid).
-         Number on top, label below — same visual order as the six card tiles. -->
-    <g transform="translate(30, 315)">
-        <rect width="460" height="70" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-        <text x="230" y="38" text-anchor="middle" fill="#000000" font-size="30" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {tokens_total_str}
-        </text>
-        <text x="230" y="58" text-anchor="middle" fill="#1f2937" font-size="11" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            🪙 Token Usage
-        </text>
-    </g>
-
-</svg>'''
-
-    # Save SVG
-    output_path = Path('dashboard/weekly_dashboard.svg')
-    output_path.write_text(svg_content)
-    print(f"Dashboard generated: {output_path}")
-
-    # Update README with timestamp
-    update_readme_dashboard_timestamp(today)
-
-def update_readme_dashboard_timestamp(today):
-    """Update README.md Grinding enough? section with timestamp"""
-    import re
-    readme_path = Path('README.md')
-
-    if not readme_path.exists():
-        return
-
-    with open(readme_path, 'r') as f:
-        content = f.read()
-
-    current_date = today.strftime('%m/%d/%y')
-    timestamp_line = f'<div align="right"><sub>updated at {current_date}</sub></div>'
-
-    # Pattern: # Grinding enough?, <p> with image, then optional timestamp
-    pattern = r'(# Grinding enough\?\n\n<p align="center">\n  <img src="[^"]+" alt="Weekly Dashboard">\n</p>)\n*(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>)?'
-    replacement = f'\\1\n\n{timestamp_line}'
-
-    content = re.sub(pattern, replacement, content)
-
-    with open(readme_path, 'w') as f:
-        f.write(content)
-
-    print(f"✅ Updated Grinding enough? timestamp: {current_date}")
-
-if __name__ == "__main__":
-    generate_dashboard_svg()
+if __name__ == '__main__':
+    build()

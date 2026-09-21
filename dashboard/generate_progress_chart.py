@@ -1,628 +1,178 @@
 #!/usr/bin/env python3
 """
-Generate progress charts for Piesson GitHub profile README.
+generate_progress_chart.py — Running Totals (2026-09-21 redesign).
 
-Part A: QuickChart.io dual Y-axis URL (combined chart)
-Part B: Self-generated SVG sparklines (individual metric detail)
+Two cumulative line charts — pull requests (machine-counted) and social
+posts (hand-filed, now the metric that matters most) — each on its own
+scale. Four remaining hand-filed measures print as figures.
+
+Replaces the dual-axis six-line chart and the sparkline cards.
 """
 
 import json
-import math
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import quote
-
-
-def load_weekly_data():
-    """Load and process weekly history data into cumulative series."""
-    data_file = Path('dashboard/data.json')
-
-    if not data_file.exists():
-        print("data.json not found")
-        return None
-
-    with open(data_file, 'r') as f:
-        data = json.load(f)
-
-    history = data.get('weeklyHistory', [])
-
-    if not history:
-        print("No weekly history found")
-        return None
-
-    history_sorted = sorted(history, key=lambda x: x['week'])
-
-    weeks = []
-    commits = []
-    user_talks = []
-    social_posts = []
-    coffee_chats = []
-    workouts = []
-    blog_posts = []
-
-    cumulative_commits = 0
-    cumulative_talks = 0
-    cumulative_social = 0
-    cumulative_chats = 0
-    cumulative_workouts = 0
-    cumulative_posts = 0
-
-    for entry in history_sorted:
-        week_id = entry['week']
-        week_num = week_id.split('-W')[1]
-        weeks.append(f"W{week_num}")
-
-        metrics = entry['metrics']
-
-        social = metrics.get('socialContent', {})
-        if isinstance(social, dict):
-            total_social = social.get('instagram', 0) + social.get('tiktok', 0) + social.get('hellotalk', 0)
-        else:
-            total_social = social
-
-        workouts_data = metrics.get('workouts', {})
-        if isinstance(workouts_data, dict):
-            total_workouts = workouts_data.get('running', 0) + workouts_data.get('gym', 0)
-        else:
-            total_workouts = workouts_data
-
-        cumulative_commits += metrics.get('commits', 0)
-        cumulative_talks += metrics.get('userSessions', 0)
-        cumulative_social += total_social
-        cumulative_chats += metrics.get('ctoMeetings', 0)
-        cumulative_workouts += total_workouts
-        cumulative_posts += metrics.get('blogPosts', 0)
-
-        commits.append(cumulative_commits)
-        user_talks.append(cumulative_talks)
-        social_posts.append(cumulative_social)
-        coffee_chats.append(cumulative_chats)
-        workouts.append(cumulative_workouts)
-        blog_posts.append(cumulative_posts)
-
-    return {
-        'weeks': weeks,
-        'commits': commits,
-        'user_talks': user_talks,
-        'social_posts': social_posts,
-        'coffee_chats': coffee_chats,
-        'workouts': workouts,
-        'blog_posts': blog_posts
-    }
-
-
-# ---------------------------------------------------------------------------
-# Part A: QuickChart.io dual Y-axis combined chart
-# ---------------------------------------------------------------------------
-
-def generate_chart_url(data):
-    """Generate QuickChart.io URL with dual Y-axis.
-
-    Left axis (y1): Code Commits (large scale)
-    Right axis (y2): Other 5 metrics (smaller scale)
-    """
-    if not data:
-        return None
-
-    config = {
-        "type": "line",
-        "data": {
-            "labels": data['weeks'],
-            "datasets": [
-                {
-                    "label": "Code Commits",
-                    "data": data['commits'],
-                    "borderColor": "#FF6384",
-                    "backgroundColor": "rgba(255,99,132,0.08)",
-                    "fill": False,
-                    "yAxisID": "y1",
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.3
-                },
-                {
-                    "label": "User Talks",
-                    "data": data['user_talks'],
-                    "borderColor": "#36A2EB",
-                    "backgroundColor": "rgba(54,162,235,0.08)",
-                    "fill": False,
-                    "yAxisID": "y2",
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.3
-                },
-                {
-                    "label": "Social Posts",
-                    "data": data['social_posts'],
-                    "borderColor": "#E6B800",
-                    "backgroundColor": "rgba(230,184,0,0.08)",
-                    "fill": False,
-                    "yAxisID": "y2",
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.3
-                },
-                {
-                    "label": "Coffee Chats",
-                    "data": data['coffee_chats'],
-                    "borderColor": "#4BC0C0",
-                    "backgroundColor": "rgba(75,192,192,0.08)",
-                    "fill": False,
-                    "yAxisID": "y2",
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.3
-                },
-                {
-                    "label": "Workouts",
-                    "data": data['workouts'],
-                    "borderColor": "#9966FF",
-                    "backgroundColor": "rgba(153,102,255,0.08)",
-                    "fill": False,
-                    "yAxisID": "y2",
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.3
-                },
-                {
-                    "label": "Blog Posts",
-                    "data": data['blog_posts'],
-                    "borderColor": "#FF9F40",
-                    "backgroundColor": "rgba(255,159,64,0.08)",
-                    "fill": False,
-                    "yAxisID": "y2",
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.3
-                }
-            ]
-        },
-        "options": {
-            "responsive": False,
-            "title": {
-                "display": True,
-                "text": "Progress Tracker",
-                "fontSize": 16
-            },
-            "legend": {
-                "position": "right",
-                "labels": {"fontSize": 11, "padding": 12}
-            },
-            "scales": {
-                "yAxes": [
-                    {
-                        "id": "y1",
-                        "position": "left",
-                        "scaleLabel": {
-                            "display": True,
-                            "labelString": "Commits",
-                            "fontStyle": "bold"
-                        },
-                        "ticks": {"beginAtZero": True}
-                    },
-                    {
-                        "id": "y2",
-                        "position": "right",
-                        "scaleLabel": {
-                            "display": True,
-                            "labelString": "Other Metrics",
-                            "fontStyle": "bold"
-                        },
-                        "gridLines": {"drawOnChartArea": False},
-                        "ticks": {"beginAtZero": True}
-                    }
-                ]
-            },
-            "plugins": {
-                "datalabels": {
-                    "display": "auto",
-                    "anchor": "end",
-                    "align": "top",
-                    "font": {"size": 9},
-                    "formatter": "Math.round"
-                }
-            }
-        }
-    }
-
-    config_json = json.dumps(config, separators=(',', ':'))
-    url = f"https://quickchart.io/chart?c={quote(config_json)}&w=900&h=450&bkg=white"
-    return url
-
-
-# ---------------------------------------------------------------------------
-# Part B: Self-generated SVG sparklines
-# ---------------------------------------------------------------------------
-
-# Metric definitions: (name, emoji, data_key, color)
-METRICS = [
-    ('Code Commits', '\U0001f680', 'commits', '#FF6384'),
-    ('User Talks', '\U0001f4ac', 'user_talks', '#36A2EB'),
-    ('Social Posts', '\U0001f4f1', 'social_posts', '#E6B800'),
-    ('Coffee Chats', '\u2615', 'coffee_chats', '#4BC0C0'),
-    ('Workouts', '\U0001f3c3', 'workouts', '#9966FF'),
-    ('Blog Posts', '\U0001f4dd', 'blog_posts', '#FF9F40'),
-]
-
-# SVG layout constants
-SVG_WIDTH = 800
-SVG_HEIGHT = 440
-CARD_W = 236
-CARD_H = 192
-PADDING = 30
-GAP = 16
-CHART_X = 30
-CHART_Y = 36
-CHART_W = CARD_W - 40   # 196
-CHART_H = CARD_H - 72   # 120
-
-# Card positions: 3x2 grid
-CARD_POSITIONS = [
-    (PADDING, 20),
-    (PADDING + CARD_W + GAP, 20),
-    (PADDING + 2 * (CARD_W + GAP), 20),
-    (PADDING, 20 + CARD_H + GAP),
-    (PADDING + CARD_W + GAP, 20 + CARD_H + GAP),
-    (PADDING + 2 * (CARD_W + GAP), 20 + CARD_H + GAP),
-]
-
-
-def _scale_points(values, chart_width, chart_height):
-    """Scale data values to SVG coordinates within chart area.
-
-    Returns (points_list, max_value_used_for_scaling).
-    """
-    n = len(values)
-    if n == 0:
-        return [], 1
-
-    raw_max = max(values)
-    max_val = raw_max * 1.1 if raw_max > 0 else 1
-
-    points = []
-    for i, val in enumerate(values):
-        x = (i / max(n - 1, 1)) * chart_width
-        y = chart_height - (val / max_val) * chart_height
-        points.append((round(x, 1), round(y, 1)))
-    return points, max_val
-
-
-def _render_sparkline_card(name, emoji, values, weeks, color, card_w, card_h):
-    """Render one mini sparkline card as SVG group content."""
-    final_val = values[-1] if values else 0
-    points, max_val = _scale_points(values, CHART_W, CHART_H)
-
-    # Polyline points string
-    polyline_pts = ' '.join(f'{CHART_X + x},{CHART_Y + y}' for x, y in points)
-
-    # Polygon for area fill (close along bottom edge)
-    polygon_pts = polyline_pts
-    if points:
-        polygon_pts += f' {CHART_X + points[-1][0]},{CHART_Y + CHART_H}'
-        polygon_pts += f' {CHART_X + points[0][0]},{CHART_Y + CHART_H}'
-
-    # Y-axis tick values: 0, mid, max
-    raw_max = max(values) if values and max(values) > 0 else 0
-    if raw_max > 0:
-        mid_val = raw_max // 2
-        y_ticks = [
-            (0, CHART_Y + CHART_H),
-            (mid_val, CHART_Y + CHART_H - (mid_val / max_val) * CHART_H),
-            (raw_max, CHART_Y + CHART_H - (raw_max / max_val) * CHART_H),
-        ]
-    else:
-        y_ticks = [(0, CHART_Y + CHART_H)]
-
-    # Grid lines (3 horizontal dashed)
-    grid_ys = [CHART_Y, CHART_Y + CHART_H / 2, CHART_Y + CHART_H]
-
-    # Last data point dot
-    last_dot = ''
-    if points:
-        lx, ly = points[-1]
-        last_dot = f'<circle cx="{CHART_X + lx}" cy="{CHART_Y + ly}" r="3.5" fill="{color}" />'
-
-    # X-axis labels: first and last week
-    first_week = weeks[0] if weeks else ''
-    last_week = weeks[-1] if len(weeks) > 1 else ''
-
-    svg = f'''
-    <rect width="{card_w}" height="{card_h}" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        {emoji} {name}
-    </text>
-
-    <!-- Final value badge -->
-    <text x="{card_w - 12}" y="22" fill="{color}" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        {final_val:,}
-    </text>
-
-    <!-- Grid lines -->'''
-
-    for gy in grid_ys:
-        svg += f'''
-    <line x1="{CHART_X}" y1="{round(gy, 1)}" x2="{CHART_X + CHART_W}" y2="{round(gy, 1)}"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />'''
-
-    svg += f'''
-
-    <!-- Y-axis ticks -->'''
-    for val, y_pos in y_ticks:
-        svg += f'''
-    <text x="{CHART_X - 4}" y="{round(y_pos + 3, 1)}" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">{val}</text>'''
-
-    svg += f'''
-
-    <!-- Area fill -->
-    <polygon points="{polygon_pts}" fill="{color}" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="{polyline_pts}" fill="none" stroke="{color}"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    {last_dot}
-
-    <!-- X-axis labels -->
-    <text x="{CHART_X}" y="{CHART_Y + CHART_H + 14}" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">{first_week}</text>
-    <text x="{CHART_X + CHART_W}" y="{CHART_Y + CHART_H + 14}" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">{last_week}</text>
-    '''
-
-    return svg
-
-
-def generate_sparklines_svg(data):
-    """Generate a self-contained SVG with 6 mini sparkline charts in a 3x2 grid."""
-    if not data:
-        return None
-
-    cards_svg = ''
-    for i, (name, emoji, data_key, color) in enumerate(METRICS):
-        x, y = CARD_POSITIONS[i]
-        card_content = _render_sparkline_card(
-            name, emoji, data[data_key], data['weeks'], color, CARD_W, CARD_H
-        )
-        cards_svg += f'  <g transform="translate({x},{y})">{card_content}</g>\n'
-
-    svg = f'''<svg width="{SVG_WIDTH}" height="{SVG_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#f1f5f9;stop-opacity:1" />
-    </linearGradient>
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="8" flood-color="#000000" flood-opacity="0.1"/>
-    </filter>
-  </defs>
-
-  <rect width="{SVG_WIDTH}" height="{SVG_HEIGHT}" fill="url(#bg)" rx="16"
-        stroke="#e2e8f0" stroke-width="1"/>
-
-{cards_svg}</svg>'''
-
-    return svg
-
-
-def save_sparklines_svg(data):
-    """Generate and save the sparklines SVG to disk."""
-    svg_content = generate_sparklines_svg(data)
-    if svg_content is None:
-        return None
-    output_path = Path('dashboard/progress_sparklines.svg')
-    output_path.write_text(svg_content)
-    return str(output_path)
-
-
-# ---------------------------------------------------------------------------
-# Part C: AI Tokens weekly chart (non-cumulative, forward-only)
-# ---------------------------------------------------------------------------
-
-def _extract_week_tokens(entry):
-    """Return the tokens dict from a history or currentWeek entry, or None."""
-    metrics = entry.get('metrics') if isinstance(entry, dict) else None
-    if not isinstance(metrics, dict):
-        return None
-    tokens = metrics.get('tokens')
-    return tokens if isinstance(tokens, dict) else None
-
-
-def _round_b(value):
-    """Convert raw token count to billions, rounded to 2 decimals. Preserves
-    None so the chart renders a gap for weeks before forward-only cutover."""
-    if value is None:
-        return None
-    try:
-        return round(int(value) / 1_000_000_000, 2)
-    except (TypeError, ValueError):
-        return None
-
-
-def load_tokens_series(raw_data):
-    """Build a non-cumulative weekly tokens series (claude / codex / total).
-
-    Uses the 11 most recent history entries plus a synthetic point for the
-    current in-progress week so the combined chart shows 12 points like the
-    rest of the dashboard. Past weeks without a tokens field render as null
-    so chart.js draws a gap (consistent with forward-only policy).
-    """
-    if not isinstance(raw_data, dict):
-        return None
-
-    history = raw_data.get('weeklyHistory', []) or []
-    history_sorted = sorted(history, key=lambda x: x.get('week', ''))
-    completed = history_sorted[-11:]
-
-    weeks, claude, codex, total = [], [], [], []
-
-    for entry in completed:
-        week_id = entry.get('week', '')
-        if '-W' not in week_id:
-            continue
-        weeks.append(f"W{week_id.split('-W')[1]}")
-        tokens = _extract_week_tokens(entry)
-        if tokens is None:
-            claude.append(None)
-            codex.append(None)
-            total.append(None)
-        else:
-            claude.append(_round_b(tokens.get('claude')))
-            codex.append(_round_b(tokens.get('codex')))
-            total.append(_round_b(tokens.get('total')))
-
-    current = raw_data.get('currentWeek')
-    if isinstance(current, dict):
-        start = current.get('startDate', '')
-        try:
-            parsed = datetime.strptime(start, '%Y-%m-%d')
-            weeks.append(f"W{parsed.isocalendar()[1]:02d}")
-            tokens = _extract_week_tokens(current) or {}
-            claude.append(_round_b(tokens.get('claude')) or 0.0)
-            codex.append(_round_b(tokens.get('codex')) or 0.0)
-            total.append(_round_b(tokens.get('total')) or 0.0)
-        except ValueError:
-            pass
-
-    if not weeks:
-        return None
-
-    return {
-        'weeks': weeks,
-        'claude': claude,
-        'codex': codex,
-        'total': total,
-    }
-
-
-def generate_tokens_chart_url(raw_data):
-    """Return a QuickChart URL for the weekly Token Usage chart, or None if
-    no week has a tokens record (forward-only pre-tracking state).
-
-    Chart intentionally carries no unit text (no 'B', no 'CC'/'CX' labels) —
-    the section heading supplies the context."""
-    series = load_tokens_series(raw_data)
-    if not series:
-        return None
-
-    if all((v is None or v == 0) for v in series['claude']) and \
-       all((v is None or v == 0) for v in series['codex']):
-        return None
-
-    config = {
-        "type": "line",
-        "data": {
-            "labels": series['weeks'],
-            "datasets": [
-                {
-                    "label": "Claude Code",
-                    "data": series['claude'],
-                    "borderColor": "#F59E0B",
-                    "backgroundColor": "rgba(245,158,11,0.08)",
-                    "fill": False,
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.25,
-                    "spanGaps": False,
-                },
-                {
-                    "label": "Codex",
-                    "data": series['codex'],
-                    "borderColor": "#10B981",
-                    "backgroundColor": "rgba(16,185,129,0.08)",
-                    "fill": False,
-                    "borderWidth": 2.5,
-                    "pointRadius": 3,
-                    "tension": 0.25,
-                    "spanGaps": False,
-                },
-            ],
-        },
-        "options": {
-            "responsive": False,
-            "title": {
-                "display": True,
-                "text": "Token Usage",
-                "fontSize": 16,
-            },
-            "legend": {
-                "position": "right",
-                "labels": {"fontSize": 11, "padding": 12},
-            },
-            "scales": {
-                "yAxes": [
-                    {
-                        "scaleLabel": {
-                            "display": True,
-                            "labelString": "Tokens (B)",
-                            "fontStyle": "bold",
-                        },
-                        "ticks": {"beginAtZero": True},
-                    }
-                ]
-            },
-            "plugins": {
-                "datalabels": {
-                    "display": "auto",
-                    "anchor": "end",
-                    "align": "top",
-                    "font": {"size": 9},
-                    "formatter": "(v) => v == null ? '' : v.toFixed(1)",
-                }
-            },
-        },
-    }
-
-    config_json = json.dumps(config, separators=(',', ':'))
-    return f"https://quickchart.io/chart?c={quote(config_json)}&w=900&h=400&bkg=white"
-
-
-# ---------------------------------------------------------------------------
-# CLI entry point
-# ---------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    print("Generating progress charts...\n")
-
-    data = load_weekly_data()
-
-    if data:
-        combined_url = generate_chart_url(data)
-        print("Combined Chart URL (QuickChart.io dual Y-axis):")
-        print(combined_url)
-        print(f"\nURL length: {len(combined_url)} chars")
-        print()
-
-        svg_path = save_sparklines_svg(data)
-        print(f"Sparklines SVG saved: {svg_path}")
-
-    # Tokens chart is fed from raw data.json (needs currentWeek, not just
-    # the cumulative-friendly shape produced by load_weekly_data).
-    raw_path = Path('dashboard/data.json')
-    if raw_path.exists():
-        raw = json.loads(raw_path.read_text())
-        tokens_url = generate_tokens_chart_url(raw)
-        if tokens_url:
-            print("\nTokens Chart URL (QuickChart.io):")
-            print(tokens_url)
-            print(f"\nURL length: {len(tokens_url)} chars")
-        else:
-            print("\nTokens Chart: no tracked weeks yet, skipping")
-    else:
-        print("\nTokens Chart: data.json missing, skipping")
-
-    if not data:
-        print("Failed to generate charts")
-        exit(1)
-
-    print("\nDone!")
+
+DATA = Path('dashboard/data.json')
+OUT = Path('dashboard/progress_sparklines.svg')
+
+PAPER = '#e4e4df'; EDGE = '#cbcbc4'
+INK = '#15150f'; INK2 = '#3e3e37'; INK3 = '#575750'
+RED = '#a81f16'; RULE = '#a9a9a0'; HAIR = '#c9c9c1'
+FILL2 = '#6e6e66'
+SERIF = "Georgia, 'Times New Roman', serif"
+SANS = "system-ui, -apple-system, sans-serif"
+
+W, H = 1000, 700
+L, R = 64, 936
+CHART_W = R - L
+
+
+def t(x, y, s, size=13, fill=INK, weight='400', anchor='start',
+       family=SERIF, style='', letter=''):
+    a = f' text-anchor="{anchor}"' if anchor != 'start' else ''
+    ls = f' letter-spacing="{letter}"' if letter else ''
+    st = f' font-style="{style}"' if style else ''
+    esc = str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    return (f'<text x="{x}" y="{y}" font-family="{family}" font-size="{size}" '
+            f'fill="{fill}" font-weight="{weight}"{a}{st}{ls}>{esc}</text>\n')
+
+
+def hline(x1, x2, y, color=HAIR, w=1):
+    return f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{color}" stroke-width="{w}"/>\n'
+
+
+def dotted(x1, x2, y):
+    return f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{RULE}" stroke-width="1" stroke-dasharray="1.5,3.5"/>\n'
+
+
+def line_chart(y0, label, cum, total, sub, color, h=120):
+    """Cumulative line chart: baseline at y0+h, top at y0."""
+    out = []
+    out.append(t(L, y0 - 14, label, 21, INK))
+    out.append(dotted(L + 280, R - 80, y0 - 20))
+    out.append(t(R, y0 - 10, str(total), 56, INK, '700', anchor='end', letter='-0.03em'))
+    out.append(t(L, y0 + 10, sub, 13, INK2, family=SANS))
+
+    gy = y0 + h
+    out.append(hline(L, R, gy, RULE))
+    out.append(hline(L, R, y0 + 8, HAIR))
+
+    n = len(cum)
+    mx = max(cum) or 1
+    mn = min(cum)
+    rng = (mx - mn) or 1
+    pts = []
+    for i, v in enumerate(cum):
+        x = L + i * CHART_W / (n - 1)
+        yv = gy - 10 - (v - mn) / rng * (h - 24)
+        pts.append((x, yv))
+    poly = ' '.join(f'{x:.1f},{y:.1f}' for x, y in pts)
+    out.append(f'<polyline points="{poly}" fill="none" stroke="{color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>\n')
+    lx, ly = pts[-1]
+    out.append(f'<circle cx="{lx:.1f}" cy="{ly:.1f}" r="4.5" fill="{RED}"/>\n')
+    out.append(t(L + 2, y0 + 4, str(mx), 11, INK3, family=SANS))
+
+    # axis
+    out.append(t(L, gy + 18, 'W27', 12, INK3, family=SANS))
+    for frac, lbl in [(0.2, 'W29'), (0.4, 'W31'), (0.6, 'W33'), (0.8, 'W35')]:
+        out.append(t(L + CHART_W * frac, gy + 18, lbl, 12, INK3, family=SANS))
+    out.append(t(R, gy + 18, 'W38', 12, RED, '600', anchor='end', family=SANS))
+    return out
+
+
+def build():
+    d = json.loads(DATA.read_text())
+    cw = d['currentWeek']
+    hist = list(reversed(d['weeklyHistory']))
+    hist11 = hist[-11:] if len(hist) >= 11 else hist
+
+    def week_pr(e):
+        return e['metrics'].get('pullRequests', e['metrics'].get('commits', 0))
+
+    def week_soc(e):
+        s = e['metrics'].get('socialContent', {})
+        return sum(v for v in s.values() if isinstance(v, int))
+
+    pr_now = cw['metrics'].get('pullRequests', cw['metrics'].get('commits', 0))
+    soc_now = sum(v for v in cw['metrics'].get('socialContent', {}).values() if isinstance(v, int))
+
+    pr_cum, s = [], 0
+    for e in hist11:
+        s += week_pr(e); pr_cum.append(s)
+    s += pr_now; pr_cum.append(s)
+
+    soc_cum, s = [], 0
+    for e in hist11:
+        s += week_soc(e); soc_cum.append(s)
+    s += soc_now; soc_cum.append(s)
+
+    # hand totals
+    m = cw['metrics']
+    wo = m.get('workouts', {})
+    wo_tot = sum(v for v in wo.values() if isinstance(v, int))
+    hand = [
+        ('Workouts', wo_tot),
+        ('Coffee chats', m.get('ctoMeetings', 0)),
+        ('Talks with users', m.get('userSessions', 0)),
+        ('Blog posts', m.get('blogPosts', 0)),
+    ]
+
+    now = datetime.now().strftime('%-d %b %Y')
+
+    out = []
+    out.append(f'<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">\n')
+    out.append(f'<rect width="{W}" height="{H}" fill="{PAPER}" stroke="{EDGE}" stroke-width="1"/>\n')
+    out.append(f'<style>text{{font-variant-numeric:tabular-nums;}}</style>\n')
+
+    out.append(t(L, 40, 'PIESSON · RUNNING TOTALS', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(t(R, 40, 'W27 — W38', 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, 50, INK, 2))
+
+    # chart 1: PR
+    out += line_chart(90, 'Pull requests merged', pr_cum, pr_cum[-1],
+                      'Counted from GitHub search, twelve weeks.', INK)
+
+    # chart 2: Social
+    out += line_chart(290, 'Social posts', soc_cum, soc_cum[-1],
+                      'Filed by hand, twelve weeks.', FILL2)
+
+    # hand rows
+    y = 520
+    out.append(t(L, y, 'ALSO FILED BY HAND', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, y + 10, INK))
+    col_x = [L, L + 430]
+    yy = y + 42
+    for i, (name, val) in enumerate(hand):
+        cx = col_x[i % 2]
+        out.append(t(cx, yy, name, 17, INK))
+        out.append(dotted(cx + 160, cx + 386, yy - 5))
+        out.append(t(cx + 392, yy, str(val), 21, INK, '700', anchor='end'))
+        if i % 2 == 1:
+            out.append(hline(cx - 430 if cx == col_x[1] else cx, cx + 430, yy + 12))
+            yy += 38
+
+    # note
+    out.append(t(L, yy + 24, 'The top figure is counted by the machine; the rest are entered by hand each week,',
+                 13, INK2, family=SANS))
+    out.append(t(L, yy + 42, 'which is the point of entering them: the number is the review, not the report.',
+                 13, INK2, family=SANS))
+
+    # colophon
+    yc = H - 24
+    out.append(hline(L, R, yc - 14, INK))
+    out.append(t(L, yc, 'Totals run from week 27 and reset with the quarter.', 13, INK2, family=SANS))
+    out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
+
+    out.append('</svg>\n')
+    OUT.write_text(''.join(out))
+    print(f'wrote {OUT}')
+
+
+def generate_progress_chart():
+    """Backward-compat wrapper."""
+    build()
+
+
+if __name__ == '__main__':
+    build()

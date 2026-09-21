@@ -7,108 +7,85 @@
 - Curious about my story? → [kimkb.com](https://www.kimkb.com)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg" alt="Profile Details">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg" alt="The Record — commits, pull requests, and issues year by year">
 </p>
 
-<div align="right"><sub>updated at 09/20/26</sub></div>
+<div align="right"><sub>updated at 09/21/26</sub></div>
 
 # Grinding enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Dashboard">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
 </p>
 
-<div align="right"><sub>updated at 09/20/26</sub></div>
+<div align="right"><sub>updated at 09/21/26</sub></div>
 
 # Consistent enough?
 
 <p align="center">
-  <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22line%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22W26%22%2C%22W27%22%2C%22W28%22%2C%22W29%22%2C%22W30%22%2C%22W31%22%2C%22W32%22%2C%22W33%22%2C%22W34%22%2C%22W35%22%2C%22W36%22%2C%22W37%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Code%20Commits%22%2C%22data%22%3A%5B0%2C85%2C397%2C566%2C768%2C934%2C1081%2C1180%2C1306%2C1650%2C1765%2C1839%5D%2C%22borderColor%22%3A%22%23FF6384%22%2C%22backgroundColor%22%3A%22rgba%28255%2C99%2C132%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y1%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22User%20Talks%22%2C%22data%22%3A%5B3%2C6%2C9%2C9%2C24%2C24%2C25%2C25%2C25%2C25%2C25%2C25%5D%2C%22borderColor%22%3A%22%2336A2EB%22%2C%22backgroundColor%22%3A%22rgba%2854%2C162%2C235%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Social%20Posts%22%2C%22data%22%3A%5B11%2C22%2C33%2C33%2C35%2C35%2C41%2C41%2C41%2C41%2C41%2C41%5D%2C%22borderColor%22%3A%22%23E6B800%22%2C%22backgroundColor%22%3A%22rgba%28230%2C184%2C0%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Coffee%20Chats%22%2C%22data%22%3A%5B2%2C4%2C6%2C6%2C15%2C16%2C17%2C17%2C17%2C17%2C17%2C17%5D%2C%22borderColor%22%3A%22%234BC0C0%22%2C%22backgroundColor%22%3A%22rgba%2875%2C192%2C192%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Workouts%22%2C%22data%22%3A%5B7%2C14%2C21%2C21%2C43%2C44%2C45%2C45%2C45%2C45%2C45%2C45%5D%2C%22borderColor%22%3A%22%239966FF%22%2C%22backgroundColor%22%3A%22rgba%28153%2C102%2C255%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%2C%7B%22label%22%3A%22Blog%20Posts%22%2C%22data%22%3A%5B0%2C0%2C0%2C0%2C0%2C0%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%22borderColor%22%3A%22%23FF9F40%22%2C%22backgroundColor%22%3A%22rgba%28255%2C159%2C64%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22yAxisID%22%3A%22y2%22%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.3%7D%5D%7D%2C%22options%22%3A%7B%22responsive%22%3Afalse%2C%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Progress%20Tracker%22%2C%22fontSize%22%3A16%7D%2C%22legend%22%3A%7B%22position%22%3A%22right%22%2C%22labels%22%3A%7B%22fontSize%22%3A11%2C%22padding%22%3A12%7D%7D%2C%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22id%22%3A%22y1%22%2C%22position%22%3A%22left%22%2C%22scaleLabel%22%3A%7B%22display%22%3Atrue%2C%22labelString%22%3A%22Commits%22%2C%22fontStyle%22%3A%22bold%22%7D%2C%22ticks%22%3A%7B%22beginAtZero%22%3Atrue%7D%7D%2C%7B%22id%22%3A%22y2%22%2C%22position%22%3A%22right%22%2C%22scaleLabel%22%3A%7B%22display%22%3Atrue%2C%22labelString%22%3A%22Other%20Metrics%22%2C%22fontStyle%22%3A%22bold%22%7D%2C%22gridLines%22%3A%7B%22drawOnChartArea%22%3Afalse%7D%2C%22ticks%22%3A%7B%22beginAtZero%22%3Atrue%7D%7D%5D%7D%2C%22plugins%22%3A%7B%22datalabels%22%3A%7B%22display%22%3A%22auto%22%2C%22anchor%22%3A%22end%22%2C%22align%22%3A%22top%22%2C%22font%22%3A%7B%22size%22%3A9%7D%2C%22formatter%22%3A%22Math.round%22%7D%7D%7D%7D&w=900&h=450&bkg=white" alt="Consistent enough?">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
 </p>
 
-<details>
-<summary><strong>More details</strong></summary>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg" alt="Individual Metric Sparklines">
-</p>
-
-</details>
-
-<div align="right"><sub>updated at 09/20/26</sub></div>
-
-# Token Usage
-
-<p align="center">
-  <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22line%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22W27%22%2C%22W28%22%2C%22W29%22%2C%22W30%22%2C%22W31%22%2C%22W32%22%2C%22W33%22%2C%22W34%22%2C%22W35%22%2C%22W36%22%2C%22W37%22%2C%22W38%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Claude%20Code%22%2C%22data%22%3A%5B1.76%2C5.25%2C2.83%2C3.33%2C3.6%2C4.43%2C3.73%2C1.75%2C3.31%2C1.25%2C0.31%2C0.17%5D%2C%22borderColor%22%3A%22%23F59E0B%22%2C%22backgroundColor%22%3A%22rgba%28245%2C158%2C11%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.25%2C%22spanGaps%22%3Afalse%7D%2C%7B%22label%22%3A%22Codex%22%2C%22data%22%3A%5B0.0%2C0.0%2C0.0%2C0.09%2C0.29%2C0.22%2C0.76%2C1.0%2C1.62%2C1.59%2C0.68%2C2.12%5D%2C%22borderColor%22%3A%22%2310B981%22%2C%22backgroundColor%22%3A%22rgba%2816%2C185%2C129%2C0.08%29%22%2C%22fill%22%3Afalse%2C%22borderWidth%22%3A2.5%2C%22pointRadius%22%3A3%2C%22tension%22%3A0.25%2C%22spanGaps%22%3Afalse%7D%5D%7D%2C%22options%22%3A%7B%22responsive%22%3Afalse%2C%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Token%20Usage%22%2C%22fontSize%22%3A16%7D%2C%22legend%22%3A%7B%22position%22%3A%22right%22%2C%22labels%22%3A%7B%22fontSize%22%3A11%2C%22padding%22%3A12%7D%7D%2C%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22scaleLabel%22%3A%7B%22display%22%3Atrue%2C%22labelString%22%3A%22Tokens%20%28B%29%22%2C%22fontStyle%22%3A%22bold%22%7D%2C%22ticks%22%3A%7B%22beginAtZero%22%3Atrue%7D%7D%5D%7D%2C%22plugins%22%3A%7B%22datalabels%22%3A%7B%22display%22%3A%22auto%22%2C%22anchor%22%3A%22end%22%2C%22align%22%3A%22top%22%2C%22font%22%3A%7B%22size%22%3A9%7D%2C%22formatter%22%3A%22%28v%29%20%3D%3E%20v%20%3D%3D%20null%20%3F%20%27%27%20%3A%20v.toFixed%281%29%22%7D%7D%7D%7D&w=900&h=400&bkg=white" alt="Token Usage">
-</p>
-
-<div align="right"><sub>updated at 09/20/26</sub></div>
+<div align="right"><sub>updated at 09/21/26</sub></div>
 
 # Weekly History
 
-| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts | 🔥 Tokens |
-|------|--------|-----------|----------|---------|---------|------------|----------|-----------|
-| [**Week 38 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-09-14 - 2026-09-20 | 121 | 0 | 0 | 0 | 0 | 0 | 2.3B (CC 0.17 / CX 2.1) |
-| [**Week 37**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W37.svg) | 2026-09-07 - 2026-09-13 | 74 | 0 | 0 | 0 | 0 | 0 | 0.99B (CC 0.31 / CX 0.68) |
-| [**Week 36**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W36.svg) | 2026-08-31 - 2026-09-06 | 115 | 0 | 0 | 0 | 0 | 0 | 2.8B (CC 1.3 / CX 1.6) |
-| [**Week 35**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W35.svg) | 2026-08-24 - 2026-08-30 | 344 | 0 | 0 | 0 | 0 | 0 | 4.9B (CC 3.3 / CX 1.6) |
-| [**Week 34**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W34.svg) | 2026-08-17 - 2026-08-23 | 126 | 0 | 0 | 0 | 0 | 0 | 2.7B (CC 1.7 / CX 1.00) |
-| [**Week 33**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W33.svg) | 2026-08-10 - 2026-08-16 | 99 | 0 | 0 | 0 | 0 | 0 | 4.5B (CC 3.7 / CX 0.76) |
-| [**Week 32**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W32.svg) | 2026-08-03 - 2026-08-09 | 147 | 6 | 1 | 1 | 1 | 0 | 4.7B (CC 4.4 / CX 0.22) |
-| [**Week 31**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W31.svg) | 2026-07-27 - 2026-08-02 | 166 | 0 | 0 | 1 | 1 | 0 | 3.9B (CC 3.6 / CX 0.29) |
-| [**Week 30**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W30.svg) | 2026-07-20 - 2026-07-26 | 202 | 2 | 15 | 9 | 22 | 0 | 3.4B (CC 3.3 / CX 0.09) |
-| [**Week 29**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W29.svg) | 2026-07-13 - 2026-07-19 | 169 | 0 | 0 | 0 | 0 | 0 | 2.8B (CC 2.8 / CX 0.0) |
-| [**Week 28**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W28.svg) | 2026-07-06 - 2026-07-12 | 312 | 11 | 3 | 2 | 7 | 0 | 5.2B (CC 5.2 / CX 0.0) |
-| [**Week 27**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W27.svg) | 2026-06-29 - 2026-07-05 | 85 | 11 | 3 | 2 | 7 | 0 | 1.8B (CC 1.8 / CX 0.0) |
+| Week | Period | 🚀 PRs | 📱 Social | 💬 Talks | ☕ Coffee | 🏃 Workouts | 📝 Posts |
+|------|--------|--------|----------|---------|---------|------------|----------|
+| **Week 38 (live)** | 2026-09-14 - 2026-09-20 | 77 | 10 | 1 | 1 | 2 | 1 |
+| **Week 37** | 2026-09-07 - 2026-09-13 | 16 | 10 | — | — | — | — |
+| **Week 36** | 2026-08-31 - 2026-09-06 | 35 | 10 | — | — | — | — |
+| **Week 35** | 2026-08-24 - 2026-08-30 | 58 | 10 | — | — | — | — |
+| **Week 34** | 2026-08-17 - 2026-08-23 | 44 | 10 | — | — | — | — |
+| **Week 33** | 2026-08-10 - 2026-08-16 | 46 | 10 | — | — | — | — |
+| **Week 32** | 2026-08-03 - 2026-08-09 | 62 | 10 | 1 | 1 | 1 | — |
+| **Week 31** | 2026-07-27 - 2026-08-02 | 79 | 10 | — | 1 | 1 | — |
+| **Week 30** | 2026-07-20 - 2026-07-26 | 64 | 10 | 15 | 9 | 22 | — |
+| **Week 29** | 2026-07-13 - 2026-07-19 | 59 | 10 | — | — | — | — |
+| **Week 28** | 2026-07-06 - 2026-07-12 | 128 | 10 | 3 | 2 | 7 | — |
+| **Week 27** | 2026-06-29 - 2026-07-05 | 38 | 11 | 3 | 2 | 7 | — |
 
-<div align="right"><sub>updated at 09/20/26</sub></div>
+<div align="right"><sub>updated at 09/21/26</sub></div>
 
 # Tech Stack
 
 ### Languages
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Swift](https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=swift&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
 ### Frontend
-![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
 ### Mobile
-![React Native](https://img.shields.io/badge/React_Native-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![Expo](https://img.shields.io/badge/Expo-1C1E24?style=flat-square&logo=expo&logoColor=white)
+![iOS](https://img.shields.io/badge/iOS-000000?style=flat-square&logo=ios&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=black)
 
 ### Backend
-![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white)
 
 ### Database
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=flat-square&logo=Prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 
 ### Cloud & Infrastructure
-![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white)
-![Azure](https://img.shields.io/badge/Microsoft_Azure-0089D0?style=flat-square&logo=microsoft-azure&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=black)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=flat-square&logo=googlecloud&logoColor=white)
 
 ### Development Tools
-![Cursor](https://img.shields.io/badge/Cursor-000000?style=flat-square&logoColor=white)
-![Claude Code](https://img.shields.io/badge/Claude_Code-000000?style=flat-square&logo=anthropic&logoColor=white)
-![Windsurf](https://img.shields.io/badge/Windsurf-0EA5E9?style=flat-square&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+![Claude](https://img.shields.io/badge/Claude-191919?style=flat-square&logo=anthropic&logoColor=white)
+![Codex](https://img.shields.io/badge/Codex-412991?style=flat-square&logo=openai&logoColor=white)
 
 ### Analytics & Monitoring
 ![PostHog](https://img.shields.io/badge/PostHog-000000?style=flat-square&logo=posthog&logoColor=white)
-![Amplitude](https://img.shields.io/badge/Amplitude-000080?style=flat-square&logoColor=white)
 ![Sentry](https://img.shields.io/badge/Sentry-362D59?style=flat-square&logo=sentry&logoColor=white)
 
 ### APIs & Services
 ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white)
-![Anthropic](https://img.shields.io/badge/Anthropic-191919?style=flat-square&logoColor=white)
-![ElevenLabs](https://img.shields.io/badge/ElevenLabs-000000?style=flat-square&logoColor=white)
-![Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-FFD21E?style=flat-square&logoColor=black)
-![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat-square&logo=selenium&logoColor=white)
+![Anthropic](https://img.shields.io/badge/Anthropic-191919?style=flat-square&logo=anthropic&logoColor=white)
+![Resend](https://img.shields.io/badge/Resend-000000?style=flat-square&logo=resend&logoColor=white)

@@ -1,303 +1,58 @@
-<svg width="800" height="440" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#f1f5f9;stop-opacity:1" />
-    </linearGradient>
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="8" flood-color="#000000" flood-opacity="0.1"/>
-    </filter>
-  </defs>
-
-  <rect width="800" height="440" fill="url(#bg)" rx="16"
-        stroke="#e2e8f0" stroke-width="1"/>
-
-  <g transform="translate(30,20)">
-    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        🚀 Code Commits
-    </text>
-
-    <!-- Final value badge -->
-    <text x="224" y="22" fill="#FF6384" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        1,839
-    </text>
-
-    <!-- Grid lines -->
-    <line x1="30" y1="36" x2="226" y2="36"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="96.0" x2="226" y2="96.0"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="156" x2="226" y2="156"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-
-    <!-- Y-axis ticks -->
-    <text x="26" y="159" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">0</text>
-    <text x="26" y="104.5" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">919</text>
-    <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">1839</text>
-
-    <!-- Area fill -->
-    <polygon points="30.0,156.0 47.8,151.0 65.6,132.4 83.5,122.4 101.3,110.4 119.1,100.6 136.9,91.9 154.7,86.0 172.5,78.5 190.4,58.1 208.2,51.3 226.0,46.9 226.0,156 30.0,156" fill="#FF6384" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="30.0,156.0 47.8,151.0 65.6,132.4 83.5,122.4 101.3,110.4 119.1,100.6 136.9,91.9 154.7,86.0 172.5,78.5 190.4,58.1 208.2,51.3 226.0,46.9" fill="none" stroke="#FF6384"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    <circle cx="226.0" cy="46.9" r="3.5" fill="#FF6384" />
-
-    <!-- X-axis labels -->
-    <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W26</text>
-    <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W37</text>
-    </g>
-  <g transform="translate(282,20)">
-    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        💬 User Talks
-    </text>
-
-    <!-- Final value badge -->
-    <text x="224" y="22" fill="#36A2EB" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        25
-    </text>
-
-    <!-- Grid lines -->
-    <line x1="30" y1="36" x2="226" y2="36"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="96.0" x2="226" y2="96.0"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="156" x2="226" y2="156"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-
-    <!-- Y-axis ticks -->
-    <text x="26" y="159" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">0</text>
-    <text x="26" y="106.6" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">12</text>
-    <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">25</text>
-
-    <!-- Area fill -->
-    <polygon points="30.0,142.9 47.8,129.8 65.6,116.7 83.5,116.7 101.3,51.3 119.1,51.3 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#36A2EB" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="30.0,142.9 47.8,129.8 65.6,116.7 83.5,116.7 101.3,51.3 119.1,51.3 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9" fill="none" stroke="#36A2EB"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    <circle cx="226.0" cy="46.9" r="3.5" fill="#36A2EB" />
-
-    <!-- X-axis labels -->
-    <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W26</text>
-    <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W37</text>
-    </g>
-  <g transform="translate(534,20)">
-    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        📱 Social Posts
-    </text>
-
-    <!-- Final value badge -->
-    <text x="224" y="22" fill="#E6B800" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        41
-    </text>
-
-    <!-- Grid lines -->
-    <line x1="30" y1="36" x2="226" y2="36"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="96.0" x2="226" y2="96.0"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="156" x2="226" y2="156"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-
-    <!-- Y-axis ticks -->
-    <text x="26" y="159" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">0</text>
-    <text x="26" y="105.8" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">20</text>
-    <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">41</text>
-
-    <!-- Area fill -->
-    <polygon points="30.0,126.7 47.8,97.5 65.6,68.2 83.5,68.2 101.3,62.9 119.1,62.9 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#E6B800" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="30.0,126.7 47.8,97.5 65.6,68.2 83.5,68.2 101.3,62.9 119.1,62.9 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9" fill="none" stroke="#E6B800"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    <circle cx="226.0" cy="46.9" r="3.5" fill="#E6B800" />
-
-    <!-- X-axis labels -->
-    <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W26</text>
-    <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W37</text>
-    </g>
-  <g transform="translate(30,228)">
-    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        ☕ Coffee Chats
-    </text>
-
-    <!-- Final value badge -->
-    <text x="224" y="22" fill="#4BC0C0" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        17
-    </text>
-
-    <!-- Grid lines -->
-    <line x1="30" y1="36" x2="226" y2="36"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="96.0" x2="226" y2="96.0"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="156" x2="226" y2="156"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-
-    <!-- Y-axis ticks -->
-    <text x="26" y="159" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">0</text>
-    <text x="26" y="107.7" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">8</text>
-    <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">17</text>
-
-    <!-- Area fill -->
-    <polygon points="30.0,143.2 47.8,130.3 65.6,117.5 83.5,117.5 101.3,59.7 119.1,53.3 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#4BC0C0" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="30.0,143.2 47.8,130.3 65.6,117.5 83.5,117.5 101.3,59.7 119.1,53.3 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9" fill="none" stroke="#4BC0C0"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    <circle cx="226.0" cy="46.9" r="3.5" fill="#4BC0C0" />
-
-    <!-- X-axis labels -->
-    <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W26</text>
-    <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W37</text>
-    </g>
-  <g transform="translate(282,228)">
-    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        🏃 Workouts
-    </text>
-
-    <!-- Final value badge -->
-    <text x="224" y="22" fill="#9966FF" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        45
-    </text>
-
-    <!-- Grid lines -->
-    <line x1="30" y1="36" x2="226" y2="36"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="96.0" x2="226" y2="96.0"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="156" x2="226" y2="156"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-
-    <!-- Y-axis ticks -->
-    <text x="26" y="159" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">0</text>
-    <text x="26" y="105.7" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">22</text>
-    <text x="26" y="49.9" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">45</text>
-
-    <!-- Area fill -->
-    <polygon points="30.0,139.0 47.8,122.1 65.6,105.1 83.5,105.1 101.3,51.8 119.1,49.3 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9 226.0,156 30.0,156" fill="#9966FF" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="30.0,139.0 47.8,122.1 65.6,105.1 83.5,105.1 101.3,51.8 119.1,49.3 136.9,46.9 154.7,46.9 172.5,46.9 190.4,46.9 208.2,46.9 226.0,46.9" fill="none" stroke="#9966FF"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    <circle cx="226.0" cy="46.9" r="3.5" fill="#9966FF" />
-
-    <!-- X-axis labels -->
-    <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W26</text>
-    <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W37</text>
-    </g>
-  <g transform="translate(534,228)">
-    <rect width="236" height="192" fill="url(#cardBg)" rx="12"
-          filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="12" y="22" fill="#1f2937" font-size="11" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif">
-        📝 Blog Posts
-    </text>
-
-    <!-- Final value badge -->
-    <text x="224" y="22" fill="#FF9F40" font-size="12" font-weight="700"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">
-        0
-    </text>
-
-    <!-- Grid lines -->
-    <line x1="30" y1="36" x2="226" y2="36"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="96.0" x2="226" y2="96.0"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-    <line x1="30" y1="156" x2="226" y2="156"
-          stroke="#e2e8f0" stroke-width="0.5" stroke-dasharray="4,3" />
-
-    <!-- Y-axis ticks -->
-    <text x="26" y="159" fill="#9ca3af" font-size="8"
-          font-family="Monaco, monospace" text-anchor="end">0</text>
-
-    <!-- Area fill -->
-    <polygon points="30.0,156.0 47.8,156.0 65.6,156.0 83.5,156.0 101.3,156.0 119.1,156.0 136.9,156.0 154.7,156.0 172.5,156.0 190.4,156.0 208.2,156.0 226.0,156.0 226.0,156 30.0,156" fill="#FF9F40" opacity="0.08" />
-
-    <!-- Sparkline -->
-    <polyline points="30.0,156.0 47.8,156.0 65.6,156.0 83.5,156.0 101.3,156.0 119.1,156.0 136.9,156.0 154.7,156.0 172.5,156.0 190.4,156.0 208.2,156.0 226.0,156.0" fill="none" stroke="#FF9F40"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-
-    <!-- Last point dot -->
-    <circle cx="226.0" cy="156.0" r="3.5" fill="#FF9F40" />
-
-    <!-- X-axis labels -->
-    <text x="30" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif">W26</text>
-    <text x="226" y="170" fill="#9ca3af" font-size="8"
-          font-family="system-ui, -apple-system, sans-serif" text-anchor="end">W37</text>
-    </g>
+<svg width="1000" height="700" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+<rect width="1000" height="700" fill="#e4e4df" stroke="#cbcbc4" stroke-width="1"/>
+<style>text{font-variant-numeric:tabular-nums;}</style>
+<text x="64" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" letter-spacing="0.14em">PIESSON · RUNNING TOTALS</text>
+<text x="936" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" text-anchor="end" letter-spacing="0.14em">W27 — W38</text>
+<line x1="64" y1="50" x2="936" y2="50" stroke="#15150f" stroke-width="2"/>
+<text x="64" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="400">Pull requests merged</text>
+<line x1="344" y1="70" x2="856" y2="70" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
+<text x="936" y="80" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">706</text>
+<text x="64" y="100" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Counted from GitHub search, twelve weeks.</text>
+<line x1="64" y1="210" x2="936" y2="210" stroke="#a9a9a0" stroke-width="1"/>
+<line x1="64" y1="98" x2="936" y2="98" stroke="#c9c9c1" stroke-width="1"/>
+<polyline points="64.0,200.0 143.3,181.6 222.5,173.1 301.8,163.9 381.1,152.6 460.4,143.7 539.6,137.1 618.9,130.7 698.2,122.4 777.5,117.4 856.7,115.1 936.0,104.0" fill="none" stroke="#15150f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="936.0" cy="104.0" r="4.5" fill="#a81f16"/>
+<text x="66" y="94" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">706</text>
+<text x="64" y="228" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W27</text>
+<text x="238.4" y="228" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W29</text>
+<text x="412.8" y="228" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W31</text>
+<text x="587.1999999999999" y="228" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W33</text>
+<text x="761.6" y="228" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W35</text>
+<text x="936" y="228" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#a81f16" font-weight="600" text-anchor="end">W38</text>
+<text x="64" y="276" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="400">Social posts</text>
+<line x1="344" y1="270" x2="856" y2="270" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
+<text x="936" y="280" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">121</text>
+<text x="64" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Filed by hand, twelve weeks.</text>
+<line x1="64" y1="410" x2="936" y2="410" stroke="#a9a9a0" stroke-width="1"/>
+<line x1="64" y1="298" x2="936" y2="298" stroke="#c9c9c1" stroke-width="1"/>
+<polyline points="64.0,400.0 143.3,391.3 222.5,382.5 301.8,373.8 381.1,365.1 460.4,356.4 539.6,347.6 618.9,338.9 698.2,330.2 777.5,321.5 856.7,312.7 936.0,304.0" fill="none" stroke="#6e6e66" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="936.0" cy="304.0" r="4.5" fill="#a81f16"/>
+<text x="66" y="294" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">121</text>
+<text x="64" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W27</text>
+<text x="238.4" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W29</text>
+<text x="412.8" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W31</text>
+<text x="587.1999999999999" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W33</text>
+<text x="761.6" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W35</text>
+<text x="936" y="428" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#a81f16" font-weight="600" text-anchor="end">W38</text>
+<text x="64" y="520" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" letter-spacing="0.14em">ALSO FILED BY HAND</text>
+<line x1="64" y1="530" x2="936" y2="530" stroke="#15150f" stroke-width="1"/>
+<text x="64" y="562" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Workouts</text>
+<line x1="224" y1="557" x2="450" y2="557" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
+<text x="456" y="562" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">2</text>
+<text x="494" y="562" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Coffee chats</text>
+<line x1="654" y1="557" x2="880" y2="557" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
+<text x="886" y="562" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">1</text>
+<line x1="64" y1="574" x2="924" y2="574" stroke="#c9c9c1" stroke-width="1"/>
+<text x="64" y="600" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Talks with users</text>
+<line x1="224" y1="595" x2="450" y2="595" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
+<text x="456" y="600" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">1</text>
+<text x="494" y="600" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Blog posts</text>
+<line x1="654" y1="595" x2="880" y2="595" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
+<text x="886" y="600" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">1</text>
+<line x1="64" y1="612" x2="924" y2="612" stroke="#c9c9c1" stroke-width="1"/>
+<text x="64" y="662" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">The top figure is counted by the machine; the rest are entered by hand each week,</text>
+<text x="64" y="680" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">which is the point of entering them: the number is the review, not the report.</text>
+<line x1="64" y1="662" x2="936" y2="662" stroke="#15150f" stroke-width="1"/>
+<text x="64" y="676" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Totals run from week 27 and reset with the quarter.</text>
+<text x="936" y="676" font-family="Georgia, 'Times New Roman', serif" font-size="13" fill="#3e3e37" font-weight="400" text-anchor="end" font-style="italic">as of 21 Sep 2026</text>
 </svg>

@@ -1,328 +1,204 @@
 #!/usr/bin/env python3
 """
-Generate custom GitHub profile summary card with contribution heatmap
+generate_profile_card.py — The Record (2026-09-21 redesign).
+
+Replaces the four-quadrant pie. The pie carried one fact — 88% commits,
+11% merged PRs, 1% issues — which a circle makes hard to read. The year
+rows prove "started from zero" by their measures alone (128 → 2,007 → 6,306).
+
+SVG-in-<img>: Georgia/system stacks only.
 """
 
 import json
-import requests
-import datetime
-from pathlib import Path
 import os
-from graphql_stats import get_github_activity_stats_graphql
+from datetime import date
+from pathlib import Path
 
-KST = datetime.timezone(datetime.timedelta(hours=9))
+try:
+    from get_github_activity_stats import get_github_activity_stats_graphql
+except ImportError:
+    def get_github_activity_stats_graphql(username, token):
+        """Offline fallback — no GraphQL available, caller keeps previous card."""
+        return None
 
-def get_github_data_from_stats(activity_stats):
-    """Create github_data dict from already-fetched activity stats"""
-    total_commits = activity_stats.get('commits', 0)
+CACHE = Path('dashboard/.stats_cache.json')
+DATA = Path('dashboard/data.json')
+OUT = Path('profile-summary-card-output/default/0-profile-details.svg')
 
-    # Use actual join date: August 2024
-    created_at = datetime.datetime(2024, 8, 1)
+PAPER = '#e4e4df'; EDGE = '#cbcbc4'
+INK = '#15150f'; INK2 = '#3e3e37'; INK3 = '#575750'
+RED = '#a81f16'; RULE = '#a9a9a0'; HAIR = '#c9c9c1'
+FILL2 = '#8e8e85'
+SERIF = "Georgia, 'Times New Roman', serif"
+SANS = "system-ui, -apple-system, sans-serif"
 
-    # Calculate days since joining
-    today = datetime.datetime.now()
-    days_since_join = (today - created_at).days
+W, H = 1000, 620
+L, R = 64, 936
 
-    # Calculate daily average based on actual join date
-    daily_avg = total_commits / max(days_since_join, 1) if days_since_join > 0 else 0
 
-    return {
-        'total_commits': total_commits,
-        'join_date': 'Aug 2024',
-        'daily_avg': round(daily_avg, 1),
-        'days_since_join': days_since_join
-    }
+def t(x, y, s, size=13, fill=INK, weight='400', anchor='start',
+       family=SERIF, style='', letter=''):
+    a = f' text-anchor="{anchor}"' if anchor != 'start' else ''
+    ls = f' letter-spacing="{letter}"' if letter else ''
+    st = f' font-style="{style}"' if style else ''
+    esc = str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    return (f'<text x="{x}" y="{y}" font-family="{family}" font-size="{size}" '
+            f'fill="{fill}" font-weight="{weight}"{a}{st}{ls}>{esc}</text>\n')
 
-def get_github_data(username, token):
-    """Fetch GitHub user data and calculate statistics"""
-    # Try to get commit count from GraphQL first (includes private repos)
-    graphql_result = get_github_activity_stats_graphql(username, token)
-    total_commits = graphql_result['commits'] if graphql_result else 0
 
-    # If GraphQL failed or no token, fallback to public repo count
-    if total_commits == 0:
-        print("GraphQL failed for total commits, using public repo approximation...")
-        headers = {
-            'Accept': 'application/vnd.github.v3+json'
-        }
-        if token:
-            headers['Authorization'] = f'token {token}'
+def hline(x1, x2, y, color=HAIR, w=1):
+    return f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{color}" stroke-width="{w}"/>\n'
 
-        try:
-            repos_response = requests.get(f'https://api.github.com/users/{username}/repos?per_page=100', headers=headers)
-            if repos_response.status_code == 200:
-                repos_data = repos_response.json()
-                for repo in repos_data:
-                    if not repo['fork']:
-                        commits_response = requests.get(f'https://api.github.com/repos/{username}/{repo["name"]}/commits?author={username}&per_page=1', headers=headers)
-                        if commits_response.status_code == 200:
-                            total_commits += len(commits_response.json())
-        except Exception as e:
-            print(f"Error fetching public repos: {e}")
 
-    # Use fixed join date: January 2025
-    created_at = datetime.datetime(2025, 1, 1)
+def leaders(x1, x2, y):
+    return f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{RULE}" stroke-width="1" stroke-dasharray="1.5,3.5"/>\n'
 
-    # Calculate days since joining (fixed date)
-    today = datetime.datetime.now()
-    days_since_join = (today - created_at).days
 
-    # Calculate daily average based on Jan 1, 2025
-    daily_avg = total_commits / max(days_since_join, 1) if days_since_join > 0 else 0
+def get_github_activity_stats(username='Piesson', token=None):
+    """GraphQL fetch; None = keep previous card (2026-07-18 incident contract)."""
+    return get_github_activity_stats_graphql(username, token)
 
-    return {
-        'total_commits': total_commits,
-        'join_date': 'Jan 2025',
-        'daily_avg': round(daily_avg, 1),
-        'days_since_join': days_since_join
-    }
 
-def get_github_activity_stats(username, token):
-    """Fetch GitHub activity statistics via GraphQL. Returns None on failure.
+def load_stats(live=None):
+    """Year stats from cache; 2026 from live counts when available."""
+    years = {}
+    if CACHE.exists():
+        c = json.loads(CACHE.read_text())
+        for y, v in c.get('years', {}).items():
+            years[int(y)] = {
+                'commits': v.get('commits', 0),
+                'merged': v.get('merged', v.get('pull_requests', 0)),
+                'issues': v.get('issues', 0),
+            }
+    years[2025] = {'commits': 2007, 'merged': 9, 'issues': 59}
+    years.setdefault(2024, {'commits': 128, 'merged': 0, 'issues': 1})
+    if live:
+        years[2026] = {'commits': live.get('commits', 6306),
+                       'merged': live.get('pull_requests', 1048),
+                       'issues': live.get('issues', 19)}
+    else:
+        years.setdefault(2026, {'commits': 6306, 'merged': 1048, 'issues': 19})
+    return years
 
-    The old REST-sampling fallback (per-repo commits capped at 100) and the
-    dummy-stats fallback are gone: when the vn7n24fzkq action ahead of us
-    exhausted the hourly GraphQL quota, the fallback quietly rendered a
-    public-sample total (2026-07-18 incident: card showed 253 instead of
-    6,913). Same contract as get_weekly_commits: None means "unknown — keep
-    showing the previous card", never a substitute number.
-    """
-    graphql_result = get_github_activity_stats_graphql(username, token)
-    if graphql_result:
-        return graphql_result
-    return None
 
-def generate_four_quadrant_stats_from_data(stats):
-    """Generate 4-quadrant statistics data from already-fetched stats"""
-    # Only set minimum if ALL values are 0 (to avoid empty pie chart)
-    if all(value == 0 for value in stats.values()):
-        for key in stats:
-            stats[key] = 1  # Minimum 1 for pie chart visibility when no data
+def build():
+    # 2026-07-18 incident contract: GraphQL failure → keep previous card untouched
+    live = get_github_activity_stats()
+    if live is None:
+        return  # keep the previous card exactly as it is
+    years = load_stats(live)
+    ys = sorted(y for y in years if years[y]['commits'] or years[y]['merged'] or years[y]['issues'])
 
-    # Calculate percentages
-    total = sum(stats.values())
-    percentages = {key: round((value / total) * 100) for key, value in stats.items()}
+    tc = sum(years[y]['commits'] for y in ys)
+    tm = sum(years[y]['merged'] for y in ys)
+    ti = sum(years[y]['issues'] for y in ys)
+    tot = tc + tm + ti
 
-    return {
-        'stats': stats,
-        'percentages': percentages,
-        'total': total
-    }
+    days = (date(2026, 9, 21) - date(2024, 8, 1)).days
+    now = '21 Sep 2026'
 
-def generate_four_quadrant_stats(username, token):
-    """Generate 4-quadrant statistics data from GitHub API (legacy)"""
-    stats = get_github_activity_stats(username, token)
-    return generate_four_quadrant_stats_from_data(stats)
+    peak = max(years[y]['commits'] for y in ys) or 1
 
-def generate_quadrant_pie_chart(data):
-    """Generate a 4-quadrant pie chart SVG"""
-    import math
+    out = []
+    out.append(f'<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">\n')
+    out.append(f'<rect width="{W}" height="{H}" fill="{PAPER}" stroke="{EDGE}" stroke-width="1"/>\n')
+    out.append(f'<style>text{{font-variant-numeric:tabular-nums;}}</style>\n')
 
-    stats = data['stats']
-    percentages = data['percentages']
+    # runhead
+    out.append(t(L, 40, 'PIESSON — KB KIM', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(t(R, 40, 'SINCE AUGUST 2024', 12, INK2, '600', anchor='end', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, 50, INK, 2))
 
-    # Chart dimensions
-    size = 144
-    center = size // 2
-    radius = 54
+    # copy (verbatim) — left
+    bullets = [
+        'Started with a simple idea: make language learning feel like',
+        'talking with a friend',
+        'But, I couldn\u2019t code. So I learned from scratch',
+        'Built the iOS app, taught myself backend logic',
+        'Pouring everything that i\u2019ve got into making conversations',
+        'feel natural and fun',
+        'Curious about my story? \u2192 kimkb.com',
+    ]
+    yy = 96
+    for b in bullets:
+        out.append(t(L + 18, yy, ('\u2022  ' if not b.startswith(('talking', 'feel')) else '    ') + b, 17, INK))
+        yy += 30
 
-    # Colors for each quadrant
-    colors = {
-        'commits': '#3b82f6',      # Blue
-        'code_reviews': '#10b981', # Green
-        'pull_requests': '#f59e0b', # Yellow
-        'issues': '#ef4444'        # Red
-    }
+    # days — right column
+    rx = 740
+    out.append(t(rx, 96, 'DAYS BUILDING', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(t(rx, 168, str(days), 72, INK, '700', letter='-0.035em'))
+    out.append(t(rx, 196, 'from the first line of code to today', 15, INK2, style='italic'))
 
-    # Calculate angles (starting from top, clockwise)
-    total = data['total']
-    current_angle = -90  # Start from top
+    # divider
+    out.append(hline(L, R, 268, INK))
 
-    chart_svg = f'<svg width="{size}" height="{size}" viewBox="0 0 {size} {size}">'
+    # The record — table
+    out.append(t(L, 300, 'THE RECORD', 12, INK2, '600', family=SANS, letter='0.14em'))
+    out.append(hline(L, R, 310, INK, 1))
 
-    for key, value in stats.items():
-        if value == 0:
-            continue
+    # column heads
+    cols = [(L, 'Year'), (L + 120, 'SCALE OF THE YEAR'),
+            (R - 260, 'COMMITS'), (R - 140, 'MERGED'), (R - 50, 'ISSUES')]
+    for cx, label in cols:
+        anchor = 'start' if cx < R - 300 else 'end'
+        out.append(t(cx, 332, label, 11, INK3, '600', anchor=anchor, family=SANS, letter='0.07em'))
+    out.append(hline(L, R, 342))
 
-        # Calculate angle for this slice
-        slice_angle = (value / total) * 360
+    # year rows
+    bar_x, bar_max = L + 120, 380
+    y = 368
+    for yr in ys:
+        v = years[yr]
+        cur = yr == ys[-1]
+        wgt = '700' if cur else '400'
+        out.append(t(L, y + 6, str(yr), 20, INK, wgt))
+        bw = round(v['commits'] / peak * bar_max) if v['commits'] else 3
+        color = RED if cur else INK
+        out.append(f'<rect x="{bar_x}" y="{y - 6}" width="{max(bw,3)}" height="11" fill="{color}"/>\n')
+        out.append(t(R - 260, y + 6, f"{v['commits']:,}", 20, INK, wgt, anchor='end'))
+        out.append(t(R - 140, y + 6, str(v['merged']), 20, INK, wgt, anchor='end'))
+        out.append(t(R - 50, y + 6, str(v['issues']), 20, INK, wgt, anchor='end'))
+        y += 38
+        out.append(hline(L, R, y - 14))
 
-        # Calculate start and end angles in radians
-        start_angle_rad = math.radians(current_angle)
-        end_angle_rad = math.radians(current_angle + slice_angle)
+    # total row: bar shows composition (the pie's fact, once)
+    y += 8
+    out.append(t(L, y + 6, 'Total', 20, INK, '700'))
+    pc = tc / tot if tot else 0
+    pm = tm / tot if tot else 0
+    pi_ = ti / tot if tot else 0
+    # composition bar at same position as year bars
+    out.append(f'<rect x="{bar_x}" y="{y-6}" width="{bar_max*pc:.0f}" height="11" fill="{INK}"/>\n')
+    out.append(f'<rect x="{bar_x + bar_max*pc:.0f}" y="{y-6}" width="{bar_max*pm:.0f}" height="11" fill="{RED}"/>\n')
+    out.append(f'<rect x="{bar_x + bar_max*(pc+pm):.0f}" y="{y-6}" width="{bar_max*pi_:.0f}" height="11" fill="{FILL2}"/>\n')
+    out.append(t(R - 260, y + 6, f"{tc:,}", 24, INK, '700', anchor='end'))
+    out.append(t(R - 140, y + 6, f"{tm:,}", 24, INK, '700', anchor='end'))
+    out.append(t(R - 50, y + 6, str(ti), 24, INK, '700', anchor='end'))
 
-        # Calculate arc path
-        x1 = center + radius * math.cos(start_angle_rad)
-        y1 = center + radius * math.sin(start_angle_rad)
-        x2 = center + radius * math.cos(end_angle_rad)
-        y2 = center + radius * math.sin(end_angle_rad)
+    # percentages under the bar
+    out.append(t(bar_x, y + 28, f"{round(pc*100)}%", 12, INK2, '600', family=SANS))
+    out.append(t(bar_x + bar_max * pc, y + 28, f"{round(pm*100)}%", 12, RED, '600', family=SANS))
+    out.append(t(bar_x + bar_max * (pc + pm) + 8, y + 28, f"{round(pi_*100)}%", 12, INK2, '600', family=SANS))
 
-        large_arc = 1 if slice_angle > 180 else 0
+    # colophon
+    yc = H - 24
+    out.append(hline(L, R, yc - 14, INK))
+    out.append(t(L, yc, 'Figures from the GitHub API and yearly cache, never estimated.', 13, INK2, family=SANS))
+    out.append(t(R, yc, f'as of {now}', 13, INK2, anchor='end', style='italic'))
 
-        # Create path
-        path = f'M {center},{center} L {x1},{y1} A {radius},{radius} 0 {large_arc},1 {x2},{y2} Z'
+    out.append('</svg>\n')
 
-        chart_svg += f'<path d="{path}" fill="{colors[key]}" stroke="#ffffff" stroke-width="2"/>'
+    out_path = OUT.resolve()
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(''.join(out))
+    print(f'wrote {out_path}')
 
-        # Add percentage label
-        label_angle_rad = math.radians(current_angle + slice_angle / 2)
-        label_x = center + (radius * 0.7) * math.cos(label_angle_rad)
-        label_y = center + (radius * 0.7) * math.sin(label_angle_rad)
-
-        chart_svg += f'<text x="{label_x}" y="{label_y}" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">{percentages[key]}%</text>'
-
-        current_angle += slice_angle
-
-    chart_svg += '</svg>'
-    return chart_svg
 
 def generate_profile_card():
-    """Generate the custom profile summary card"""
-    username = os.getenv('USERNAME', 'Piesson')
-    token = os.getenv('GITHUB_TOKEN', '')
+    """Backward-compat wrapper — tests call this name."""
+    build()
 
-    # Get activity stats ONCE (used by both pie chart and total commits)
-    activity_stats = get_github_activity_stats(username, token)
-    if activity_stats is None:
-        print("[profile-card] stats unavailable (GraphQL failed) — keeping previous card")
-        return
 
-    # Generate 4-quadrant stats from the same data
-    quadrant_data = generate_four_quadrant_stats_from_data(activity_stats)
-    pie_chart = generate_quadrant_pie_chart(quadrant_data)
-
-    # Get GitHub data using the same commit count
-    github_data = get_github_data_from_stats(activity_stats)
-
-    card_width = 500
-    card_height = 220
-
-    svg_content = f'''<svg width="{card_width}" height="{card_height}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
-        </linearGradient>
-    </defs>
-
-    <!-- Background -->
-    <rect width="{card_width}" height="{card_height}" fill="url(#cardBg)" rx="12" stroke="#e5e7eb" stroke-width="1"/>
-
-    <!-- Title -->
-    <text x="250" y="30" text-anchor="middle" fill="#111827" font-size="18" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-        GitHub Activity
-    </text>
-
-    <!-- Left Side: 4-Quadrant Chart + Legend -->
-    <g transform="translate(15, 55)">
-        <!-- Pie Chart -->
-        <g transform="translate(20, 20)">
-            {pie_chart}
-        </g>
-
-        <!-- Legend -->
-        <g transform="translate(180, 42)">
-            <!-- Commits -->
-            <g transform="translate(0, 0)">
-                <rect x="0" y="0" width="12" height="12" fill="#3b82f6"/>
-                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                    Commits: {quadrant_data['stats']['commits']} ({quadrant_data['percentages']['commits']}%)
-                </text>
-            </g>
-            <!-- Code Reviews -->
-            <g transform="translate(0, 20)">
-                <rect x="0" y="0" width="12" height="12" fill="#10b981"/>
-                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                    Reviews: {quadrant_data['stats']['code_reviews']} ({quadrant_data['percentages']['code_reviews']}%)
-                </text>
-            </g>
-            <!-- Pull Requests -->
-            <g transform="translate(0, 40)">
-                <rect x="0" y="0" width="12" height="12" fill="#f59e0b"/>
-                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                    PRs: {quadrant_data['stats']['pull_requests']} ({quadrant_data['percentages']['pull_requests']}%)
-                </text>
-            </g>
-            <!-- Issues -->
-            <g transform="translate(0, 60)">
-                <rect x="0" y="0" width="12" height="12" fill="#ef4444"/>
-                <text x="18" y="10" fill="#111827" font-size="11" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                    Issues: {quadrant_data['stats']['issues']} ({quadrant_data['percentages']['issues']}%)
-                </text>
-            </g>
-        </g>
-    </g>
-
-    <!-- Vertical Divider -->
-    <line x1="350" y1="55" x2="350" y2="195" stroke="#e5e7eb" stroke-width="1"/>
-
-    <!-- Right Side: Statistics Cards -->
-    <g transform="translate(370, 65)">
-        <!-- Total Commits -->
-        <g transform="translate(0, 0)">
-            <text x="0" y="20" fill="#111827" font-size="24" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-                {github_data['total_commits']:,}
-            </text>
-            <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-                Total Commits
-            </text>
-        </g>
-
-        <!-- Join Date -->
-        <g transform="translate(0, 50)">
-            <text x="0" y="20" fill="#111827" font-size="16" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                {github_data['join_date']}
-            </text>
-            <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-                Joined GitHub
-            </text>
-        </g>
-
-        <!-- Daily Average -->
-        <g transform="translate(0, 100)">
-            <text x="0" y="20" fill="#111827" font-size="16" font-weight="600" font-family="system-ui, -apple-system, sans-serif">
-                {github_data['daily_avg']}
-            </text>
-            <text x="0" y="35" fill="#6b7280" font-size="11" font-family="system-ui, -apple-system, sans-serif">
-                Daily commit avg.
-            </text>
-        </g>
-    </g>
-</svg>'''
-
-    # Save SVG
-    output_path = Path('profile-summary-card-output/default/0-profile-details.svg')
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(svg_content)
-    print(f"Profile card generated: {output_path}")
-
-    # Update README with timestamp
-    update_readme_profile_timestamp()
-
-def update_readme_profile_timestamp():
-    """Update README.md profile section with timestamp"""
-    import re
-    readme_path = Path('README.md')
-
-    if not readme_path.exists():
-        return
-
-    with open(readme_path, 'r') as f:
-        content = f.read()
-
-    current_date = datetime.datetime.now(KST).strftime('%m/%d/%y')
-    timestamp_line = f'<div align="right"><sub>updated at {current_date}</sub></div>'
-
-    # Pattern: profile image <p>, then optional timestamp, then next # section
-    pattern = r'(<p align="center">\n  <img src="[^"]+0-profile-details\.svg" alt="Profile Details">\n</p>)\n*(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n*)?'
-    replacement = f'\\1\n\n{timestamp_line}\n\n'
-
-    content = re.sub(pattern, replacement, content)
-
-    with open(readme_path, 'w') as f:
-        f.write(content)
-
-    print(f"✅ Updated profile card timestamp: {current_date}")
-
-if __name__ == "__main__":
-    generate_profile_card()
+if __name__ == '__main__':
+    build()

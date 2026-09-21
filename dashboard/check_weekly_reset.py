@@ -58,6 +58,7 @@ def save_to_history(data, current_week_info):
         "endDate": current.get('endDate', current_week_info['sunday']),
         "metrics": {
             "commits": current['metrics'].get('commits', 0),
+            "pullRequests": current['metrics'].get('pullRequests', 0),
             "socialContent": current['metrics'].get('socialContent', {
                 'instagram': 0,
                 'tiktok': 0,
@@ -98,6 +99,7 @@ def save_to_history(data, current_week_info):
 def reset_current_week_metrics(data):
     """Reset all metrics to 0 (except commits which is calculated from git)"""
     data['currentWeek']['metrics'] = {
+        'pullRequests': 0,  # filled by the weekly PR counter; 0 until first run
         'socialContent': {
             'instagram': 0,
             'tiktok': 0,

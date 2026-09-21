@@ -91,8 +91,8 @@ def generate_history_table(weekly_history, current_week=None):
     lines = []
     lines.append("# Weekly History")
     lines.append("")
-    lines.append("| Week | Period | 🚀 Commits | 📱 Social | 💬 Talks | ☕ Chats | 🏃 Workouts | 📝 Posts | 🔥 Tokens |")
-    lines.append("|------|--------|-----------|----------|---------|---------|------------|----------|-----------|")
+    lines.append("| Week | Period | 🚀 PRs | 📱 Social | 💬 Talks | ☕ Coffee | 🏃 Workouts | 📝 Posts |")
+    lines.append("|------|--------|--------|----------|---------|---------|------------|----------|")
 
     for entry in _build_rows(weekly_history, live_entry):
         week_id = entry['week']
@@ -119,8 +119,12 @@ def generate_history_table(weekly_history, current_week=None):
         else:
             total_workouts = workouts
 
-        commits = metrics.get('commits', 0)
+        prs = metrics.get('pullRequests', 0)
         user_sessions = metrics.get('userSessions', 0)
+        # Weeks where nothing was hand-filed show an em-dash, not 0
+        def _cell(v, week_has_data):
+            return str(v) if week_has_data else '\u2014'
+        _filed = any([user_sessions, total_social, cto_meetings, total_workouts, blog_posts])
         cto_meetings = metrics.get('ctoMeetings', 0)
         blog_posts = metrics.get('blogPosts', 0)
         tokens_cell = _fmt_tokens_cell(metrics.get('tokens'))
@@ -132,8 +136,8 @@ def generate_history_table(weekly_history, current_week=None):
             week_label = f"[**Week {week_num}**]({svg_url})"
 
         lines.append(
-            f"| {week_label} | {period} | {commits} | {total_social} | "
-            f"{user_sessions} | {cto_meetings} | {total_workouts} | {blog_posts} | {tokens_cell} |"
+            f"| {week_label} | {period} | {prs} | {_cell(total_social, _filed)} | "
+            f"{_cell(user_sessions, _filed)} | {_cell(cto_meetings, _filed)} | {_cell(total_workouts, _filed)} | {_cell(blog_posts, _filed)} |"
         )
 
     lines.append("")
@@ -261,7 +265,7 @@ def update_readme_with_history():
         readme_content = f.read()
 
     history_table = generate_history_table(weekly_history, current_week=current_week)
-    combined_url, individual_urls = generate_chart_urls(weekly_history)
+    # (2026-09-21 redesign) QuickChart URLs removed — README embeds self-contained SVGs
 
     history_pattern = r'# Weekly History\n\n\|.*?\n\|.*?\n(?:\|.*?\n)*\n(?:<div align="right"><sub>updated at \d{2}/\d{2}/\d{2}</sub></div>\n)?\n?'
 
