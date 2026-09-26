@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-25",
+  "lastUpdated": "2026-08-04",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -14,23 +14,22 @@
     "metrics": {
       "pullRequests": 17,
       "socialContent": {
-        "total": 8
+        "total": 0
       },
-      "userSessions": 2,
-      "ctoMeetings": 10,
+      "userSessions": 0,
+      "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "total": 1
+        "total": 0
       },
       "tokens": {
-        "claude": 454040,
-        "codex": 3668019,
-        "total": 4122059,
-        "updatedAt": "2026-09-25T00:05:21+09:00"
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
       },
       "commits": 50
-    },
-    "manualMetricsSource": "daily-notes"
+    }
   },
   "weeklyHistory": [
     {
@@ -53,10 +52,10 @@
           "gym": 1
         },
         "tokens": {
-          "claude": 171844674,
-          "codex": 2118768557,
-          "total": 2290613231,
-          "updatedAt": "2026-09-23T09:47:24+09:00"
+          "claude": 169179062,
+          "codex": 2118667420,
+          "total": 2287846482,
+          "updatedAt": "2026-09-20T11:04:36+09:00"
         }
       }
     },
