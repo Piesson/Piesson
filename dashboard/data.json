@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-28",
+  "lastUpdated": "2026-08-04",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -9,30 +9,53 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-09-21",
-    "endDate": "2026-09-27",
+    "startDate": "2026-09-28",
+    "endDate": "2026-10-04",
     "metrics": {
-      "pullRequests": 17,
+      "pullRequests": 0,
       "socialContent": {
-        "total": 16
+        "total": 0
       },
-      "userSessions": 4,
-      "ctoMeetings": 10,
+      "userSessions": 0,
+      "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "total": 2
+        "total": 0
       },
       "tokens": {
-        "claude": 11677336,
-        "codex": 3668019,
-        "total": 15345355,
-        "updatedAt": "2026-09-28T00:05:22+09:00"
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
       },
-      "commits": 50
-    },
-    "manualMetricsSource": "daily-notes"
+      "commits": 7
+    }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W39",
+      "startDate": "2026-09-21",
+      "endDate": "2026-09-27",
+      "metrics": {
+        "commits": 133,
+        "pullRequests": 97,
+        "socialContent": {
+          "total": 0
+        },
+        "userSessions": 0,
+        "ctoMeetings": 0,
+        "blogPosts": 0,
+        "workouts": {
+          "total": 0
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": null
+        }
+      }
+    },
     {
       "week": "2026-W38",
       "startDate": "2026-09-14",
@@ -53,10 +76,10 @@
           "gym": 1
         },
         "tokens": {
-          "claude": 171844674,
+          "claude": 169179062,
           "codex": 2118667420,
-          "total": 2290512094,
-          "updatedAt": "2026-09-28T00:05:30+09:00"
+          "total": 2287846482,
+          "updatedAt": "2026-09-20T11:04:36+09:00"
         }
       }
     },
@@ -328,33 +351,6 @@
           "updatedAt": "2026-07-14T00:03:58+09:00"
         },
         "pullRequests": 128
-      }
-    },
-    {
-      "week": "2026-W27",
-      "startDate": "2026-06-29",
-      "endDate": "2026-07-05",
-      "metrics": {
-        "commits": 85,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 3,
-          "hellotalk": 8
-        },
-        "userSessions": 3,
-        "ctoMeetings": 2,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 4,
-          "gym": 3
-        },
-        "tokens": {
-          "claude": 1755114138,
-          "codex": 0,
-          "total": 1755114138,
-          "updatedAt": "2026-07-14T00:04:05+09:00"
-        },
-        "pullRequests": 38
       }
     }
   ]
