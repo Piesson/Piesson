@@ -6,13 +6,13 @@
 <line x1="64" y1="54" x2="936" y2="54" stroke="#15150f" stroke-width="2"/>
 <text x="64" y="106" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="400">Pull requests merged</text>
 <line x1="344" y1="105" x2="856" y2="105" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="936" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">657</text>
+<text x="936" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">659</text>
 <text x="64" y="166" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Counted from GitHub search, twelve weeks.</text>
 <line x1="64" y1="240" x2="936" y2="240" stroke="#a9a9a0" stroke-width="1"/>
 <line x1="64" y1="136" x2="936" y2="136" stroke="#c9c9c1" stroke-width="1"/>
-<polyline points="64.0,230.0 143.3,219.7 222.5,207.0 301.8,197.1 381.1,189.7 460.4,182.6 539.6,173.3 618.9,167.7 698.2,165.1 777.5,152.8 856.7,137.2 936.0,134.0" fill="none" stroke="#15150f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="64.0,230.0 143.3,219.8 222.5,207.1 301.8,197.2 381.1,189.8 460.4,182.8 539.6,173.5 618.9,167.9 698.2,165.4 777.5,153.0 856.7,137.5 936.0,134.0" fill="none" stroke="#15150f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="936.0" cy="134.0" r="4.5" fill="#a81f16"/>
-<text x="66" y="124" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">657</text>
+<text x="66" y="124" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">659</text>
 <text x="143.27272727272725" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W30</text>
 <text x="301.8181818181818" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W32</text>
 <text x="460.3636363636364" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W34</text>
