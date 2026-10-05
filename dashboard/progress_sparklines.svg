@@ -2,38 +2,38 @@
 <rect width="1000" height="730" fill="#e4e4df" stroke="#cbcbc4" stroke-width="1"/>
 <style>text{font-variant-numeric:tabular-nums;}</style>
 <text x="64" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" letter-spacing="0.14em">PIESSON · RUNNING TOTALS</text>
-<text x="936" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" text-anchor="end" letter-spacing="0.14em">W29 — W40</text>
+<text x="936" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" text-anchor="end" letter-spacing="0.14em">W30 — W41</text>
 <line x1="64" y1="54" x2="936" y2="54" stroke="#15150f" stroke-width="2"/>
 <text x="64" y="106" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="400">Pull requests merged</text>
 <line x1="344" y1="105" x2="856" y2="105" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="936" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">710</text>
+<text x="936" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">679</text>
 <text x="64" y="166" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Counted from GitHub search, twelve weeks.</text>
 <line x1="64" y1="240" x2="936" y2="240" stroke="#a9a9a0" stroke-width="1"/>
 <line x1="64" y1="136" x2="936" y2="136" stroke="#c9c9c1" stroke-width="1"/>
-<polyline points="64.0,230.0 143.3,220.6 222.5,208.9 301.8,199.8 381.1,193.0 460.4,186.5 539.6,177.9 618.9,172.8 698.2,170.4 777.5,159.1 856.7,144.8 936.0,134.0" fill="none" stroke="#15150f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="64.0,230.0 143.3,217.7 222.5,208.0 301.8,200.8 381.1,193.9 460.4,184.9 539.6,179.4 618.9,176.9 698.2,164.9 777.5,149.8 856.7,135.1 936.0,134.0" fill="none" stroke="#15150f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="936.0" cy="134.0" r="4.5" fill="#a81f16"/>
-<text x="66" y="124" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">710</text>
-<text x="143.27272727272725" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W30</text>
-<text x="301.8181818181818" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W32</text>
-<text x="460.3636363636364" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W34</text>
-<text x="618.9090909090909" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W36</text>
-<text x="777.4545454545455" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W38</text>
-<text x="936.0" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#a81f16" font-weight="600" text-anchor="end">W40</text>
+<text x="66" y="124" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">679</text>
+<text x="143.27272727272725" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W31</text>
+<text x="301.8181818181818" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W33</text>
+<text x="460.3636363636364" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W35</text>
+<text x="618.9090909090909" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W37</text>
+<text x="777.4545454545455" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W39</text>
+<text x="936.0" y="258" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#a81f16" font-weight="600" text-anchor="end">W41</text>
 <text x="64" y="296" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="400">Social posts</text>
 <line x1="344" y1="295" x2="856" y2="295" stroke="#a9a9a0" stroke-width="1" stroke-dasharray="1.5,3.5"/>
-<text x="936" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">131</text>
+<text x="936" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="56" fill="#15150f" font-weight="700" text-anchor="end" letter-spacing="-0.03em">121</text>
 <text x="64" y="356" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Filed by hand, twelve weeks.</text>
 <line x1="64" y1="430" x2="936" y2="430" stroke="#a9a9a0" stroke-width="1"/>
 <line x1="64" y1="326" x2="936" y2="326" stroke="#c9c9c1" stroke-width="1"/>
-<polyline points="64.0,420.0 143.3,412.1 222.5,404.1 301.8,396.2 381.1,388.3 460.4,380.3 539.6,372.4 618.9,364.5 698.2,356.5 777.5,348.6 856.7,333.5 936.0,324.0" fill="none" stroke="#6e6e66" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="64.0,420.0 143.3,411.4 222.5,402.7 301.8,394.1 381.1,385.4 460.4,376.8 539.6,368.1 618.9,359.5 698.2,350.8 777.5,334.4 856.7,324.0 936.0,324.0" fill="none" stroke="#6e6e66" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="936.0" cy="324.0" r="4.5" fill="#a81f16"/>
-<text x="66" y="314" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">131</text>
-<text x="143.27272727272725" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W30</text>
-<text x="301.8181818181818" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W32</text>
-<text x="460.3636363636364" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W34</text>
-<text x="618.9090909090909" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W36</text>
-<text x="777.4545454545455" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W38</text>
-<text x="936.0" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#a81f16" font-weight="600" text-anchor="end">W40</text>
+<text x="66" y="314" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#575750" font-weight="400">121</text>
+<text x="143.27272727272725" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W31</text>
+<text x="301.8181818181818" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W33</text>
+<text x="460.3636363636364" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W35</text>
+<text x="618.9090909090909" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W37</text>
+<text x="777.4545454545455" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#575750" font-weight="400">W39</text>
+<text x="936.0" y="448" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#a81f16" font-weight="600" text-anchor="end">W41</text>
 <text x="64" y="548" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3e3e37" font-weight="600" letter-spacing="0.14em">ALSO FILED BY HAND · TWELVE-WEEK TOTALS</text>
 <line x1="64" y1="562" x2="936" y2="562" stroke="#15150f" stroke-width="1"/>
 <text x="64" y="590" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#15150f" font-weight="400">Workouts</text>
@@ -51,6 +51,6 @@
 <text x="886" y="634" font-family="Georgia, 'Times New Roman', serif" font-size="21" fill="#15150f" font-weight="700" text-anchor="end">1</text>
 <line x1="64" y1="650" x2="924" y2="650" stroke="#c9c9c1" stroke-width="1"/>
 <line x1="64" y1="688" x2="936" y2="688" stroke="#15150f" stroke-width="1"/>
-<text x="64" y="716" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Totals cover W29 — W40, the latest twelve weeks.</text>
-<text x="936" y="716" font-family="Georgia, 'Times New Roman', serif" font-size="13" fill="#3e3e37" font-weight="400" text-anchor="end" font-style="italic">as of 3 Oct 2026</text>
+<text x="64" y="716" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3e3e37" font-weight="400">Totals cover W30 — W41, the latest twelve weeks.</text>
+<text x="936" y="716" font-family="Georgia, 'Times New Roman', serif" font-size="13" fill="#3e3e37" font-weight="400" text-anchor="end" font-style="italic">as of 5 Oct 2026</text>
 </svg>

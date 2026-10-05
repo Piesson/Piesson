@@ -9,30 +9,54 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-09-28",
-    "endDate": "2026-10-04",
+    "startDate": "2026-10-05",
+    "endDate": "2026-10-11",
     "metrics": {
-      "pullRequests": 73,
+      "pullRequests": 7,
       "socialContent": {
-        "total": 12
+        "total": 0
       },
-      "userSessions": 4,
-      "ctoMeetings": 2,
+      "userSessions": 0,
+      "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "total": 4
+        "total": 0
       },
       "tokens": {
-        "claude": 32925904,
-        "codex": 73589526,
-        "total": 106515430,
-        "updatedAt": "2026-10-05T00:05:21+09:00"
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
       },
-      "commits": 100
-    },
-    "manualMetricsSource": "daily-notes"
+      "commits": 53
+    }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W40",
+      "startDate": "2026-09-28",
+      "endDate": "2026-10-04",
+      "metrics": {
+        "commits": 134,
+        "pullRequests": 94,
+        "socialContent": {
+          "total": 12
+        },
+        "userSessions": 4,
+        "ctoMeetings": 2,
+        "blogPosts": 0,
+        "workouts": {
+          "total": 4
+        },
+        "tokens": {
+          "claude": 32925904,
+          "codex": 73589526,
+          "total": 106515430,
+          "updatedAt": "2026-10-05T00:05:21+09:00"
+        }
+      },
+      "manualMetricsSource": "daily-notes"
+    },
     {
       "week": "2026-W39",
       "startDate": "2026-09-21",
@@ -326,33 +350,6 @@
           "updatedAt": "2026-07-20T12:56:04+09:00"
         },
         "pullRequests": 59
-      }
-    },
-    {
-      "week": "2026-W28",
-      "startDate": "2026-07-06",
-      "endDate": "2026-07-12",
-      "metrics": {
-        "commits": 312,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 10,
-          "hellotalk": 0
-        },
-        "userSessions": 3,
-        "ctoMeetings": 2,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 4,
-          "gym": 3
-        },
-        "tokens": {
-          "claude": 5246465623,
-          "codex": 0,
-          "total": 5246465623,
-          "updatedAt": "2026-07-14T00:03:58+09:00"
-        },
-        "pullRequests": 128
       }
     }
   ]
