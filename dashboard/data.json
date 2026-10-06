@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-06",
+  "lastUpdated": "2026-10-07",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -24,9 +24,9 @@
       },
       "tokens": {
         "claude": 25676842,
-        "codex": 4535733,
-        "total": 30212575,
-        "updatedAt": "2026-10-06T00:05:24+09:00"
+        "codex": 7452444,
+        "total": 33129286,
+        "updatedAt": "2026-10-07T00:05:17+09:00"
       },
       "commits": 66
     }
@@ -40,13 +40,13 @@
         "commits": 134,
         "pullRequests": 94,
         "socialContent": {
-          "total": 21
+          "total": 18
         },
-        "userSessions": 7,
+        "userSessions": 6,
         "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "total": 7
+          "total": 6
         },
         "tokens": {
           "claude": 32925904,
