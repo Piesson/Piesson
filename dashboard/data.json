@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-08",
+  "lastUpdated": "2026-10-07",
   "goals": {
     "weeklyCommits": 140,
     "weeklyUserTalks": 7,
@@ -14,23 +14,22 @@
     "metrics": {
       "pullRequests": 28,
       "socialContent": {
-        "total": 20
+        "total": 0
       },
-      "userSessions": 2,
+      "userSessions": 0,
       "ctoMeetings": 0,
       "blogPosts": 0,
       "workouts": {
-        "total": 2
+        "total": 0
       },
       "tokens": {
-        "claude": 541191436,
-        "codex": 11495510,
-        "total": 552686946,
-        "updatedAt": "2026-10-08T00:05:18+09:00"
+        "claude": 25676842,
+        "codex": 7452444,
+        "total": 33129286,
+        "updatedAt": "2026-10-07T00:05:17+09:00"
       },
       "commits": 85
-    },
-    "manualMetricsSource": "daily-notes"
+    }
   },
   "weeklyHistory": [
     {
@@ -41,13 +40,13 @@
         "commits": 134,
         "pullRequests": 94,
         "socialContent": {
-          "total": 28
+          "total": 18
         },
-        "userSessions": 7,
+        "userSessions": 6,
         "ctoMeetings": 2,
         "blogPosts": 0,
         "workouts": {
-          "total": 7
+          "total": 6
         },
         "tokens": {
           "claude": 32925904,
@@ -66,13 +65,13 @@
         "commits": 133,
         "pullRequests": 97,
         "socialContent": {
-          "total": 25
+          "total": 19
         },
-        "userSessions": 7,
-        "ctoMeetings": 12,
+        "userSessions": 5,
+        "ctoMeetings": 10,
         "blogPosts": 0,
         "workouts": {
-          "total": 5
+          "total": 3
         },
         "tokens": {
           "claude": 11677336,
