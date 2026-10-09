@@ -12,7 +12,7 @@
     "startDate": "2026-10-05",
     "endDate": "2026-10-11",
     "metrics": {
-      "pullRequests": 93,
+      "pullRequests": 115,
       "socialContent": {
         "total": 24
       },
@@ -28,7 +28,7 @@
         "total": 1829850180,
         "updatedAt": "2026-10-10T01:16:56+09:00"
       },
-      "commits": 170
+      "commits": 209
     },
     "manualMetricsSource": "daily-notes"
   },
