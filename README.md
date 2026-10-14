@@ -15,7 +15,7 @@
 # Grinding enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=7d71dc3d6f84" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=afcc07c453d4" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 10/13/26</sub></div>
@@ -23,7 +23,7 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=5920cf32db48" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=cc84bc6f12d8" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 10/13/26</sub></div>
@@ -32,7 +32,7 @@
 
 | Week | Period | 🚀 PRs | 📱 Social | 💬 Talks | ☕ Coffee | 🏃 Workouts | 📝 Posts |
 |------|--------|--------|----------|---------|---------|------------|----------|
-| [**Week 42 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-10-12 - 2026-10-18 | 16 | — | — | — | — | — |
+| [**Week 42 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=afcc07c453d4) | 2026-10-12 - 2026-10-18 | 19 | — | — | — | — | — |
 | [**Week 41**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W41.svg) | 2026-10-05 - 2026-10-11 | 123 | 24 | 4 | 2 | 2 | 0 |
 | [**Week 40**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W40.svg) | 2026-09-28 - 2026-10-04 | 94 | 28 | 7 | 2 | 7 | 0 |
 | [**Week 39**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W39.svg) | 2026-09-21 - 2026-09-27 | 97 | 25 | 7 | 12 | 5 | 0 |
