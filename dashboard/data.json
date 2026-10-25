@@ -9,10 +9,10 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-10-19",
-    "endDate": "2026-10-25",
+    "startDate": "2026-10-26",
+    "endDate": "2026-11-01",
     "metrics": {
-      "pullRequests": 2,
+      "pullRequests": 6,
       "socialContent": {
         "total": 0
       },
@@ -28,10 +28,34 @@
         "total": 0,
         "updatedAt": null
       },
-      "commits": 28
+      "commits": 10
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W43",
+      "startDate": "2026-10-19",
+      "endDate": "2026-10-25",
+      "metrics": {
+        "commits": 261,
+        "pullRequests": 146,
+        "socialContent": {
+          "total": 0
+        },
+        "userSessions": 0,
+        "ctoMeetings": 0,
+        "blogPosts": 0,
+        "workouts": {
+          "total": 0
+        },
+        "tokens": {
+          "claude": 0,
+          "codex": 0,
+          "total": 0,
+          "updatedAt": null
+        }
+      }
+    },
     {
       "week": "2026-W42",
       "startDate": "2026-10-12",
@@ -318,33 +342,6 @@
           "updatedAt": "2026-08-10T00:05:20+09:00"
         },
         "pullRequests": 62
-      }
-    },
-    {
-      "week": "2026-W31",
-      "startDate": "2026-07-27",
-      "endDate": "2026-08-02",
-      "metrics": {
-        "commits": 166,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 10,
-          "hellotalk": 0
-        },
-        "userSessions": 0,
-        "ctoMeetings": 1,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 1,
-          "gym": 0
-        },
-        "tokens": {
-          "claude": 3596797522,
-          "codex": 290772748,
-          "total": 3887570270,
-          "updatedAt": "2026-08-03T00:02:22+09:00"
-        },
-        "pullRequests": 79
       }
     }
   ]
