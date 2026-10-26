@@ -26,7 +26,7 @@
         "claude": 0,
         "codex": 0,
         "total": 0,
-        "updatedAt": null
+        "updatedAt": "2026-10-26T17:38:28+09:00"
       },
       "commits": 10
     }
@@ -49,10 +49,10 @@
           "total": 0
         },
         "tokens": {
-          "claude": 0,
-          "codex": 0,
-          "total": 0,
-          "updatedAt": null
+          "claude": 1552553702,
+          "codex": 18617980,
+          "total": 1571171682,
+          "updatedAt": "2026-10-26T17:38:48+09:00"
         }
       }
     },
@@ -73,10 +73,10 @@
           "total": 0
         },
         "tokens": {
-          "claude": 2868813990,
-          "codex": 56252523,
-          "total": 2925066513,
-          "updatedAt": "2026-10-15T19:49:41+09:00"
+          "claude": 5243781373,
+          "codex": 85946272,
+          "total": 5329727645,
+          "updatedAt": "2026-10-26T17:39:10+09:00"
         }
       }
     },
