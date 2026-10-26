@@ -10,7 +10,7 @@ Replaces the dual-axis six-line chart and the sparkline cards.
 """
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from metric_totals import grouped_total
@@ -18,6 +18,7 @@ from week_utils import iso_week_id
 
 DATA = Path('dashboard/data.json')
 OUT = Path('dashboard/progress_sparklines.svg')
+KST = timezone(timedelta(hours=9))
 
 PAPER = '#e4e4df'; EDGE = '#cbcbc4'
 INK = '#15150f'; INK2 = '#3e3e37'; INK3 = '#575750'
@@ -137,7 +138,8 @@ def build():
         ('Blog posts', sum_metric('blogPosts')),
     ]
 
-    now = datetime.now().strftime('%-d %b %Y')
+    # Weeks are KST, so the date must be too; CI runners use UTC.
+    now = datetime.now(KST).strftime('%-d %b %Y')
 
     out = []
     out.append(f'<svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">\n')
