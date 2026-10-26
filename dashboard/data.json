@@ -9,10 +9,10 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-10-12",
-    "endDate": "2026-10-18",
+    "startDate": "2026-10-26",
+    "endDate": "2026-11-01",
     "metrics": {
-      "pullRequests": 55,
+      "pullRequests": 6,
       "socialContent": {
         "total": 0
       },
@@ -23,15 +23,63 @@
         "total": 0
       },
       "tokens": {
-        "claude": 2868813990,
-        "codex": 56252523,
-        "total": 2925066513,
-        "updatedAt": "2026-10-15T19:49:41+09:00"
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": "2026-10-26T17:38:28+09:00"
       },
-      "commits": 97
+      "commits": 10
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W43",
+      "startDate": "2026-10-19",
+      "endDate": "2026-10-25",
+      "metrics": {
+        "commits": 261,
+        "pullRequests": 146,
+        "socialContent": {
+          "total": 0
+        },
+        "userSessions": 0,
+        "ctoMeetings": 0,
+        "blogPosts": 0,
+        "workouts": {
+          "total": 0
+        },
+        "tokens": {
+          "claude": 1552553702,
+          "codex": 18617980,
+          "total": 1571171682,
+          "updatedAt": "2026-10-26T17:38:48+09:00"
+        }
+      }
+    },
+    {
+      "week": "2026-W42",
+      "startDate": "2026-10-12",
+      "endDate": "2026-10-18",
+      "metrics": {
+        "commits": 195,
+        "pullRequests": 122,
+        "socialContent": {
+          "total": 0
+        },
+        "userSessions": 0,
+        "ctoMeetings": 0,
+        "blogPosts": 0,
+        "workouts": {
+          "total": 0
+        },
+        "tokens": {
+          "claude": 5243781373,
+          "codex": 85946272,
+          "total": 5329727645,
+          "updatedAt": "2026-10-26T17:39:10+09:00"
+        }
+      }
+    },
     {
       "week": "2026-W41",
       "startDate": "2026-10-05",
@@ -294,60 +342,6 @@
           "updatedAt": "2026-08-10T00:05:20+09:00"
         },
         "pullRequests": 62
-      }
-    },
-    {
-      "week": "2026-W31",
-      "startDate": "2026-07-27",
-      "endDate": "2026-08-02",
-      "metrics": {
-        "commits": 166,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 10,
-          "hellotalk": 0
-        },
-        "userSessions": 0,
-        "ctoMeetings": 1,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 1,
-          "gym": 0
-        },
-        "tokens": {
-          "claude": 3596797522,
-          "codex": 290772748,
-          "total": 3887570270,
-          "updatedAt": "2026-08-03T00:02:22+09:00"
-        },
-        "pullRequests": 79
-      }
-    },
-    {
-      "week": "2026-W30",
-      "startDate": "2026-07-20",
-      "endDate": "2026-07-26",
-      "metrics": {
-        "commits": 202,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 10,
-          "hellotalk": 0
-        },
-        "userSessions": 15,
-        "ctoMeetings": 9,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 12,
-          "gym": 10
-        },
-        "tokens": {
-          "claude": 3331192278,
-          "codex": 87275861,
-          "total": 3418468139,
-          "updatedAt": "2026-07-28T00:05:26+09:00"
-        },
-        "pullRequests": 64
       }
     }
   ]
