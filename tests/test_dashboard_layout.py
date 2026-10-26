@@ -60,6 +60,16 @@ class DashboardLayoutTests(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
+    def test_period_label_names_the_end_month_and_year_when_they_change(self):
+        from datetime import date
+        cases = [
+            (date(2026, 10, 19), date(2026, 10, 25), "October 19 – 25, 2026"),
+            (date(2026, 10, 26), date(2026, 11, 1), "October 26 – November 1, 2026"),
+            (date(2026, 12, 28), date(2027, 1, 3), "December 28, 2026 – January 3, 2027"),
+        ]
+        for start, end, label in cases:
+            self.assertEqual(generate_svg.period_label(start, end), label)
+
     def test_weekly_bars_start_below_series_labels_and_section_rule(self):
         out = self.root / "weekly.svg"
         with patch.object(generate_svg, "DATA", self.data), \
