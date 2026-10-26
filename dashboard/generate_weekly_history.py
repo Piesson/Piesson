@@ -48,8 +48,8 @@ def generate_history_svg(week_entry):
     else:
         workout_detail = "Legacy aggregate"
 
-    # Commits (from old format, might not exist)
-    commits = metrics.get('commits', 0)
+    # Pull requests are the dashboard's headline code metric (README and weekly panel).
+    pull_requests = metrics.get('pullRequests', 0)
 
     # Other metrics
     user_sessions = metrics.get('userSessions', 0)
@@ -83,18 +83,18 @@ def generate_history_svg(week_entry):
     </text>
 
     <!-- Metrics Grid -->
-    <!-- Row 1: Commits, User Talks, Social Posts -->
-    <!-- Commits -->
+    <!-- Row 1: Pull Requests, User Talks, Social Posts -->
+    <!-- Pull Requests -->
     <g transform="translate(60, 75)">
         <rect width="120" height="100" fill="url(#cardBg)" rx="12" filter="url(#shadow)" stroke="#e2e8f0" stroke-width="1"/>
         <text x="60" y="40" text-anchor="middle" fill="#000000" font-size="36" font-weight="800" font-family="system-ui, -apple-system, sans-serif">
-            {commits}
+            {pull_requests}
         </text>
         <text x="60" y="60" text-anchor="middle" fill="#1f2937" font-size="10" font-weight="700" font-family="system-ui, -apple-system, sans-serif">
-            🚀 CODE COMMITS
+            🚀 PULL REQUESTS
         </text>
         <text x="60" y="78" text-anchor="middle" fill="#9ca3af" font-size="8" font-weight="400" font-family="system-ui, -apple-system, sans-serif">
-            Daily goal: 20 commits
+            Weekly goal: 60 PRs
         </text>
     </g>
 

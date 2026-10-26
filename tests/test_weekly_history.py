@@ -28,6 +28,15 @@ class WeeklyHistoryTests(unittest.TestCase):
         self.assertIn("Filed from daily notes", generate_history_svg(managed))
         self.assertIn("Legacy aggregate", generate_history_svg(copy.deepcopy(ENTRY)))
 
+    def test_card_shows_pull_requests_not_legacy_commits(self):
+        entry = copy.deepcopy(ENTRY)
+        entry["metrics"]["commits"] = 195
+        svg = generate_history_svg(entry)
+        self.assertIn("PULL REQUESTS", svg)
+        self.assertRegex(svg, r">\s*3\s*</text>")
+        self.assertNotIn("195", svg)
+        self.assertNotIn("COMMITS", svg)
+
     def test_reset_archives_then_clears_source_marker(self):
         current = copy.deepcopy(ENTRY)
         current.pop("week")

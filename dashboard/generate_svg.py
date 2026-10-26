@@ -59,6 +59,15 @@ def load():
     return json.loads(DATA.read_text())
 
 
+def period_label(s, e):
+    # Name the end month or year only when it differs, e.g. "October 26 – November 1, 2026".
+    if s.year != e.year:
+        return f"{s.strftime('%B %-d, %Y')} – {e.strftime('%B %-d, %Y')}"
+    if s.month != e.month:
+        return f"{s.strftime('%B %-d')} – {e.strftime('%B %-d, %Y')}"
+    return f"{s.strftime('%B %-d')} – {e.strftime('%-d, %Y')}"
+
+
 def goal_for(key):
     goals = {'pullRequests': 60, 'userSessions': 7, 'social': 7,
              'workouts': 7, 'coffee': 2, 'blog': 1}
@@ -117,7 +126,7 @@ def build():
     # period label
     s = datetime.fromisoformat(cw['startDate'])
     e = datetime.fromisoformat(cw['endDate'])
-    period = f"{s.strftime('%B %-d')} – {e.strftime('%-d, %Y')}"
+    period = period_label(s, e)
     now = datetime.now(KST).strftime('%-d %b %Y')
 
     # ---- svg ----
