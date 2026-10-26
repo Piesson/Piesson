@@ -135,6 +135,22 @@ class DashboardLayoutTests(unittest.TestCase):
         self.assertIn("Totals cover W28 — W39, the latest twelve weeks.", svg)
         self.assertIn(">W39</text>", svg)
 
+    def test_as_of_date_is_kst(self):
+        from datetime import datetime, timezone
+
+        class FixedNow(datetime):
+            @classmethod
+            def now(cls, tz=None):
+                moment = datetime(2026, 10, 25, 20, 0, tzinfo=timezone.utc)  # 05:00 KST, Oct 26
+                return moment.astimezone(tz) if tz else moment.replace(tzinfo=None)
+
+        out = self.root / "asof.svg"
+        with patch.object(generate_progress_chart, "DATA", self.data), \
+             patch.object(generate_progress_chart, "OUT", out), \
+             patch.object(generate_progress_chart, "datetime", FixedNow):
+            generate_progress_chart.generate_progress_chart()
+        self.assertIn("as of 26 Oct 2026", out.read_text())
+
     def test_hand_filed_figures_are_twelve_week_totals(self):
         out = self.root / "totals.svg"
         with patch.object(generate_progress_chart, "DATA", self.data), \
