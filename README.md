@@ -15,7 +15,7 @@
 # Grinding enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=e74c56878cf6" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=dee99b8b3c28" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 10/26/26</sub></div>
@@ -23,7 +23,7 @@
 # Consistent enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=23f9c4598a69" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=3b8e4105e1fb" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
 </p>
 
 <div align="right"><sub>updated at 10/26/26</sub></div>
@@ -32,7 +32,7 @@
 
 | Week | Period | 🚀 PRs | 📱 Social | 💬 Talks | ☕ Coffee | 🏃 Workouts | 📝 Posts |
 |------|--------|--------|----------|---------|---------|------------|----------|
-| [**Week 44 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=e74c56878cf6) | 2026-10-26 - 2026-11-01 | 6 | — | — | — | — | — |
+| [**Week 44 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-10-26 - 2026-11-01 | 8 | — | — | — | — | — |
 | [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W43.svg) | 2026-10-19 - 2026-10-25 | 146 | — | — | — | — | — |
 | [**Week 42**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W42.svg) | 2026-10-12 - 2026-10-18 | 122 | — | — | — | — | — |
 | [**Week 41**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W41.svg) | 2026-10-05 - 2026-10-11 | 123 | 24 | 4 | 2 | 2 | 0 |
