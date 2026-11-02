@@ -32,7 +32,7 @@
 
 | Week | Period | 🚀 PRs | 📱 Social | 💬 Talks | ☕ Coffee | 🏃 Workouts | 📝 Posts |
 |------|--------|--------|----------|---------|---------|------------|----------|
-| [**Week 45 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-11-02 - 2026-11-08 | 1 | — | — | — | — | — |
+| [**Week 45 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=ceb9f6af8eed) | 2026-11-02 - 2026-11-08 | 1 | — | — | — | — | — |
 | [**Week 44**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W44.svg) | 2026-10-26 - 2026-11-01 | 113 | — | — | — | — | — |
 | [**Week 43**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W43.svg) | 2026-10-19 - 2026-10-25 | 146 | — | — | — | — | — |
 | [**Week 42**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W42.svg) | 2026-10-12 - 2026-10-18 | 122 | — | — | — | — | — |
