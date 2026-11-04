@@ -23,10 +23,10 @@
         "total": 0
       },
       "tokens": {
-        "claude": 2126908,
+        "claude": 3055227,
         "codex": 0,
-        "total": 2126908,
-        "updatedAt": "2026-11-04T00:05:32+09:00"
+        "total": 3055227,
+        "updatedAt": "2026-11-05T00:05:29+09:00"
       },
       "commits": 8
     }
