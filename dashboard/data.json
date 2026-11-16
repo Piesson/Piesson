@@ -9,10 +9,10 @@
     "weeklyBlog": 1
   },
   "currentWeek": {
-    "startDate": "2026-11-09",
-    "endDate": "2026-11-15",
+    "startDate": "2026-11-16",
+    "endDate": "2026-11-22",
     "metrics": {
-      "pullRequests": 72,
+      "pullRequests": 0,
       "socialContent": {
         "total": 0
       },
@@ -23,15 +23,39 @@
         "total": 0
       },
       "tokens": {
-        "claude": 26630575,
-        "codex": 28616,
-        "total": 26659191,
-        "updatedAt": "2026-11-14T00:05:21+09:00"
+        "claude": 0,
+        "codex": 0,
+        "total": 0,
+        "updatedAt": null
       },
-      "commits": 105
+      "commits": 0
     }
   },
   "weeklyHistory": [
+    {
+      "week": "2026-W46",
+      "startDate": "2026-11-09",
+      "endDate": "2026-11-15",
+      "metrics": {
+        "commits": 112,
+        "pullRequests": 78,
+        "socialContent": {
+          "total": 0
+        },
+        "userSessions": 0,
+        "ctoMeetings": 0,
+        "blogPosts": 0,
+        "workouts": {
+          "total": 0
+        },
+        "tokens": {
+          "claude": 26630575,
+          "codex": 28616,
+          "total": 26659191,
+          "updatedAt": "2026-11-14T00:05:21+09:00"
+        }
+      }
+    },
     {
       "week": "2026-W45",
       "startDate": "2026-11-02",
@@ -309,33 +333,6 @@
           "updatedAt": "2026-08-31T01:17:09+09:00"
         },
         "pullRequests": 58
-      }
-    },
-    {
-      "week": "2026-W34",
-      "startDate": "2026-08-17",
-      "endDate": "2026-08-23",
-      "metrics": {
-        "commits": 126,
-        "socialContent": {
-          "instagram": 0,
-          "tiktok": 10,
-          "hellotalk": 0
-        },
-        "userSessions": 0,
-        "ctoMeetings": 0,
-        "blogPosts": 0,
-        "workouts": {
-          "running": 0,
-          "gym": 0
-        },
-        "tokens": {
-          "claude": 1748853917,
-          "codex": 999022556,
-          "total": 2747876473,
-          "updatedAt": "2026-08-24T00:05:23+09:00"
-        },
-        "pullRequests": 44
       }
     }
   ]
