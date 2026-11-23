@@ -10,29 +10,30 @@
   <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/profile-summary-card-output/default/0-profile-details.svg?v=a813009a12ec" alt="The Record — commits, pull requests, and issues year by year">
 </p>
 
-<div align="right"><sub>updated at 11/16/26</sub></div>
+<div align="right"><sub>updated at 11/23/26</sub></div>
 
 # Grinding enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=f87bd394ddcc" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=f8c9057f0a38" alt="Weekly Galley — pull requests merged, hand-filed measures, twelve weeks">
 </p>
 
-<div align="right"><sub>updated at 11/16/26</sub></div>
+<div align="right"><sub>updated at 11/23/26</sub></div>
 
 # Consistent enough?
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=cd6d1bd0bd84" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
+  <img src="https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/progress_sparklines.svg?v=068a8bd37b49" alt="Running Totals — cumulative pull requests and social posts over twelve weeks">
 </p>
 
-<div align="right"><sub>updated at 11/16/26</sub></div>
+<div align="right"><sub>updated at 11/23/26</sub></div>
 
 # Weekly History
 
 | Week | Period | 🚀 PRs | 📱 Social | 💬 Talks | ☕ Coffee | 🏃 Workouts | 📝 Posts |
 |------|--------|--------|----------|---------|---------|------------|----------|
-| [**Week 47 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg?v=f87bd394ddcc) | 2026-11-16 - 2026-11-22 | 0 | — | — | — | — | — |
+| [**Week 48 (live)**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/weekly_dashboard.svg) | 2026-11-23 - 2026-11-29 | 0 | — | — | — | — | — |
+| [**Week 47**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W47.svg) | 2026-11-16 - 2026-11-22 | 0 | — | — | — | — | — |
 | [**Week 46**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W46.svg) | 2026-11-09 - 2026-11-15 | 78 | — | — | — | — | — |
 | [**Week 45**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W45.svg) | 2026-11-02 - 2026-11-08 | 32 | — | — | — | — | — |
 | [**Week 44**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W44.svg) | 2026-10-26 - 2026-11-01 | 113 | — | — | — | — | — |
@@ -43,9 +44,8 @@
 | [**Week 39**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W39.svg) | 2026-09-21 - 2026-09-27 | 97 | 25 | 7 | 12 | 5 | 0 |
 | [**Week 38**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W38.svg) | 2026-09-14 - 2026-09-20 | 77 | 10 | 1 | 1 | 2 | 1 |
 | [**Week 37**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W37.svg) | 2026-09-07 - 2026-09-13 | 16 | 10 | 0 | 0 | 0 | 0 |
-| [**Week 36**](https://raw.githubusercontent.com/Piesson/Piesson/main/dashboard/history/weekly_history_2026-W36.svg) | 2026-08-31 - 2026-09-06 | 35 | 10 | 0 | 0 | 0 | 0 |
 
-<div align="right"><sub>updated at 11/16/26</sub></div>
+<div align="right"><sub>updated at 11/23/26</sub></div>
 
 # Tech Stack
 
