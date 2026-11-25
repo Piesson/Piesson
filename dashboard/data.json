@@ -26,7 +26,7 @@
         "claude": 0,
         "codex": 0,
         "total": 0,
-        "updatedAt": null
+        "updatedAt": "2026-11-25T16:02:57+09:00"
       },
       "commits": 0
     }
@@ -52,7 +52,7 @@
           "claude": 0,
           "codex": 0,
           "total": 0,
-          "updatedAt": null
+          "updatedAt": "2026-11-25T16:03:06+09:00"
         }
       }
     },
@@ -76,7 +76,7 @@
           "claude": 26630575,
           "codex": 28616,
           "total": 26659191,
-          "updatedAt": "2026-11-14T00:05:21+09:00"
+          "updatedAt": "2026-11-25T16:03:16+09:00"
         }
       }
     },
